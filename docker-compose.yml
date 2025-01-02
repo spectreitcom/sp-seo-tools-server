@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+#  db:
+#    image: mysql:8.0.32
+#    volumes:
+#      - matfil_db:/var/lib/mysql
+#    networks:
+#      - matfil_network
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: matfil
+#      MYSQL_USER: matfil
+#      MYSQL_PASSWORD: matfil
+#    ports:
+#      - "3306:3306"
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - sp_seo_tool_network
+    ports:
+      - "3000:3000"
+#    depends_on:
+#      - db
+#      - redis
+    command: yarn run start:dev
+#    env_file:
+#      - ./.env
+
+#  redis:
+#    image: redis
+#    networks:
+#      - matfil_network
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - matfil_redis:/data
+#    command: redis-server --appendonly yes
+
+
+networks:
+  sp_seo_tool_network:
+
+volumes:
+  sp_seo_tool_db:
+  sp_seo_tool_redis:
