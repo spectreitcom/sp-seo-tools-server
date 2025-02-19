@@ -10,7 +10,7 @@ export class TestingModeCheckerCron implements CronServiceInterface {
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_1AM)
-  handle() {
-    this.testingModeCheckerQueueService.checkTestingModes();
+  async handle() {
+    await this.testingModeCheckerQueueService.checkTestingModes();
   }
 }
