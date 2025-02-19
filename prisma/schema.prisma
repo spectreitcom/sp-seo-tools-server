@@ -5,10 +5,148 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// Admin Auth
+
+model AdminUser {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+}
+
+// User Auth
+
+model User {
+  id       String           @id @default(uuid())
+  email    String           @unique
+  password String?
+  googleId String?
+  provider UserAuthProvider
+}
+
+enum UserAuthProvider {
+  GOOGLE
+  CREDENTIALS
+}
+
+// Rank Tracker
+
+model RtDomain {
+  id       String      @id @default(uuid())
+  text     String      @unique
+  userId   String
+  keywords RtKeyword[]
+}
+
+model RtKeyword {
+  id              String             @id @default(uuid())
+  text            String
+  domainId        String
+  domain          RtDomain           @relation(fields: [domainId], references: [id])
+  domainPositions RtDomainPosition[]
+  device          String?
+  searchEngineId  String
+  searchEngine    RtSearchEngine     @relation(fields: [searchEngineId], references: [id])
+  localizationId  String
+  localization    RtLocalization     @relation(fields: [localizationId], references: [id])
+}
+
+model RtDomainPosition {
+  id        String    @id @default(uuid())
+  keywordId String
+  keyword   RtKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  position  Int       @default(0)
+  timestamp Int
+}
+
+model RtUserSubscriptionInfo {
+  id               String  @id @default(uuid())
+  userId           String
+  active           Boolean
+  maxKeywordsQty   Int
+  maxSearchedPages Int
+}
+
+model RtSearchEngine {
+  id               String           @id @default(uuid())
+  engineName       String
+  seSearchEngineId String           @unique
+  engineKey        String           @unique
+  keywords         RtKeyword[]
+  localizations    RtLocalization[]
+}
+
+model RtLocalization {
+  id               String         @id @default(uuid())
+  domainParam      String
+  searchEngineId   String
+  searchEngine     RtSearchEngine @relation(fields: [searchEngineId], references: [id])
+  keywords         RtKeyword[]
+  countryCode      String
+  seLocalizationId String
+  name             String
+
+  @@unique([searchEngineId, countryCode])
+}
+
+model RtTestingMode {
+  id               String  @id @default(uuid())
+  expiresAt        Int
+  userId           String  @unique
+  active           Boolean @default(true)
+  maxKeywordsQty   Int
+  maxSearchedPages Int
+  createdAt        Int
+}
+
+// Rank Tracker Subscription
+
+model RankTrackerSubscription {
+  id                String                        @id @default(uuid())
+  name              String
+  amount            Float
+  maxKeywordsQty    Int
+  hidden            Boolean                       @default(false)
+  userSubscriptions RankTrackerUserSubscription[]
+}
+
+model RankTrackerUserSubscription {
+  id             String                  @id @default(uuid())
+  userId         String
+  subscriptionId String
+  subscription   RankTrackerSubscription @relation(fields: [subscriptionId], references: [id])
+}
+
+// Search Engines
+
+model SeSearchEngine {
+  id            String           @id @default(uuid())
+  name          String
+  engineKey     ESearchEngine    @unique
+  localizations SeLocalization[]
+}
+
+model SeLocalization {
+  id             String         @id @default(uuid())
+  domainParam    String
+  searchEngineId String
+  searchEngine   SeSearchEngine @relation(fields: [searchEngineId], references: [id])
+  countryCode    String
+  name           String
+
+  @@unique([searchEngineId, countryCode])
+}
+
+enum ESearchEngine {
+  GOOGLE
+  YAHOO
+  YANDEX
 }
