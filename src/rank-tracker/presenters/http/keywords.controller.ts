@@ -5,14 +5,18 @@ import {
   Param,
   ParseUUIDPipe,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { KeywordService } from '../../application/services/keyword.service';
+import { AuthGuard } from '../../application/guards/auth.guard';
+import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 
 @Controller('rank-tracker/keywords')
 export class KeywordsController {
   constructor(private readonly keywordService: KeywordService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getUserKeywordsList(
     @Query('page') page: number,
     @Query('searchText') searchText: string,
@@ -20,7 +24,7 @@ export class KeywordsController {
     @Query('searchEngineId') searchEngineId: string,
     @Query('device') device: string,
     @Query('domainId') domainId: string,
-    userId: string, // todo;
+    @CurrentUserId() userId: string, // todo;
   ) {
     return this.keywordService.getUserKeywordsList(
       userId,
@@ -34,6 +38,7 @@ export class KeywordsController {
   }
 
   @Delete(':keywordId')
+  @UseGuards(AuthGuard)
   deleteKeyword(
     @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
     userId: string, // todo;

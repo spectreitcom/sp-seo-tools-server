@@ -19,11 +19,11 @@ export class GoogleStrategy implements ScrapeStrategy {
     const API_KEY = this.configService.get<string>('SERP_API_API_KEY');
     const BASE_URL = this.configService.get<string>('SERP_API_BASE_URL');
 
-    const start = (page + 1) * 10; // todo: WIP
+    const start = (page - 1) * 10;
 
     const url = `${BASE_URL}/search`;
     const params = {
-      apiKey: API_KEY,
+      api_key: API_KEY,
       q: query,
       device,
       start,

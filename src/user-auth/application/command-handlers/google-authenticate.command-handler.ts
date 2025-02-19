@@ -24,8 +24,6 @@ export class GoogleAuthenticateCommandHandler
       const { email, googleId } =
         await this.googleAuthenticationService.authenticate(token);
 
-      console.log(email, googleId); // todo;
-
       const userModel = await this.userRepository.findByGoogleId(googleId);
 
       if (!userModel) {
