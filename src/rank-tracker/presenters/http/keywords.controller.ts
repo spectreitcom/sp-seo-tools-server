@@ -24,7 +24,7 @@ export class KeywordsController {
     @Query('searchEngineId') searchEngineId: string,
     @Query('device') device: string,
     @Query('domainId') domainId: string,
-    @CurrentUserId() userId: string, // todo;
+    @CurrentUserId() userId: string,
   ) {
     return this.keywordService.getUserKeywordsList(
       userId,
@@ -41,7 +41,7 @@ export class KeywordsController {
   @UseGuards(AuthGuard)
   deleteKeyword(
     @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
-    userId: string, // todo;
+    @CurrentUserId() userId: string,
   ) {
     return this.keywordService.delete(keywordId, userId);
   }

@@ -21,9 +21,9 @@ export class ScrapeStrategyFactory {
       case GOOGLE_ENGINE_KEY:
         return new GoogleStrategy(configService, http);
       case YAHOO_ENGINE_KEY:
-        return new YahooStrategy();
+        return new YahooStrategy(configService, http);
       case YANDEX_ENGINE_KEY:
-        return new YandexStrategy();
+        return new YandexStrategy(configService, http);
       default:
         throw new NotFoundEngineKey();
     }
