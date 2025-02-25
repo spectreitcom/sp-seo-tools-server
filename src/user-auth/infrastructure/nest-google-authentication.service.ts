@@ -22,10 +22,12 @@ export class NestGoogleAuthenticationService
       const loginTicket = await this.oauthClient.verifyIdToken({
         idToken: token,
       });
-      const { sub: googleId, email } = loginTicket.getPayload();
+      const { sub: googleId, email, picture } = loginTicket.getPayload();
+
       return {
         email,
         googleId,
+        picture,
       };
     } catch (_) {
       throw new GoogleAuthenticateError();

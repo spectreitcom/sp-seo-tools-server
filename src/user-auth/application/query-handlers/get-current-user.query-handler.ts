@@ -5,6 +5,7 @@ import { UnauthorizedException } from '@nestjs/common';
 
 export type GetCurrentUserQueryResponse = {
   email: string;
+  picture: string | null;
 };
 
 @QueryHandler(GetCurrentUserQuery)
@@ -23,6 +24,7 @@ export class GetCurrentUserQueryHandler
     }
     return {
       email: user.email,
+      picture: user.picture,
     };
   }
 }

@@ -6,6 +6,7 @@ export abstract class UserRepository {
     provider: UserAuthProvider,
     googleId?: string,
     password?: string,
+    picture?: string,
   ): Promise<User>;
 
   abstract findByGoogleId(googleId: string): Promise<User>;

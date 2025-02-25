@@ -21,7 +21,7 @@ export class GoogleAuthenticateCommandHandler
     try {
       const { token } = command;
 
-      const { email, googleId } =
+      const { email, googleId, picture } =
         await this.googleAuthenticationService.authenticate(token);
 
       const userModel = await this.userRepository.findByGoogleId(googleId);
@@ -31,6 +31,8 @@ export class GoogleAuthenticateCommandHandler
           email,
           UserAuthProvider.GOOGLE,
           googleId,
+          null,
+          picture,
         );
 
         const accessToken = await this.tokenService.sign(

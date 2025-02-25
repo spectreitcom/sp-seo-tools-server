@@ -5,6 +5,7 @@ export type CommandResponse = {
 export type GoogleAuthenticateResponse = {
   email: string;
   googleId: string;
+  picture: string | null;
 };
 
 export type TokenPayload = {

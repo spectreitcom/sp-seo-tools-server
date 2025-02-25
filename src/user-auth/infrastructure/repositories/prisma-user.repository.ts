@@ -12,6 +12,7 @@ export class PrismaUserRepository implements UserRepository {
     provider: UserAuthProvider,
     googleId?: string,
     password?: string,
+    picture?: string,
   ): Promise<User> {
     return this.databaseService.user.create({
       data: {
@@ -19,6 +20,7 @@ export class PrismaUserRepository implements UserRepository {
         email,
         password,
         provider,
+        picture,
       },
     });
   }
