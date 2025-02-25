@@ -114,14 +114,18 @@ model RankTrackerSubscription {
   name              String
   amount            Float
   maxKeywordsQty    Int
+  maxSearchedPages  Int
   hidden            Boolean                       @default(false)
   userSubscriptions RankTrackerUserSubscription[]
+  priceId           String                        @unique
 }
 
 model RankTrackerUserSubscription {
   id             String                  @id @default(uuid())
-  userId         String
+  userId         String                  @unique
+  active         Boolean                 @default(true)
   subscriptionId String
+  sessionId      String
   subscription   RankTrackerSubscription @relation(fields: [subscriptionId], references: [id])
 }
 

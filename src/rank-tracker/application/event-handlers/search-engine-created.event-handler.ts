@@ -1,20 +1,22 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { SearchEngineCreatedEvent } from '../../../search-engine/domain/events/search-engine-created.event';
 import { Logger } from '@nestjs/common';
 import { SearchEngineRepository } from '../ports/search-engine.repository';
 import { SearchEngineFactory } from '../../domain/factories/search-engine.factory';
+import { SearchEngineCreatedIntegrationEvent } from '../../../search-engine/application/integration-events/search-engine-created.integration-event';
 
-@EventsHandler(SearchEngineCreatedEvent)
+@EventsHandler(SearchEngineCreatedIntegrationEvent)
 export class SearchEngineCreatedEventHandler
-  implements IEventHandler<SearchEngineCreatedEvent>
+  implements IEventHandler<SearchEngineCreatedIntegrationEvent>
 {
-  private readonly logger: Logger = new Logger(SearchEngineCreatedEvent.name);
+  private readonly logger: Logger = new Logger(
+    SearchEngineCreatedIntegrationEvent.name,
+  );
 
   constructor(
     private readonly searchEngineRepository: SearchEngineRepository,
   ) {}
 
-  async handle(event: SearchEngineCreatedEvent) {
+  async handle(event: SearchEngineCreatedIntegrationEvent) {
     this.logger.debug(JSON.stringify(event));
 
     const { searchEngineId, engineKey, engineName } = event;

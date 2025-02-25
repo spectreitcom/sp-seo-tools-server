@@ -1,22 +1,24 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { LocalizationCreatedEvent } from '../../../search-engine/domain/events/localization-created.event';
 import { Logger } from '@nestjs/common';
 import { LocalizationRepository } from '../ports/localization.repository';
 import { LocalizationFactory } from '../../domain/factories/localization.factory';
 import { SearchEngineRepository } from '../ports/search-engine.repository';
+import { LocalizationCreatedIntegrationEvent } from '../../../search-engine/application/integration-events/localization-created.integration-event';
 
-@EventsHandler(LocalizationCreatedEvent)
+@EventsHandler(LocalizationCreatedIntegrationEvent)
 export class LocalizationCreatedEventHandler
-  implements IEventHandler<LocalizationCreatedEvent>
+  implements IEventHandler<LocalizationCreatedIntegrationEvent>
 {
-  private readonly logger = new Logger(LocalizationCreatedEvent.name);
+  private readonly logger = new Logger(
+    LocalizationCreatedIntegrationEvent.name,
+  );
 
   constructor(
     private readonly localizationRepository: LocalizationRepository,
     private readonly searchEngineRepository: SearchEngineRepository,
   ) {}
 
-  async handle(event: LocalizationCreatedEvent) {
+  async handle(event: LocalizationCreatedIntegrationEvent) {
     this.logger.debug(JSON.stringify(event));
 
     const { searchEngineId, localizationId, domainParam, countryCode, name } =

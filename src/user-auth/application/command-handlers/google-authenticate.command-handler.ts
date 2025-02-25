@@ -37,6 +37,7 @@ export class GoogleAuthenticateCommandHandler
           newUserModel.id,
           email,
         );
+
         return { accessToken };
       }
 
