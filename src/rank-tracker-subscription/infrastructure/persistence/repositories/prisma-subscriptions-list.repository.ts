@@ -44,4 +44,24 @@ export class PrismaSubscriptionsListRepository
       model.subscription.maxSearchedPages,
     );
   }
+
+  async getActivePlanByUser(userId: string): Promise<SubscriptionListItemDto> {
+    const model =
+      await this.databaseService.rankTrackerUserSubscription.findUnique({
+        where: { userId, active: true },
+        include: {
+          subscription: true,
+        },
+      });
+
+    if (!model) return null;
+
+    return new SubscriptionListItemDto(
+      model.subscription.id,
+      model.subscription.name,
+      model.subscription.amount,
+      model.subscription.maxKeywordsQty,
+      model.subscription.maxSearchedPages,
+    );
+  }
 }

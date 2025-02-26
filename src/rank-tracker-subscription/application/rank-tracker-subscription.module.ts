@@ -15,6 +15,8 @@ import { SubscriptionController } from '../presenters/http/subscription.controll
 import { SubscriptionActivatedEventHandler } from './event-handlers/subscription-activated.event-handler';
 import { GetCurrentPlanQueryHandler } from './query-handlers/get-current-plan.query-handler';
 import { CreateSessionPortalCommandHandler } from './command-handlers/create-session-portal.command-handler';
+import { SubscriptionDeactivatedEventHandler } from './event-handlers/subscription-deactivated.event-handler';
+import { DeactivateSubscriptionCommandHandler } from './command-handlers/deactivate-subscription.command-handler';
 
 @Module({
   imports: [InfrastructureModule, AdminAuthModule, UserAuthModule],
@@ -31,6 +33,8 @@ import { CreateSessionPortalCommandHandler } from './command-handlers/create-ses
     SubscriptionActivatedEventHandler,
     GetCurrentPlanQueryHandler,
     CreateSessionPortalCommandHandler,
+    SubscriptionDeactivatedEventHandler,
+    DeactivateSubscriptionCommandHandler,
   ],
 })
 export class RankTrackerSubscriptionModule {}

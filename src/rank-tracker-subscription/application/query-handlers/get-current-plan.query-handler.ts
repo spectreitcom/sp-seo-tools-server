@@ -13,6 +13,6 @@ export class GetCurrentPlanQueryHandler
 
   execute(query: GetCurrentPlanQuery): Promise<SubscriptionListItemDto> {
     const { userId } = query;
-    return this.subscriptionsListRepository.findByUserId(userId);
+    return this.subscriptionsListRepository.getActivePlanByUser(userId);
   }
 }

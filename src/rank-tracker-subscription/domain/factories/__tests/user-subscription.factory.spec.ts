@@ -8,10 +8,12 @@ describe('UserSubscriptionFactory', () => {
       const USER_ID = randomUUID();
       const SUBSCRIPTION_ID = randomUUID();
       const SESSION_ID = randomUUID();
+      const CUSTOMER_ID = randomUUID();
       const userSubscription = UserSubscriptionFactory.create(
         USER_ID,
         SUBSCRIPTION_ID,
         SESSION_ID,
+        CUSTOMER_ID,
       );
 
       expect(userSubscription).toBeInstanceOf(UserSubscription);

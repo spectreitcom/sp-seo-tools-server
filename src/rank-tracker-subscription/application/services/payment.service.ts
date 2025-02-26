@@ -9,6 +9,7 @@ import { UserSubscriptionRepository } from '../ports/user-subscription.repositor
 import { UserSubscriptionFactory } from '../../domain/factories/user-subscription.factory';
 import { CreateSessionPortalCommand } from '../commands/create-session-portal.command';
 import { CreateSessionPortalCommandResponse } from '../command-handlers/create-session-portal.command-handler';
+import { DeactivateSubscriptionCommand } from '../commands/deactivate-subscription.command';
 
 type Metadata = {
   userId: string;
@@ -32,10 +33,13 @@ export class PaymentService {
         await this.handleSessionCompleted(
           event.data.object.metadata as Metadata,
           event.data.object.id,
+          event.data.object.customer.toString(),
         );
         break;
       case 'customer.subscription.deleted':
-        // todo;
+        await this.handleSubscriptionDeleted(
+          event.data.object.customer.toString(),
+        );
         break;
     }
   }
@@ -57,7 +61,17 @@ export class PaymentService {
     >(new CreateSessionPortalCommand(userId));
   }
 
-  private async handleSessionCompleted(metadata: Metadata, sessionId: string) {
+  private async handleSubscriptionDeleted(customerId: string) {
+    return this.commandBus.execute<DeactivateSubscriptionCommand, void>(
+      new DeactivateSubscriptionCommand(customerId),
+    );
+  }
+
+  private async handleSessionCompleted(
+    metadata: Metadata,
+    sessionId: string,
+    customerId: string,
+  ) {
     if (metadata.productType === 'rank-tracker') {
       const { userId, subscriptionId } = metadata;
       let userSubscription =
@@ -68,9 +82,12 @@ export class PaymentService {
           userId,
           subscriptionId,
           sessionId,
+          customerId,
         );
       }
 
+      userSubscription.updateCustomerId(customerId);
+      userSubscription.updateSessionId(sessionId);
       userSubscription.activate();
       this.eventPublisher.mergeObjectContext(userSubscription);
       await this.userSubscriptionRepository.save(userSubscription);

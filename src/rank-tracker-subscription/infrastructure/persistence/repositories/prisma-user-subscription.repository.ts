@@ -28,6 +28,7 @@ export class PrismaUserSubscriptionRepository
           subscriptionId: userSubscription.getSubscriptionId(),
           active: userSubscription.getActive(),
           sessionId: userSubscription.getSessionId(),
+          customerId: userSubscription.getCustomerId(),
         },
       });
       return;
@@ -40,8 +41,20 @@ export class PrismaUserSubscriptionRepository
         subscriptionId: userSubscription.getSubscriptionId(),
         active: userSubscription.getActive(),
         sessionId: userSubscription.getSessionId(),
+        customerId: userSubscription.getCustomerId(),
       },
     });
+  }
+
+  async findByCustomer(customerId: string): Promise<UserSubscription | null> {
+    const model =
+      await this.databaseService.rankTrackerUserSubscription.findUnique({
+        where: { customerId },
+      });
+
+    if (!model) return null;
+
+    return UserSubscriptionMapper.toDomain(model);
   }
 
   async hasUserActiveSubscription(userId: string): Promise<boolean> {

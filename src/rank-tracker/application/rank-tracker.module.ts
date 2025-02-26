@@ -28,6 +28,7 @@ import { LocalizationsService } from './services/localizations.service';
 import { AuthGuard } from './guards/auth.guard';
 import { UserAuthModule } from '../../user-auth/application/user-auth.module';
 import { SubscriptionActivatedEventHandler } from './event-handlers/subscription-activated.event-handler';
+import { SubscriptionDeactivatedEventHandler } from './event-handlers/subscription-deactivated.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -61,6 +62,7 @@ import { SubscriptionActivatedEventHandler } from './event-handlers/subscription
     LocalizationsService,
     AuthGuard,
     SubscriptionActivatedEventHandler,
+    SubscriptionDeactivatedEventHandler,
   ],
 })
 export class RankTrackerModule {}

@@ -5,5 +5,6 @@ export class ActivateSubscriptionCommand implements ICommand {
     public readonly userId: string,
     public readonly subscriptionId: string,
     public readonly sessionId: string,
+    public readonly customerId: string,
   ) {}
 }

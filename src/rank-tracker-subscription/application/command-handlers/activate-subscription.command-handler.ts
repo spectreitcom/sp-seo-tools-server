@@ -13,11 +13,12 @@ export class ActivateSubscriptionCommandHandler
   ) {}
 
   async execute(command: ActivateSubscriptionCommand): Promise<void> {
-    const { subscriptionId, userId, sessionId } = command;
+    const { subscriptionId, userId, sessionId, customerId } = command;
     const userSubscription = UserSubscriptionFactory.create(
       userId,
       subscriptionId,
       sessionId,
+      customerId,
     );
     this.eventPublisher.mergeObjectContext(userSubscription);
     userSubscription.activate();

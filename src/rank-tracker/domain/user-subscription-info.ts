@@ -1,5 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { UserSubscriptionActivatedEvent } from './events/user-subscription-activated.event';
+import { UserSubscriptionDeactivatedEvent } from './events/user-subscription-deactivated.event';
 
 export class UserSubscriptionInfo extends AggregateRoot {
   constructor(
@@ -15,6 +16,11 @@ export class UserSubscriptionInfo extends AggregateRoot {
   activate() {
     this.active = true;
     this.apply(new UserSubscriptionActivatedEvent());
+  }
+
+  deactivate() {
+    this.active = false;
+    this.apply(new UserSubscriptionDeactivatedEvent());
   }
 
   getUserSubscriptionInfoId() {

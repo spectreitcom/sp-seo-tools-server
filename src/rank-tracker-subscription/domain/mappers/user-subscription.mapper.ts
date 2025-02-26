@@ -8,6 +8,7 @@ export class UserSubscriptionMapper {
       rankTrackerUserSubscription.userId,
       rankTrackerUserSubscription.subscriptionId,
       rankTrackerUserSubscription.sessionId,
+      rankTrackerUserSubscription.customerId,
       rankTrackerUserSubscription.active,
     );
   }
