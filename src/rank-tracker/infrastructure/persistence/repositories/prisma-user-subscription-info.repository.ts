@@ -14,18 +14,18 @@ export class PrismaUserSubscriptionInfoRepository
     const userSubscriptionInfoModel =
       await this.databaseService.rtUserSubscriptionInfo.findUnique({
         where: {
-          id: userSubscriptionInfo.userSubscriptionInfoId,
+          id: userSubscriptionInfo.getUserSubscriptionInfoId(),
         },
       });
 
     if (userSubscriptionInfoModel) {
       await this.databaseService.rtUserSubscriptionInfo.update({
-        where: { id: userSubscriptionInfo.userSubscriptionInfoId },
+        where: { id: userSubscriptionInfo.getUserSubscriptionInfoId() },
         data: {
-          userId: userSubscriptionInfo.userId,
-          active: userSubscriptionInfo.active,
-          maxKeywordsQty: userSubscriptionInfo.maxKeywordsQty,
-          maxSearchedPages: userSubscriptionInfo.maxSearchedPages,
+          userId: userSubscriptionInfo.getUserId(),
+          active: userSubscriptionInfo.getActive(),
+          maxKeywordsQty: userSubscriptionInfo.getMaxKeywordsQty(),
+          maxSearchedPages: userSubscriptionInfo.getMaxSearchedPages(),
         },
       });
       return;
@@ -33,11 +33,11 @@ export class PrismaUserSubscriptionInfoRepository
 
     await this.databaseService.rtUserSubscriptionInfo.create({
       data: {
-        id: userSubscriptionInfo.userSubscriptionInfoId,
-        userId: userSubscriptionInfo.userId,
-        active: userSubscriptionInfo.active,
-        maxKeywordsQty: userSubscriptionInfo.maxKeywordsQty,
-        maxSearchedPages: userSubscriptionInfo.maxSearchedPages,
+        id: userSubscriptionInfo.getUserSubscriptionInfoId(),
+        userId: userSubscriptionInfo.getUserId(),
+        active: userSubscriptionInfo.getActive(),
+        maxKeywordsQty: userSubscriptionInfo.getMaxKeywordsQty(),
+        maxSearchedPages: userSubscriptionInfo.getMaxSearchedPages(),
       },
     });
   }

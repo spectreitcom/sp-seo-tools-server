@@ -40,12 +40,12 @@ export class AddKeywordCommandHandler
     if (testingMode && testingMode.getActive()) {
       maxKeywordsQty = testingMode.getMaxKeywordsQty();
     } else if (userSubscriptionInfo) {
-      maxKeywordsQty = userSubscriptionInfo.maxKeywordsQty;
+      maxKeywordsQty = userSubscriptionInfo.getMaxKeywordsQty();
     }
 
     try {
       const keyword = KeywordFactory.create(
-        userSubscriptionInfo ? userSubscriptionInfo.active : false,
+        userSubscriptionInfo ? userSubscriptionInfo.getActive() : false,
         usedKeywordsQty,
         maxKeywordsQty,
         domainId,

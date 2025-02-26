@@ -27,6 +27,7 @@ import { LocalizationsController } from '../presenters/http/localizations.contro
 import { LocalizationsService } from './services/localizations.service';
 import { AuthGuard } from './guards/auth.guard';
 import { UserAuthModule } from '../../user-auth/application/user-auth.module';
+import { SubscriptionActivatedEventHandler } from './event-handlers/subscription-activated.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -59,6 +60,7 @@ import { UserAuthModule } from '../../user-auth/application/user-auth.module';
     GetAllLocalizationsCountryCodesQueryHandler,
     LocalizationsService,
     AuthGuard,
+    SubscriptionActivatedEventHandler,
   ],
 })
 export class RankTrackerModule {}

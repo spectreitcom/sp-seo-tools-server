@@ -93,7 +93,7 @@ export class PositionCheckerConsumer extends WorkerHost {
 
     for (
       let page = 1;
-      page < userSubscriptionInfo.maxSearchedPages + 1;
+      page < userSubscriptionInfo.getMaxSearchedPages() + 1;
       page++
     ) {
       const result = await this.serpapiClient.scrape(
