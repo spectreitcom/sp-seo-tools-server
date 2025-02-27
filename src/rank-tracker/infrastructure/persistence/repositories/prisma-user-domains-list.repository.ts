@@ -46,7 +46,7 @@ export class PrismaUserDomainsListRepository
         new UserDomainsListItemDto(
           model.id,
           model.text,
-          keywordCount._count ?? 0,
+          keywordCount?._count ?? 0,
         ),
       );
     }
