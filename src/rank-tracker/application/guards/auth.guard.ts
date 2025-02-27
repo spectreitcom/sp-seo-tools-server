@@ -15,6 +15,8 @@ export class AuthGuard implements CanActivate {
 
     const hasAccess = await this.userAuthFacade.hasAccess(request);
 
+    request.userId = await this.userAuthFacade.getUserFromRequest(request);
+
     if (hasAccess) return true;
 
     throw new UnauthorizedException();

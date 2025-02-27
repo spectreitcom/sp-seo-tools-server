@@ -10,8 +10,8 @@ export class DomainsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  addDomain(@Body() payload: AddDomainDto) {
-    return this.domainService.addDomain(payload, 'userId');
+  addDomain(@Body() payload: AddDomainDto, @CurrentUserId() userId: string) {
+    return this.domainService.addDomain(payload, userId);
   }
 
   @Get()
