@@ -36,6 +36,9 @@ export class GetUserDomainsListQueryHandler
       searchText,
     );
 
-    return { data, total };
+    const userTotal =
+      await this.userDomainsListRepository.countAllForUser(userId);
+
+    return { data, total, userTotal };
   }
 }

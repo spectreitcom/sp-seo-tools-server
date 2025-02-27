@@ -68,4 +68,12 @@ export class PrismaUserDomainsListRepository
       },
     });
   }
+
+  async countAllForUser(userId: string): Promise<number> {
+    return this.databaseService.rtDomain.count({
+      where: {
+        userId,
+      },
+    });
+  }
 }

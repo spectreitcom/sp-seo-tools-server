@@ -11,4 +11,5 @@ export abstract class UserDomainsListRepository {
     userId: string,
     searchText: string | null | undefined,
   ): Promise<number>;
+  abstract countAllForUser(userId: string): Promise<number>;
 }
