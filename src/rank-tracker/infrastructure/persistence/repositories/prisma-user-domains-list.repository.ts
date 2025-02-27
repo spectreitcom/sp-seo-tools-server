@@ -25,6 +25,9 @@ export class PrismaUserDomainsListRepository
       },
       take,
       skip,
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     const results: UserDomainsListItemDto[] = [];

@@ -29,6 +29,7 @@ export class PrismaDomainRepository implements DomainRepository {
         id: domain.domainId,
         userId: domain.userId,
         text: domain.text,
+        createdAt: domain.createdAt,
       },
     });
   }

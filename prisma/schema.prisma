@@ -41,10 +41,11 @@ enum UserAuthProvider {
 // Rank Tracker
 
 model RtDomain {
-  id       String      @id @default(uuid())
-  text     String      @unique
-  userId   String
-  keywords RtKeyword[]
+  id        String      @id @default(uuid())
+  text      String      @unique
+  userId    String
+  keywords  RtKeyword[]
+  createdAt Int
 }
 
 model RtKeyword {
