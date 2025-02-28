@@ -17,10 +17,7 @@ export function IsDomain(validationOptions?: ValidationOptions) {
       options: validationOptions,
       propertyName,
       validator: {
-        validate(
-          value: any,
-          _?: ValidationArguments,
-        ): Promise<boolean> | boolean {
+        validate(value: any): Promise<boolean> | boolean {
           return isDomainValidator(value);
         },
         defaultMessage(): string {
