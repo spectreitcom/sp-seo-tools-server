@@ -1,8 +1,4 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidationArguments,
-} from 'class-validator';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 
 export const isDomainValidator = (value: string) => {
   const regExp = new RegExp(/^([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,63}$/);
