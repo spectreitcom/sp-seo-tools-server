@@ -21,6 +21,7 @@ describe('isDomainValidator', () => {
     const domain9 = isDomainValidator('http://test.wp.pl');
     const domain10 = isDomainValidator('https://www.test.wp.pl');
     const domain11 = isDomainValidator('https://test.wp.pl');
+    const domain12 = isDomainValidator('test.pl/something');
 
     expect(domain1).toBeFalsy();
     expect(domain2).toBeFalsy();
@@ -33,5 +34,6 @@ describe('isDomainValidator', () => {
     expect(domain9).toBeFalsy();
     expect(domain10).toBeFalsy();
     expect(domain11).toBeFalsy();
+    expect(domain12).toBeFalsy();
   });
 });
