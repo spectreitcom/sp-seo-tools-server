@@ -42,17 +42,19 @@ enum UserAuthProvider {
 
 model RtDomain {
   id        String      @id @default(uuid())
-  text      String      @unique
+  text      String
   userId    String
   keywords  RtKeyword[]
   createdAt Int
+
+  @@unique([userId, text])
 }
 
 model RtKeyword {
   id              String             @id @default(uuid())
   text            String
   domainId        String
-  domain          RtDomain           @relation(fields: [domainId], references: [id])
+  domain          RtDomain           @relation(fields: [domainId], references: [id], onDelete: Cascade)
   domainPositions RtDomainPosition[]
   device          String?
   searchEngineId  String

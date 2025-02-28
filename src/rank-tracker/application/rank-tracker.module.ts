@@ -29,6 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { UserAuthModule } from '../../user-auth/application/user-auth.module';
 import { SubscriptionActivatedEventHandler } from './event-handlers/subscription-activated.event-handler';
 import { SubscriptionDeactivatedEventHandler } from './event-handlers/subscription-deactivated.event-handler';
+import { DeleteDomainCommandHandler } from './command-handlers/delete-domain.command-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -63,6 +64,7 @@ import { SubscriptionDeactivatedEventHandler } from './event-handlers/subscripti
     AuthGuard,
     SubscriptionActivatedEventHandler,
     SubscriptionDeactivatedEventHandler,
+    DeleteDomainCommandHandler,
   ],
 })
 export class RankTrackerModule {}

@@ -51,4 +51,10 @@ export class PrismaDomainRepository implements DomainRepository {
     });
     return !!rtDomain;
   }
+
+  async remove(domainId: string): Promise<void> {
+    await this.databaseService.rtDomain.delete({
+      where: { id: domainId },
+    });
+  }
 }

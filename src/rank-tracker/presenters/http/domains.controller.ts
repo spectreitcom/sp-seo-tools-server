@@ -1,4 +1,13 @@
-import { Body, Controller, Post, Get, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Query,
+  UseGuards,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { AddDomainDto } from '../../application/dto/add-domain.dto';
 import { DomainService } from '../../application/services/domain.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
@@ -26,5 +35,14 @@ export class DomainsController {
       page && page > 0 ? page : 1,
       searchText,
     );
+  }
+
+  @Delete(':domainId')
+  @UseGuards(AuthGuard)
+  deleteDomain(
+    @Param('domainId') domainId: string,
+    @CurrentUserId() userId: string,
+  ) {
+    return this.domainService.deleteDomain(domainId, userId);
   }
 }

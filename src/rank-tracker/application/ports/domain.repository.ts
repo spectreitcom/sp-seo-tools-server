@@ -4,4 +4,5 @@ export abstract class DomainRepository {
   abstract save(domain: Domain): Promise<void>;
   abstract findById(domainId: string): Promise<Domain>;
   abstract domainExists(domainText: string, userId: string): Promise<boolean>;
+  abstract remove(domainId: string): Promise<void>;
 }

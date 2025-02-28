@@ -4,6 +4,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AddDomainCommand } from '../commands/add-domain.command';
 import { GetUserDomainsListQuery } from '../queries/get-user-domains-list.query';
 import { GetUserDomainsListQueryResponse } from '../query-handlers/get-user-domains-list.query-handler';
+import { DeleteDomainCommand } from '../commands/delete-domain.command';
 
 @Injectable()
 export class DomainService {
@@ -23,5 +24,11 @@ export class DomainService {
       GetUserDomainsListQuery,
       GetUserDomainsListQueryResponse
     >(new GetUserDomainsListQuery(page, searchText, userId));
+  }
+
+  deleteDomain(domainId: string, userId: string) {
+    return this.commandBus.execute<DeleteDomainCommand, void>(
+      new DeleteDomainCommand(domainId, userId),
+    );
   }
 }
