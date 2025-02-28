@@ -23,7 +23,6 @@ export class PrismaDomainRepository implements DomainRepository {
       return;
     }
 
-    // create
     await this.databaseService.rtDomain.create({
       data: {
         id: domain.domainId,
