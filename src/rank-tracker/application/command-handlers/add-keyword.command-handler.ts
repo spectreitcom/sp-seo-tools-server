@@ -63,10 +63,10 @@ export class AddKeywordCommandHandler
       keyword.commit();
     } catch (e) {
       if (e instanceof InactiveSubscriptionError) {
-        throw new BadRequestException();
+        throw new BadRequestException('Subscription is inactive');
       }
       if (e instanceof IsKeywordsQuantityExceededError) {
-        throw new BadRequestException();
+        throw new BadRequestException('Keywords quantity exceeded');
       }
 
       throw new InternalServerErrorException();

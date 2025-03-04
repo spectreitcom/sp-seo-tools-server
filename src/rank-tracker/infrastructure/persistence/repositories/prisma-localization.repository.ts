@@ -52,4 +52,13 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
 
     return LocalizationMapper.toDomain(localizationModel);
   }
+
+  async findBySearchEngine(searchEngineId: string): Promise<Localization[]> {
+    const models = await this.databaseService.rtLocalization.findMany({
+      where: {
+        searchEngineId,
+      },
+    });
+    return models.map((model) => LocalizationMapper.toDomain(model));
+  }
 }
