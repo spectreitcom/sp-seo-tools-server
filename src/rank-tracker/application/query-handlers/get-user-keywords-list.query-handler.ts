@@ -37,6 +37,10 @@ export class GetUserKeywordsListQueryHandler
     }
 
     const deviceFilterValue = device ? _device.value : undefined;
+    const searchEngineIdFilterValue = searchEngineId
+      ? searchEngineId
+      : undefined;
+    const domainIdFilterValue = domainId ? domainId : undefined;
 
     const take = 30;
 
@@ -48,9 +52,9 @@ export class GetUserKeywordsListQueryHandler
       skip,
       searchText,
       localizationId,
-      searchEngineId,
+      searchEngineIdFilterValue,
       deviceFilterValue,
-      domainId,
+      domainIdFilterValue,
     );
 
     const total =
@@ -58,9 +62,9 @@ export class GetUserKeywordsListQueryHandler
         userId,
         searchText,
         localizationId,
-        searchEngineId,
+        searchEngineIdFilterValue,
         deviceFilterValue,
-        domainId,
+        domainIdFilterValue,
       );
 
     const userTotal =
