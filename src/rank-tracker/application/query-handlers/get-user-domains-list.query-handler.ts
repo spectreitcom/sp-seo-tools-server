@@ -31,7 +31,7 @@ export class GetUserDomainsListQueryHandler
       searchText,
     );
 
-    const total = await this.userDomainsListRepository.countAll(
+    const total = await this.userDomainsListRepository.countAllWithSearchParams(
       userId,
       searchText,
     );

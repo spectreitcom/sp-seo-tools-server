@@ -7,7 +7,7 @@ export abstract class UserDomainsListRepository {
     skip: number,
     searchText: string | null | undefined,
   ): Promise<UserDomainsListItemDto[]>;
-  abstract countAll(
+  abstract countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,
   ): Promise<number>;

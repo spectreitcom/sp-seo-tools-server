@@ -51,18 +51,23 @@ export class GetUserKeywordsListQueryHandler
       domainId,
     );
 
-    const total = await this.userKeywordsListRepository.countAllUserKeywords(
-      userId,
-      searchText,
-      localizationId,
-      searchEngineId,
-      _device.value,
-      domainId,
-    );
+    const total =
+      await this.userKeywordsListRepository.countAllWithSearchParams(
+        userId,
+        searchText,
+        localizationId,
+        searchEngineId,
+        _device.value,
+        domainId,
+      );
+
+    const userTotal =
+      await this.userKeywordsListRepository.countAllForUser(userId);
 
     return {
       data,
       total,
+      userTotal,
     };
   }
 }

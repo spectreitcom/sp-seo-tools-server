@@ -57,7 +57,7 @@ export class PrismaUserDomainsListRepository
     return results;
   }
 
-  async countAll(
+  async countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,
   ): Promise<number> {

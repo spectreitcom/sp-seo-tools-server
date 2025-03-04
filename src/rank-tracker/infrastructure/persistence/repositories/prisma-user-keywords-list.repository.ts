@@ -86,7 +86,7 @@ export class PrismaUserKeywordsListRepository
     return results;
   }
 
-  async countAllUserKeywords(
+  async countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
@@ -119,6 +119,16 @@ export class PrismaUserKeywordsListRepository
             domainId,
           },
         ],
+      },
+    });
+  }
+
+  async countAllForUser(userId: string): Promise<number> {
+    return this.databaseService.rtKeyword.count({
+      where: {
+        domain: {
+          userId,
+        },
       },
     });
   }
