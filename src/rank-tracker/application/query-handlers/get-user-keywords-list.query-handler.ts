@@ -32,9 +32,11 @@ export class GetUserKeywordsListQueryHandler
     } = query;
     const _device = new Device(device);
 
-    if (!_device.isValid()) {
+    if (device && !_device.isValid()) {
       throw new BadRequestException('Invalid device');
     }
+
+    const deviceFilterValue = device ? _device.value : undefined;
 
     const take = 30;
 
@@ -47,7 +49,7 @@ export class GetUserKeywordsListQueryHandler
       searchText,
       localizationId,
       searchEngineId,
-      _device.value,
+      deviceFilterValue,
       domainId,
     );
 
@@ -57,7 +59,7 @@ export class GetUserKeywordsListQueryHandler
         searchText,
         localizationId,
         searchEngineId,
-        _device.value,
+        deviceFilterValue,
         domainId,
       );
 

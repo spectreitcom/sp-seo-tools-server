@@ -17,7 +17,7 @@ export class PrismaUserKeywordsListRepository
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
     searchEngineId: string | null | undefined,
-    device: string | null | undefined,
+    device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<UserKeywordsListItemDto[]> {
     const models = await this.databaseService.rtKeyword.findMany({
@@ -25,23 +25,15 @@ export class PrismaUserKeywordsListRepository
         domain: {
           userId,
         },
-        OR: [
+        AND: [
           {
             text: {
               startsWith: searchText,
               mode: 'insensitive',
             },
-          },
-          {
-            localizationId,
-          },
-          {
-            searchEngineId,
-          },
-          {
             device,
-          },
-          {
+            localizationId,
+            searchEngineId,
             domainId,
           },
         ],
@@ -91,7 +83,7 @@ export class PrismaUserKeywordsListRepository
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
     searchEngineId: string | null | undefined,
-    device: string | null | undefined,
+    device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<number> {
     return this.databaseService.rtKeyword.count({
@@ -99,23 +91,15 @@ export class PrismaUserKeywordsListRepository
         domain: {
           userId,
         },
-        OR: [
+        AND: [
           {
             text: {
               startsWith: searchText,
               mode: 'insensitive',
             },
-          },
-          {
-            localizationId,
-          },
-          {
-            searchEngineId,
-          },
-          {
             device,
-          },
-          {
+            localizationId,
+            searchEngineId,
             domainId,
           },
         ],
