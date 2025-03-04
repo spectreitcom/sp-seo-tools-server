@@ -2,12 +2,14 @@ import { KeywordRepository } from '../../../application/ports/keyword.repository
 import { Keyword } from '../../../domain/keyword';
 import { DatabaseService } from '../../../../database/database.service';
 import { KeywordMapper } from '../../../domain/mappers/keyword.mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaKeywordRepository implements KeywordRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async save(keyword: Keyword): Promise<void> {
-    const keywordEntity = await this.databaseService.rtKeyword.findFirst({
+    const keywordEntity = await this.databaseService.rtKeyword.findUnique({
       where: {
         id: keyword.getKeywordId(),
       },
@@ -74,12 +76,15 @@ export class PrismaKeywordRepository implements KeywordRepository {
       data: {
         text: keyword.getKeywordText(),
         domainId: keyword.getDomainId(),
+        searchEngineId: keyword.getSearchEngineId(),
+        device: keyword.getDevice().value,
+        localizationId: keyword.getLocalizationId(),
       },
     });
   }
 
   private async create(keyword: Keyword) {
-    this.databaseService.rtKeyword.create({
+    await this.databaseService.rtKeyword.create({
       data: {
         id: keyword.getKeywordId(),
         text: keyword.getKeywordText(),
