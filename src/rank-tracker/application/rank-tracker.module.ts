@@ -32,6 +32,7 @@ import { SubscriptionDeactivatedEventHandler } from './event-handlers/subscripti
 import { DeleteDomainCommandHandler } from './command-handlers/delete-domain.command-handler';
 import { GetLocalizationsForSearchEngineQueryHandler } from './query-handlers/get-localizations-for-search-engine.query-handler';
 import { AddKeywordCommandHandler } from './command-handlers/add-keyword.command-handler';
+import { GetAllAvailableForUserDevicesQueryHandler } from './query-handlers/get-all-available-for-user-devices.query-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -69,6 +70,7 @@ import { AddKeywordCommandHandler } from './command-handlers/add-keyword.command
     DeleteDomainCommandHandler,
     GetLocalizationsForSearchEngineQueryHandler,
     AddKeywordCommandHandler,
+    GetAllAvailableForUserDevicesQueryHandler,
   ],
 })
 export class RankTrackerModule {}
