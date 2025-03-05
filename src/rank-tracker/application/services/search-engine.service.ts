@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetAllSearchEnginesQuery } from '../queries/get-all-search-engines.query';
+import { GetAllAvailableForUserSearchEnginesQuery } from '../queries/get-all-available-for-user-search-engines.query';
 import { SearchEnginesListItemDto } from '../dto/search-engines-list-item.dto';
 
 @Injectable()
 export class SearchEngineService {
   constructor(private readonly queryBus: QueryBus) {}
 
-  getAllSearchEngines(userId: string) {
+  getAllAvailableForUserSearchEngines(userId: string) {
     return this.queryBus.execute<
-      GetAllSearchEnginesQuery,
+      GetAllAvailableForUserSearchEnginesQuery,
       SearchEnginesListItemDto[]
-    >(new GetAllSearchEnginesQuery(userId));
+    >(new GetAllAvailableForUserSearchEnginesQuery(userId));
   }
 }

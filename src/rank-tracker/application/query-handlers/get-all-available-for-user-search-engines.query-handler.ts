@@ -1,14 +1,18 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetAllSearchEnginesQuery } from '../queries/get-all-search-engines.query';
+import { GetAllAvailableForUserSearchEnginesQuery } from '../queries/get-all-available-for-user-search-engines.query';
 import { SearchEnginesListItemDto } from '../dto/search-engines-list-item.dto';
 import { SearchEnginesListRepository } from '../ports/search-engines-list.repository';
 import { TestingModeRepository } from '../ports/testing-mode.repository';
 import { UserSubscriptionInfoRepository } from '../ports/user-subscription-info.repository';
 import { GOOGLE_ENGINE_KEY } from '../constants';
 
-@QueryHandler(GetAllSearchEnginesQuery)
-export class GetAllSearchEnginesQueryHandler
-  implements IQueryHandler<GetAllSearchEnginesQuery, SearchEnginesListItemDto[]>
+@QueryHandler(GetAllAvailableForUserSearchEnginesQuery)
+export class GetAllAvailableForUserSearchEnginesQueryHandler
+  implements
+    IQueryHandler<
+      GetAllAvailableForUserSearchEnginesQuery,
+      SearchEnginesListItemDto[]
+    >
 {
   constructor(
     private readonly searchEnginesListRepository: SearchEnginesListRepository,
@@ -17,7 +21,7 @@ export class GetAllSearchEnginesQueryHandler
   ) {}
 
   async execute(
-    query: GetAllSearchEnginesQuery,
+    query: GetAllAvailableForUserSearchEnginesQuery,
   ): Promise<SearchEnginesListItemDto[]> {
     const { userId } = query;
 

@@ -10,6 +10,6 @@ export class SearchEnginesController {
   @Get()
   @UseGuards(AuthGuard)
   getAllSearchEngines(@CurrentUserId() userId: string) {
-    return this.searchEngineService.getAllSearchEngines(userId);
+    return this.searchEngineService.getAllAvailableForUserSearchEngines(userId);
   }
 }

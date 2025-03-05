@@ -16,7 +16,7 @@ import { TestingModesController } from '../presenters/http/testing-modes.control
 import { KeywordService } from './services/keyword.service';
 import { DeleteKeywordCommandHandler } from './command-handlers/delete-keyword.command-handler';
 import { GetUserDomainsListQueryHandler } from './query-handlers/get-user-domains-list.query-handler';
-import { GetAllSearchEnginesQueryHandler } from './query-handlers/get-all-search-engines.query-handler';
+import { GetAllAvailableForUserSearchEnginesQueryHandler } from './query-handlers/get-all-available-for-user-search-engines.query-handler';
 import { SearchEngineService } from './services/search-engine.service';
 import { SearchEnginesController } from '../presenters/http/search-engines.controller';
 import { GetAllDevicesQueryHandler } from './query-handlers/get-all-devices.query-handler';
@@ -57,7 +57,7 @@ import { AddKeywordCommandHandler } from './command-handlers/add-keyword.command
     KeywordService,
     DeleteKeywordCommandHandler,
     GetUserDomainsListQueryHandler,
-    GetAllSearchEnginesQueryHandler,
+    GetAllAvailableForUserSearchEnginesQueryHandler,
     SearchEngineService,
     GetAllDevicesQueryHandler,
     DevicesService,
