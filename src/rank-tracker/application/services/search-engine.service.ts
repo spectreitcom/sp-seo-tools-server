@@ -7,10 +7,10 @@ import { SearchEnginesListItemDto } from '../dto/search-engines-list-item.dto';
 export class SearchEngineService {
   constructor(private readonly queryBus: QueryBus) {}
 
-  getAllSearchEngines() {
+  getAllSearchEngines(userId: string) {
     return this.queryBus.execute<
       GetAllSearchEnginesQuery,
       SearchEnginesListItemDto[]
-    >(new GetAllSearchEnginesQuery());
+    >(new GetAllSearchEnginesQuery(userId));
   }
 }

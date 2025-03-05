@@ -1,4 +1,8 @@
-import { DESKTOP_DEVICE, MOBILE_DEVICE, TABLET_DEVICE } from '../contants';
+import {
+  DESKTOP_DEVICE,
+  MOBILE_DEVICE,
+  TABLET_DEVICE,
+} from '../../application/constants';
 
 export class Device {
   constructor(public readonly value: string | null | undefined) {}

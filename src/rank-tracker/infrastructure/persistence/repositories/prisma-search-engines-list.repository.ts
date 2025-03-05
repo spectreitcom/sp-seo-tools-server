@@ -15,4 +15,17 @@ export class PrismaSearchEnginesListRepository
       (model) => new SearchEnginesListItemDto(model.id, model.engineName),
     );
   }
+
+  async findByEngineKey(
+    engineKey: string,
+  ): Promise<SearchEnginesListItemDto | null> {
+    const model = await this.databaseService.rtSearchEngine.findUnique({
+      where: {
+        engineKey,
+      },
+    });
+    return model
+      ? new SearchEnginesListItemDto(model.id, model.engineName)
+      : null;
+  }
 }

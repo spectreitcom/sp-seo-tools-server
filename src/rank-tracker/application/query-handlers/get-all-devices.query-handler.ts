@@ -1,10 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetAllDevicesQuery } from '../queries/get-all-devices.query';
-import {
-  DESKTOP_DEVICE,
-  MOBILE_DEVICE,
-  TABLET_DEVICE,
-} from '../../domain/contants';
+import { DESKTOP_DEVICE, MOBILE_DEVICE, TABLET_DEVICE } from '../constants';
 
 export type GetAllDevicesQueryResponse = { label: string; value: string }[];
 

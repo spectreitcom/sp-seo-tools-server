@@ -1,9 +1,5 @@
 import { IsNotEmpty, IsUUID, IsIn } from 'class-validator';
-import {
-  DESKTOP_DEVICE,
-  MOBILE_DEVICE,
-  TABLET_DEVICE,
-} from '../../domain/contants';
+import { DESKTOP_DEVICE, MOBILE_DEVICE, TABLET_DEVICE } from '../constants';
 
 export class AddKeywordDto {
   @IsNotEmpty()

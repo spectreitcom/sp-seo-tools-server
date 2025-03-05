@@ -1,7 +1,7 @@
 import { KeywordFactory } from '../keyword.factory';
 import { randomUUID } from 'crypto';
 import { Keyword } from '../../keyword';
-import { DESKTOP_DEVICE } from '../../contants';
+import { DESKTOP_DEVICE } from '../../../application/constants';
 
 describe('KeywordFactory', () => {
   describe('create', () => {

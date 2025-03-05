@@ -3,7 +3,7 @@ import {
   DESKTOP_DEVICE,
   MOBILE_DEVICE,
   TABLET_DEVICE,
-} from '../../domain/contants';
+} from '../../application/constants';
 
 describe('DeviceMapper', () => {
   describe('toName', () => {

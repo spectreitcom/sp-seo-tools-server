@@ -2,7 +2,7 @@ import {
   DESKTOP_DEVICE,
   MOBILE_DEVICE,
   TABLET_DEVICE,
-} from '../domain/contants';
+} from '../application/constants';
 
 export class DeviceMapper {
   static toName(device: string): string | null {

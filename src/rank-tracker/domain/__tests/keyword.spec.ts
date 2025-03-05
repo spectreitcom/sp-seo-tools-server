@@ -7,7 +7,7 @@ import {
 import { randomUUID } from 'crypto';
 import { AvailableKeywordsQuantity } from '../value-objects/available-keywords-quantity';
 import { Device } from '../value-objects/device';
-import { DESKTOP_DEVICE } from '../contants';
+import { DESKTOP_DEVICE } from '../../application/constants';
 
 const DOMAIN_ID = randomUUID();
 const KEYWORD_ID = randomUUID();

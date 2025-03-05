@@ -8,7 +8,7 @@ import {
   GOOGLE_ENGINE_KEY,
   YAHOO_ENGINE_KEY,
   YANDEX_ENGINE_KEY,
-} from '../constants';
+} from '../../../application/constants';
 import { NotFoundEngineKey } from '../exceptions';
 
 export class ScrapeStrategyFactory {

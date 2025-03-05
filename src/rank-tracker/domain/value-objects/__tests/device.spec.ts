@@ -1,5 +1,9 @@
 import { Device } from '../device';
-import { DESKTOP_DEVICE, MOBILE_DEVICE, TABLET_DEVICE } from '../../contants';
+import {
+  DESKTOP_DEVICE,
+  MOBILE_DEVICE,
+  TABLET_DEVICE,
+} from '../../../application/constants';
 
 describe('Device', () => {
   describe('isValid', () => {
