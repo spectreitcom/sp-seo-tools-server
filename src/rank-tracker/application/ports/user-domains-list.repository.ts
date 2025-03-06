@@ -12,4 +12,8 @@ export abstract class UserDomainsListRepository {
     searchText: string | null | undefined,
   ): Promise<number>;
   abstract countAllForUser(userId: string): Promise<number>;
+  abstract findById(
+    userId: string,
+    domainId: string,
+  ): Promise<UserDomainsListItemDto | null>;
 }

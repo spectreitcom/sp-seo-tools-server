@@ -78,6 +78,49 @@ export class PrismaUserKeywordsListRepository
     return results;
   }
 
+  async findById(
+    userId: string,
+    keywordId: string,
+  ): Promise<UserKeywordsListItemDto | null> {
+    const keyword = await this.databaseService.rtKeyword.findUnique({
+      where: {
+        id: keywordId,
+        domain: {
+          userId,
+        },
+      },
+      include: {
+        localization: true,
+        searchEngine: true,
+        domain: true,
+      },
+    });
+
+    if (!keyword) return null;
+
+    const domainPosition =
+      await this.databaseService.rtDomainPosition.findFirst({
+        where: {
+          keywordId: keyword.id,
+        },
+        orderBy: {
+          timestamp: 'desc',
+        },
+      });
+
+    return new UserKeywordsListItemDto(
+      keyword.id,
+      keyword.text,
+      domainPosition ? domainPosition.position : 0,
+      keyword.localization.countryCode,
+      keyword.searchEngine.engineName,
+      keyword.device,
+      keyword.domain.text,
+      keyword.localization.name,
+      DeviceMapper.toName(keyword.device),
+    );
+  }
+
   async countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,

@@ -46,6 +46,15 @@ export class KeywordsController {
     );
   }
 
+  @Get(':keyword')
+  @UseGuards(AuthGuard)
+  getUserKeyword(
+    @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
+    @CurrentUserId() userId: string,
+  ) {
+    return this.keywordService.getUserKeyword(keywordId, userId);
+  }
+
   @Delete(':keywordId')
   @UseGuards(AuthGuard)
   deleteKeyword(

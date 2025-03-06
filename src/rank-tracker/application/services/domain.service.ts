@@ -5,6 +5,8 @@ import { AddDomainCommand } from '../commands/add-domain.command';
 import { GetUserDomainsListQuery } from '../queries/get-user-domains-list.query';
 import { GetUserDomainsListQueryResponse } from '../query-handlers/get-user-domains-list.query-handler';
 import { DeleteDomainCommand } from '../commands/delete-domain.command';
+import { GetUserDomainQuery } from '../queries/get-user-domain.query';
+import { UserDomainsListItemDto } from '../dto/user-domains-list-item.dto';
 
 @Injectable()
 export class DomainService {
@@ -29,6 +31,12 @@ export class DomainService {
   deleteDomain(domainId: string, userId: string) {
     return this.commandBus.execute<DeleteDomainCommand, void>(
       new DeleteDomainCommand(domainId, userId),
+    );
+  }
+
+  getUserDomain(domainId: string, userId: string) {
+    return this.queryBus.execute<GetUserDomainQuery, UserDomainsListItemDto>(
+      new GetUserDomainQuery(domainId, userId),
     );
   }
 }

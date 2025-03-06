@@ -57,6 +57,28 @@ export class PrismaUserDomainsListRepository
     return results;
   }
 
+  async findById(
+    userId: string,
+    domainId: string,
+  ): Promise<UserDomainsListItemDto | null> {
+    const model = await this.databaseService.rtDomain.findUnique({
+      where: {
+        id: domainId,
+        userId,
+      },
+    });
+
+    if (!model) return null;
+
+    const keywordCount = await this.databaseService.rtKeyword.count({
+      where: {
+        domainId,
+      },
+    });
+
+    return new UserDomainsListItemDto(model.id, model.text, keywordCount);
+  }
+
   async countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,

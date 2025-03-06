@@ -37,6 +37,15 @@ export class DomainsController {
     );
   }
 
+  @Get(':domainId')
+  @UseGuards(AuthGuard)
+  getUserDomain(
+    @Param('domainId') domainId: string,
+    @CurrentUserId() userId: string,
+  ) {
+    return this.domainService.getUserDomain(domainId, userId);
+  }
+
   @Delete(':domainId')
   @UseGuards(AuthGuard)
   deleteDomain(

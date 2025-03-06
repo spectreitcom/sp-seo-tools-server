@@ -33,6 +33,8 @@ import { DeleteDomainCommandHandler } from './command-handlers/delete-domain.com
 import { GetLocalizationsForSearchEngineQueryHandler } from './query-handlers/get-localizations-for-search-engine.query-handler';
 import { AddKeywordCommandHandler } from './command-handlers/add-keyword.command-handler';
 import { GetAllAvailableForUserDevicesQueryHandler } from './query-handlers/get-all-available-for-user-devices.query-handler';
+import { GetUserKeywordQueryHandler } from './query-handlers/get-user-keyword.query-handler';
+import { GetUserDomainQueryHandler } from './query-handlers/get-user-domain.query-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -71,6 +73,8 @@ import { GetAllAvailableForUserDevicesQueryHandler } from './query-handlers/get-
     GetLocalizationsForSearchEngineQueryHandler,
     AddKeywordCommandHandler,
     GetAllAvailableForUserDevicesQueryHandler,
+    GetUserKeywordQueryHandler,
+    GetUserDomainQueryHandler,
   ],
 })
 export class RankTrackerModule {}

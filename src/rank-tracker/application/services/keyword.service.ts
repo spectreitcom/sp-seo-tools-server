@@ -5,6 +5,8 @@ import { GetUserKeywordsListQueryResponse } from '../query-handlers/get-user-key
 import { DeleteKeywordCommand } from '../commands/delete-keyword.command';
 import { AddKeywordDto } from '../dto/add-keyword.dto';
 import { AddKeywordCommand } from '../commands/add-keyword.command';
+import { GetUserKeywordQuery } from '../queries/get-user-keyword.query';
+import { UserKeywordsListItemDto } from '../dto/user-keywords-list-item.dto';
 
 @Injectable()
 export class KeywordService {
@@ -54,6 +56,12 @@ export class KeywordService {
   async delete(keywordId: string, userId: string) {
     return this.commandBus.execute<DeleteKeywordCommand, void>(
       new DeleteKeywordCommand(userId, keywordId),
+    );
+  }
+
+  async getUserKeyword(keywordId: string, userId: string) {
+    return this.queryBus.execute<GetUserKeywordQuery, UserKeywordsListItemDto>(
+      new GetUserKeywordQuery(userId, keywordId),
     );
   }
 }

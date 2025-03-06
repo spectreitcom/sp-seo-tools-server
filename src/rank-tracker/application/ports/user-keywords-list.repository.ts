@@ -20,4 +20,8 @@ export abstract class UserKeywordsListRepository {
     domainId: string | null | undefined,
   ): Promise<number>;
   abstract countAllForUser(userId: string): Promise<number>;
+  abstract findById(
+    userId: string,
+    keywordId: string,
+  ): Promise<UserKeywordsListItemDto | null>;
 }
