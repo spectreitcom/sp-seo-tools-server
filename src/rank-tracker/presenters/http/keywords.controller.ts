@@ -30,7 +30,6 @@ export class KeywordsController {
     @Query('page') page: number,
     @Query('searchText') searchText: string,
     @Query('localizationId') localizationId: string,
-    @Query('searchEngineId') searchEngineId: string,
     @Query('device') device: string,
     @Query('domainId') domainId: string,
     @CurrentUserId() userId: string,
@@ -40,7 +39,6 @@ export class KeywordsController {
       page && page > 0 ? page : 1,
       searchText,
       localizationId,
-      searchEngineId,
       device,
       domainId,
     );

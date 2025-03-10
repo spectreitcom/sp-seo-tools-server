@@ -47,7 +47,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
         if (response.organic && response.organic[i]) {
           results.push({
             url: response.organic[i].link,
-            position: i + 1,
+            position: response.organic[i].rank,
           });
         }
       }
@@ -77,10 +77,8 @@ export class AppGoogleScraperService implements GoogleScraperService {
         },
         {
           params: {
-            params: {
-              customer: this.customer,
-              zone: this.zone,
-            },
+            customer: this.customer,
+            zone: this.zone,
           },
           headers: {
             'Content-Type': 'application/json',

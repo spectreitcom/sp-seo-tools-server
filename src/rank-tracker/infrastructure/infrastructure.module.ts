@@ -13,10 +13,7 @@ import { PrismaDomainRepository } from './persistence/repositories/prisma-domain
 import { DatabaseModule } from '../../database/database.module';
 import { PositionCheckerProducer } from './queues/producers/position-checker.producer';
 import { PositionCheckerConsumer } from './queues/consumers/position-checker.consumer';
-import { SerpapiClient } from './serpapi/serpapi.client';
 import { HttpModule } from '@nestjs/axios';
-import { SearchEngineRepository } from '../application/ports/search-engine.repository';
-import { PrismaSearchEngineRepository } from './persistence/repositories/prisma-search-engine.repository';
 import { LocalizationRepository } from '../application/ports/localization.repository';
 import { PrismaLocalizationRepository } from './persistence/repositories/prisma-localization.repository';
 import { TestingModeRepository } from '../application/ports/testing-mode.repository';
@@ -33,10 +30,9 @@ import { UserKeywordsListRepository } from '../application/ports/user-keywords-l
 import { PrismaUserKeywordsListRepository } from './persistence/repositories/prisma-user-keywords-list.repository';
 import { UserDomainsListRepository } from '../application/ports/user-domains-list.repository';
 import { PrismaUserDomainsListRepository } from './persistence/repositories/prisma-user-domains-list.repository';
-import { SearchEnginesListRepository } from '../application/ports/search-engines-list.repository';
-import { PrismaSearchEnginesListRepository } from './persistence/repositories/prisma-search-engines-list.repository';
 import { LocalizationsCountryCodeRepository } from '../application/ports/localizations-country-code.repository';
 import { PrismaLocalizationsCountryCodeRepository } from './persistence/repositories/prisma-localizations-country-code.repository';
+import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
 
 @Module({
   imports: [
@@ -49,7 +45,7 @@ import { PrismaLocalizationsCountryCodeRepository } from './persistence/reposito
       },
     ),
     DatabaseModule,
-    HttpModule,
+    GoogleScraperModule,
   ],
   providers: [
     {
@@ -63,10 +59,6 @@ import { PrismaLocalizationsCountryCodeRepository } from './persistence/reposito
     {
       provide: PositionCheckerQueueService,
       useClass: NestPositionCheckerQueueService,
-    },
-    {
-      provide: SearchEngineRepository,
-      useClass: PrismaSearchEngineRepository,
     },
     {
       provide: LocalizationRepository,
@@ -97,16 +89,11 @@ import { PrismaLocalizationsCountryCodeRepository } from './persistence/reposito
       useClass: PrismaUserDomainsListRepository,
     },
     {
-      provide: SearchEnginesListRepository,
-      useClass: PrismaSearchEnginesListRepository,
-    },
-    {
       provide: LocalizationsCountryCodeRepository,
       useClass: PrismaLocalizationsCountryCodeRepository,
     },
     PositionCheckerProducer,
     PositionCheckerConsumer,
-    SerpapiClient,
     TestingModeCheckerProducer,
     TestingModeCheckerConsumer,
   ],
@@ -114,14 +101,12 @@ import { PrismaLocalizationsCountryCodeRepository } from './persistence/reposito
     KeywordRepository,
     PositionCheckerQueueService,
     DomainRepository,
-    SearchEngineRepository,
     LocalizationRepository,
     TestingModeRepository,
     TestingModeCheckerQueueService,
     UserSubscriptionInfoRepository,
     UserKeywordsListRepository,
     UserDomainsListRepository,
-    SearchEnginesListRepository,
     LocalizationsCountryCodeRepository,
   ],
 })

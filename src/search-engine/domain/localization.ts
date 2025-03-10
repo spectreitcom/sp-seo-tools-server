@@ -5,7 +5,6 @@ export class Localization extends AggregateRoot {
   constructor(
     public readonly localizationId: string,
     public readonly domainParam: string,
-    public readonly searchEngineId: string,
     public readonly countryCode: string,
     public readonly name: string,
   ) {
@@ -17,7 +16,6 @@ export class Localization extends AggregateRoot {
       new LocalizationCreatedEvent(
         this.localizationId,
         this.domainParam,
-        this.searchEngineId,
         this.countryCode,
         this.name,
       ),

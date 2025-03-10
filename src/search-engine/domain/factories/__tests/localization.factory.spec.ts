@@ -7,7 +7,6 @@ describe('LocalizationFactory', () => {
     it('should create Localization instance', () => {
       const localization = LocalizationFactory.create(
         'google.pl',
-        randomUUID(),
         'pl',
         'Poland',
       );

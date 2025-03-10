@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetAllLocalizationsCountryCodesQuery } from '../queries/get-all-localizations-country-codes.query';
 import { GetAllLocalizationsQueryResponse } from '../query-handlers/get-all-localizations-country-codes.query-handler';
-import { GetLocalizationsForSearchEngineQuery } from '../queries/get-localizations-for-search-engine.query';
-import { GetLocalizationsForSearchEngineQueryResponse } from '../query-handlers/get-localizations-for-search-engine.query-handler';
+import { GetLocalizationsQuery } from '../queries/get-localizations.query';
+import { GetLocalizationsQueryResponse } from '../query-handlers/get-localizations.query-handler';
 
 @Injectable()
 export class LocalizationsService {
@@ -16,10 +16,10 @@ export class LocalizationsService {
     >(new GetAllLocalizationsCountryCodesQuery());
   }
 
-  getLocalizationsForSearchEngine(searchEngineId: string) {
+  getLocalizations() {
     return this.queryBus.execute<
-      GetLocalizationsForSearchEngineQuery,
-      GetLocalizationsForSearchEngineQueryResponse
-    >(new GetLocalizationsForSearchEngineQuery(searchEngineId));
+      GetLocalizationsQuery,
+      GetLocalizationsQueryResponse
+    >(new GetLocalizationsQuery());
   }
 }

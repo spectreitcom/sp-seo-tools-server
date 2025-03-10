@@ -10,10 +10,6 @@ export class AddKeywordDto {
   readonly text: string;
 
   @IsNotEmpty()
-  @IsUUID()
-  readonly searchEngineId: string;
-
-  @IsNotEmpty()
   @IsIn([DESKTOP_DEVICE, TABLET_DEVICE, MOBILE_DEVICE])
   readonly device: string;
 

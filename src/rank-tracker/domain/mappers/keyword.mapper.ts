@@ -22,7 +22,6 @@ export class KeywordMapper {
     );
     const domainId = rtKeyword.domainId;
     const keywordText = rtKeyword.text;
-    const searchEngineId = rtKeyword.searchEngineId;
     const device = new Device(rtKeyword.device);
     const localizationId = rtKeyword.localizationId;
     const testingModeActive = rtTestingMode ? rtTestingMode.active : false;
@@ -33,7 +32,6 @@ export class KeywordMapper {
       keywordId,
       domainId,
       keywordText,
-      searchEngineId,
       device,
       localizationId,
       testingModeActive,

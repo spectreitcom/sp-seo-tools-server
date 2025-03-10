@@ -19,7 +19,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         where: { id: localization.localizationId },
         data: {
           countryCode: localization.countryCode,
-          searchEngineId: localization.searchEngineId,
           domainParam: localization.domainParam,
           seLocalizationId: localization.seLocalizationId,
           name: localization.name,
@@ -31,7 +30,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
     await this.databaseService.rtLocalization.create({
       data: {
         id: localization.localizationId,
-        searchEngineId: localization.searchEngineId,
         domainParam: localization.domainParam,
         countryCode: localization.countryCode,
         seLocalizationId: localization.seLocalizationId,
@@ -53,12 +51,8 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
     return LocalizationMapper.toDomain(localizationModel);
   }
 
-  async findBySearchEngine(searchEngineId: string): Promise<Localization[]> {
-    const models = await this.databaseService.rtLocalization.findMany({
-      where: {
-        searchEngineId,
-      },
-    });
+  async findAll(): Promise<Localization[]> {
+    const models = await this.databaseService.rtLocalization.findMany();
     return models.map((model) => LocalizationMapper.toDomain(model));
   }
 }

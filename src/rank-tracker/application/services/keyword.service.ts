@@ -21,7 +21,6 @@ export class KeywordService {
         payload.domainId,
         payload.text,
         userId,
-        payload.searchEngineId,
         payload.device,
         payload.localizationId,
       ),
@@ -33,7 +32,6 @@ export class KeywordService {
     page: number,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
-    searchEngineId: string | null | undefined,
     device: string | null | undefined,
     domainId: string | null | undefined,
   ) {
@@ -44,7 +42,6 @@ export class KeywordService {
       new GetUserKeywordsListQuery(
         searchText,
         localizationId,
-        searchEngineId,
         device,
         domainId,
         userId,

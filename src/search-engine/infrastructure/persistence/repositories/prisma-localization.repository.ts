@@ -21,7 +21,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         data: {
           countryCode: localization.countryCode,
           domainParam: localization.domainParam,
-          searchEngineId: localization.searchEngineId,
           name: localization.name,
         },
       });
@@ -32,22 +31,17 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
       data: {
         id: localization.localizationId,
         countryCode: localization.countryCode,
-        searchEngineId: localization.searchEngineId,
         domainParam: localization.domainParam,
         name: localization.name,
       },
     });
   }
 
-  async localizationExistsForSearchEngine(
-    searchEngineId: string,
-    countryCode: string,
-  ): Promise<boolean> {
+  async localizationExists(countryCode: string): Promise<boolean> {
     const localizationModel =
       await this.databaseService.seLocalization.findFirst({
         where: {
-          searchEngineId: searchEngineId,
-          countryCode: countryCode,
+          countryCode,
         },
       });
     return !!localizationModel;

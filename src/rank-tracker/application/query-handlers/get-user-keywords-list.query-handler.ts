@@ -21,15 +21,8 @@ export class GetUserKeywordsListQueryHandler
   async execute(
     query: GetUserKeywordsListQuery,
   ): Promise<GetUserKeywordsListQueryResponse> {
-    const {
-      domainId,
-      page,
-      localizationId,
-      searchEngineId,
-      searchText,
-      device,
-      userId,
-    } = query;
+    const { domainId, page, localizationId, searchText, device, userId } =
+      query;
     const _device = new Device(device);
 
     if (device && !_device.isValid()) {
@@ -37,9 +30,6 @@ export class GetUserKeywordsListQueryHandler
     }
 
     const deviceFilterValue = device ? _device.value : undefined;
-    const searchEngineIdFilterValue = searchEngineId
-      ? searchEngineId
-      : undefined;
     const domainIdFilterValue = domainId ? domainId : undefined;
 
     const take = 30;
@@ -52,7 +42,6 @@ export class GetUserKeywordsListQueryHandler
       skip,
       searchText,
       localizationId,
-      searchEngineIdFilterValue,
       deviceFilterValue,
       domainIdFilterValue,
     );
@@ -62,7 +51,6 @@ export class GetUserKeywordsListQueryHandler
         userId,
         searchText,
         localizationId,
-        searchEngineIdFilterValue,
         deviceFilterValue,
         domainIdFilterValue,
       );

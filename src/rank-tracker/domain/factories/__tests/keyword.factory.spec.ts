@@ -10,7 +10,6 @@ describe('KeywordFactory', () => {
         true,
         10,
         100,
-        randomUUID(),
         'some keyword',
         randomUUID(),
         DESKTOP_DEVICE,

@@ -7,7 +7,6 @@ export abstract class UserKeywordsListRepository {
     skip: number,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
-    searchEngineId: string | null | undefined,
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<UserKeywordsListItemDto[]>;
@@ -15,7 +14,6 @@ export abstract class UserKeywordsListRepository {
     userId: string,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
-    searchEngineId: string | null | undefined,
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<number>;

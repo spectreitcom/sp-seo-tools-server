@@ -1,4 +1,4 @@
-import { SearchResult } from '../serpapi/types';
+import { SearchResult } from '../types';
 
 export class PositionChecker {
   static getHighestPosition(searchResults: SearchResult[], domain: string) {

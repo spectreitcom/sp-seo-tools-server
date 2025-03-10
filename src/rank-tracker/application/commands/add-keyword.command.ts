@@ -5,7 +5,6 @@ export class AddKeywordCommand implements ICommand {
     public readonly domainId: string,
     public readonly text: string,
     public readonly userId: string,
-    public readonly searchEngineId: string,
     public readonly device: string,
     public readonly localizationId: string,
   ) {}

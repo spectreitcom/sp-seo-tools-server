@@ -24,8 +24,7 @@ export class AddKeywordCommandHandler
   ) {}
 
   async execute(command: AddKeywordCommand): Promise<void> {
-    const { text, domainId, userId, searchEngineId, device, localizationId } =
-      command;
+    const { text, domainId, userId, device, localizationId } = command;
 
     const userSubscriptionInfo =
       await this.userSubscriptionInfoRepository.findByUser(userId);
@@ -50,7 +49,6 @@ export class AddKeywordCommandHandler
         maxKeywordsQty,
         domainId,
         text,
-        searchEngineId,
         device,
         localizationId,
         testingMode ? testingMode.getActive() : false,

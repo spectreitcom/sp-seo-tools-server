@@ -17,13 +17,10 @@ export class AddLocalizationCommandHandler
   ) {}
 
   async execute(command: AddLocalizationCommand): Promise<void> {
-    const { searchEngineId, domainParam, countryCode, name } = command;
+    const { domainParam, countryCode, name } = command;
 
     const localizationExistsForSearchEngineExists =
-      await this.localizationRepository.localizationExistsForSearchEngine(
-        searchEngineId,
-        countryCode,
-      );
+      await this.localizationRepository.localizationExists(countryCode);
 
     if (localizationExistsForSearchEngineExists) {
       throw new BadRequestException('Localization already exists');
@@ -32,7 +29,6 @@ export class AddLocalizationCommandHandler
     try {
       const localization = LocalizationFactory.create(
         domainParam,
-        searchEngineId,
         countryCode,
         name,
       );

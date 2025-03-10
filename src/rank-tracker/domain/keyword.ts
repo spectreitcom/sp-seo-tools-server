@@ -15,7 +15,6 @@ export class Keyword extends AggregateRoot {
     private readonly keywordId: string,
     private readonly domainId: string,
     private readonly keywordText: string,
-    private readonly searchEngineId: string,
     private readonly device: Device,
     private readonly localizationId: string,
     private readonly testingModeActive: boolean,
@@ -48,10 +47,6 @@ export class Keyword extends AggregateRoot {
 
   getDomainId() {
     return this.domainId;
-  }
-
-  getSearchEngineId() {
-    return this.searchEngineId;
   }
 
   getDevice() {

@@ -57,8 +57,6 @@ model RtKeyword {
   domain          RtDomain           @relation(fields: [domainId], references: [id], onDelete: Cascade)
   domainPositions RtDomainPosition[]
   device          String?
-  searchEngineId  String
-  searchEngine    RtSearchEngine     @relation(fields: [searchEngineId], references: [id])
   localizationId  String
   localization    RtLocalization     @relation(fields: [localizationId], references: [id])
 }
@@ -79,26 +77,13 @@ model RtUserSubscriptionInfo {
   maxSearchedPages Int
 }
 
-model RtSearchEngine {
-  id               String           @id @default(uuid())
-  engineName       String
-  seSearchEngineId String           @unique
-  engineKey        String           @unique
-  keywords         RtKeyword[]
-  localizations    RtLocalization[]
-}
-
 model RtLocalization {
-  id               String         @id @default(uuid())
+  id               String      @id @default(uuid())
   domainParam      String
-  searchEngineId   String
-  searchEngine     RtSearchEngine @relation(fields: [searchEngineId], references: [id])
   keywords         RtKeyword[]
-  countryCode      String
+  countryCode      String      @unique
   seLocalizationId String
   name             String
-
-  @@unique([searchEngineId, countryCode])
 }
 
 model RtTestingMode {
@@ -136,26 +121,9 @@ model RankTrackerUserSubscription {
 
 // Search Engines
 
-model SeSearchEngine {
-  id            String           @id @default(uuid())
-  name          String
-  engineKey     ESearchEngine    @unique
-  localizations SeLocalization[]
-}
-
 model SeLocalization {
-  id             String         @id @default(uuid())
-  domainParam    String
-  searchEngineId String
-  searchEngine   SeSearchEngine @relation(fields: [searchEngineId], references: [id])
-  countryCode    String
-  name           String
-
-  @@unique([searchEngineId, countryCode])
-}
-
-enum ESearchEngine {
-  GOOGLE
-  YAHOO
-  YANDEX
+  id          String @id @default(uuid())
+  domainParam String
+  countryCode String @unique
+  name        String
 }

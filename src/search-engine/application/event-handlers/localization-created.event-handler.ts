@@ -17,7 +17,6 @@ export class LocalizationCreatedEventHandler
       new LocalizationCreatedIntegrationEvent(
         event.localizationId,
         event.domainParam,
-        event.searchEngineId,
         event.countryCode,
         event.name,
       ),

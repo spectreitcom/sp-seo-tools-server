@@ -11,7 +11,6 @@ import { DESKTOP_DEVICE } from '../../application/constants';
 
 const DOMAIN_ID = randomUUID();
 const KEYWORD_ID = randomUUID();
-const SEARCH_ENGINE_ID = randomUUID();
 const LOCALIZATION_ID = randomUUID();
 
 describe('Keyword', () => {
@@ -24,7 +23,6 @@ describe('Keyword', () => {
       KEYWORD_ID,
       DOMAIN_ID,
       keywordValue,
-      SEARCH_ENGINE_ID,
       device,
       LOCALIZATION_ID,
       false,
@@ -34,7 +32,6 @@ describe('Keyword', () => {
 
     expect(keyword.getKeywordText() === keywordValue).toBeTruthy();
     expect(keyword.getDevice().equals(device)).toBeTruthy();
-    expect(keyword.getSearchEngineId() === SEARCH_ENGINE_ID).toBeTruthy();
   });
 
   it('should add the new keyword when subscription is inactive and testing mode is active', () => {
@@ -46,7 +43,6 @@ describe('Keyword', () => {
       KEYWORD_ID,
       DOMAIN_ID,
       keywordValue,
-      SEARCH_ENGINE_ID,
       device,
       LOCALIZATION_ID,
       true,
@@ -56,7 +52,6 @@ describe('Keyword', () => {
 
     expect(keyword.getKeywordText() === keywordValue).toBeTruthy();
     expect(keyword.getDevice().equals(device)).toBeTruthy();
-    expect(keyword.getSearchEngineId() === SEARCH_ENGINE_ID).toBeTruthy();
   });
 
   it('should not add the new keyword when subscription is inactive and testing mode is inactive', () => {
@@ -67,7 +62,6 @@ describe('Keyword', () => {
       KEYWORD_ID,
       DOMAIN_ID,
       'test',
-      SEARCH_ENGINE_ID,
       device,
       LOCALIZATION_ID,
       false,
@@ -83,7 +77,6 @@ describe('Keyword', () => {
       KEYWORD_ID,
       DOMAIN_ID,
       'test',
-      SEARCH_ENGINE_ID,
       device,
       LOCALIZATION_ID,
       false,
@@ -101,7 +94,6 @@ describe('Keyword', () => {
           KEYWORD_ID,
           DOMAIN_ID,
           'test',
-          SEARCH_ENGINE_ID,
           device,
           LOCALIZATION_ID,
           false,

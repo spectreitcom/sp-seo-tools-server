@@ -4,7 +4,6 @@ export class UserKeywordsListItemDto {
     public readonly keywordText: string,
     public readonly lastIndexedPosition: number,
     public readonly localizationCountryCode: string,
-    public readonly searchEngineName: string,
     public readonly device: string,
     public readonly domain: string,
     public readonly localizationCountryName: string,

@@ -6,7 +6,6 @@ export class LocalizationMapper {
     return new Localization(
       rtLocalization.id,
       rtLocalization.domainParam,
-      rtLocalization.searchEngineId,
       rtLocalization.seLocalizationId,
       rtLocalization.countryCode,
       rtLocalization.name,

@@ -4,7 +4,6 @@ import { randomUUID } from 'crypto';
 export class LocalizationFactory {
   static create(
     domainParam: string,
-    searchEngineId: string,
     seLocalizationId: string,
     countryCode: string,
     name: string,
@@ -12,7 +11,6 @@ export class LocalizationFactory {
     return new Localization(
       randomUUID(),
       domainParam,
-      searchEngineId,
       seLocalizationId,
       countryCode,
       name,

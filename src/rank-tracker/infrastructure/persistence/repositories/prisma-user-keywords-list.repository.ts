@@ -16,7 +16,6 @@ export class PrismaUserKeywordsListRepository
     skip: number,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
-    searchEngineId: string | null | undefined,
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<UserKeywordsListItemDto[]> {
@@ -33,14 +32,12 @@ export class PrismaUserKeywordsListRepository
             },
             device,
             localizationId,
-            searchEngineId,
             domainId,
           },
         ],
       },
       include: {
         localization: true,
-        searchEngine: true,
         domain: true,
       },
       take,
@@ -66,7 +63,6 @@ export class PrismaUserKeywordsListRepository
           model.text,
           domainPosition ? domainPosition.position : 0,
           model.localization.countryCode,
-          model.searchEngine.engineName,
           model.device,
           model.domain.text,
           model.localization.name,
@@ -91,7 +87,6 @@ export class PrismaUserKeywordsListRepository
       },
       include: {
         localization: true,
-        searchEngine: true,
         domain: true,
       },
     });
@@ -113,7 +108,6 @@ export class PrismaUserKeywordsListRepository
       keyword.text,
       domainPosition ? domainPosition.position : 0,
       keyword.localization.countryCode,
-      keyword.searchEngine.engineName,
       keyword.device,
       keyword.domain.text,
       keyword.localization.name,
@@ -125,7 +119,6 @@ export class PrismaUserKeywordsListRepository
     userId: string,
     searchText: string | null | undefined,
     localizationId: string | null | undefined,
-    searchEngineId: string | null | undefined,
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<number> {
@@ -142,7 +135,6 @@ export class PrismaUserKeywordsListRepository
             },
             device,
             localizationId,
-            searchEngineId,
             domainId,
           },
         ],

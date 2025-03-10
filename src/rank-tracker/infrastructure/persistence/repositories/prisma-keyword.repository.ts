@@ -76,7 +76,6 @@ export class PrismaKeywordRepository implements KeywordRepository {
       data: {
         text: keyword.getKeywordText(),
         domainId: keyword.getDomainId(),
-        searchEngineId: keyword.getSearchEngineId(),
         device: keyword.getDevice().value,
         localizationId: keyword.getLocalizationId(),
       },
@@ -89,7 +88,6 @@ export class PrismaKeywordRepository implements KeywordRepository {
         id: keyword.getKeywordId(),
         text: keyword.getKeywordText(),
         domainId: keyword.getDomainId(),
-        searchEngineId: keyword.getSearchEngineId(),
         device: keyword.getDevice().value,
         localizationId: keyword.getLocalizationId(),
       },

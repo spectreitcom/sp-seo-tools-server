@@ -1,5 +1,5 @@
-import { SearchResult } from '../../serpapi/types';
 import { PositionChecker } from '../position-checker';
+import { SearchResult } from '../../types';
 
 const SEARCH_RESULTS: SearchResult[] = [
   {
