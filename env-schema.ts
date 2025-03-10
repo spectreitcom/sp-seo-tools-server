@@ -23,4 +23,8 @@ export default Joi.object({
   STRIPE_RANK_TRACKER_SUCCESS_URL: Joi.string().required(),
   STRIPE_RANK_TRACKER_CANCEL_URL: Joi.string().required(),
   RANK_TRACKER_DASHBOARD: Joi.string().required(),
+  BRIGHT_DATA_TOKEN: Joi.string().required(),
+  BRIGHT_DATA_BASE_URL: Joi.string().required(),
+  BRIGHT_DATA_CUSTOMER: Joi.string().required(),
+  BRIGHT_DATA_ZONE: Joi.string().required(),
 });
