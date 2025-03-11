@@ -46,6 +46,12 @@ export class KeywordsController {
     );
   }
 
+  @Get('available-quantity')
+  @UseGuards(AuthGuard)
+  getAvailableKeywordsQuantity(@CurrentUserId() userId: string) {
+    return this.keywordService.getAvailableKeywordsQuantity(userId);
+  }
+
   @Get(':keyword')
   @UseGuards(AuthGuard)
   getUserKeyword(

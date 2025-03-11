@@ -31,6 +31,7 @@ import { AddKeywordCommandHandler } from './command-handlers/add-keyword.command
 import { GetAllAvailableForUserDevicesQueryHandler } from './query-handlers/get-all-available-for-user-devices.query-handler';
 import { GetUserKeywordQueryHandler } from './query-handlers/get-user-keyword.query-handler';
 import { GetUserDomainQueryHandler } from './query-handlers/get-user-domain.query-handler';
+import { GetAvailableKeywordsQuantityQueryHandler } from './query-handlers/get-available-keywords-quantity.query-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -67,6 +68,7 @@ import { GetUserDomainQueryHandler } from './query-handlers/get-user-domain.quer
     GetAllAvailableForUserDevicesQueryHandler,
     GetUserKeywordQueryHandler,
     GetUserDomainQueryHandler,
+    GetAvailableKeywordsQuantityQueryHandler,
   ],
 })
 export class RankTrackerModule {}

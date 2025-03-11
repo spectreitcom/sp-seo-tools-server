@@ -7,6 +7,8 @@ import { AddKeywordDto } from '../dto/add-keyword.dto';
 import { AddKeywordCommand } from '../commands/add-keyword.command';
 import { GetUserKeywordQuery } from '../queries/get-user-keyword.query';
 import { UserKeywordsListItemDto } from '../dto/user-keywords-list-item.dto';
+import { GetAvailableKeywordsQuantityQuery } from '../queries/get-available-keywords-quantity.query';
+import { AvailableKeywordsQuantityDto } from '../dto/available-keywords-quantity.dto';
 
 @Injectable()
 export class KeywordService {
@@ -62,5 +64,12 @@ export class KeywordService {
     return this.queryBus.execute<GetUserKeywordQuery, UserKeywordsListItemDto>(
       new GetUserKeywordQuery(userId, keywordId),
     );
+  }
+
+  async getAvailableKeywordsQuantity(userId: string) {
+    return this.queryBus.execute<
+      GetAvailableKeywordsQuantityQuery,
+      AvailableKeywordsQuantityDto
+    >(new GetAvailableKeywordsQuantityQuery(userId));
   }
 }
