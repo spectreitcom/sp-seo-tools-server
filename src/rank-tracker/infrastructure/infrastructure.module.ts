@@ -13,7 +13,6 @@ import { PrismaDomainRepository } from './persistence/repositories/prisma-domain
 import { DatabaseModule } from '../../database/database.module';
 import { PositionCheckerProducer } from './queues/producers/position-checker.producer';
 import { PositionCheckerConsumer } from './queues/consumers/position-checker.consumer';
-import { HttpModule } from '@nestjs/axios';
 import { LocalizationRepository } from '../application/ports/localization.repository';
 import { PrismaLocalizationRepository } from './persistence/repositories/prisma-localization.repository';
 import { TestingModeRepository } from '../application/ports/testing-mode.repository';

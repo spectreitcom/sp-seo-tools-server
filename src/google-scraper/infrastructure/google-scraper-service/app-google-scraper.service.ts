@@ -10,6 +10,8 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { sleep } from '../../../shared/utils';
 
+const MAX_ITER_COUNT = 100;
+
 @Injectable()
 export class AppGoogleScraperService implements GoogleScraperService {
   private readonly token: string;
@@ -38,19 +40,29 @@ export class AppGoogleScraperService implements GoogleScraperService {
         resultsNumber,
         query,
       );
+
       await sleep(5 * 1000);
-      const response = await this.getData(response_id);
+
+      let response = await this.getData(response_id);
+      let counter = 0;
+
+      while (response.status === 202 && counter < MAX_ITER_COUNT) {
+        await sleep(5 * 1000);
+        response = await this.getData(response_id);
+        counter++;
+      }
 
       const results: SearchResult[] = [];
 
       for (let i = 0; i < resultsNumber; i++) {
-        if (response.organic && response.organic[i]) {
+        if (response.data.organic && response.data.organic[i]) {
           results.push({
-            url: response.organic[i].link,
-            position: response.organic[i].rank,
+            url: response.data.organic[i].link,
+            position: response.data.organic[i].rank,
           });
         }
       }
+
       return results;
     } catch (e) {
       throw e;
@@ -92,7 +104,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
   }
 
   private async getData(responseId: string) {
-    const response = await firstValueFrom(
+    return await firstValueFrom(
       this.http.get<GetDataResponse>(`${this.baseUrl}/serp/get_result`, {
         params: {
           customer: this.customer,
@@ -105,6 +117,5 @@ export class AppGoogleScraperService implements GoogleScraperService {
         },
       }),
     );
-    return response.data;
   }
 }
