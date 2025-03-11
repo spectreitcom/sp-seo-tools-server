@@ -19,9 +19,8 @@ export class GetUserDomainsListQueryHandler
   async execute(
     query: GetUserDomainsListQuery,
   ): Promise<GetUserDomainsListQueryResponse> {
-    const { searchText, page, userId } = query;
+    const { searchText, page, userId, take } = query;
 
-    const take = 30;
     const skip = take * (page - 1);
 
     const data = await this.userDomainsListRepository.findAll(

@@ -28,12 +28,14 @@ export class DomainsController {
   getUserDomainsList(
     @Query('page') page: number,
     @Query('searchText') searchText: string,
+    @Query('take') take: string,
     @CurrentUserId() userId: string,
   ) {
     return this.domainService.getUserDomainsList(
       userId,
       page && page > 0 ? page : 1,
       searchText,
+      +take ? +take : 30,
     );
   }
 

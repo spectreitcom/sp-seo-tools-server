@@ -21,11 +21,16 @@ export class DomainService {
     );
   }
 
-  getUserDomainsList(userId: string, page: number, searchText: string) {
+  getUserDomainsList(
+    userId: string,
+    page: number,
+    searchText: string,
+    take: number,
+  ) {
     return this.queryBus.execute<
       GetUserDomainsListQuery,
       GetUserDomainsListQueryResponse
-    >(new GetUserDomainsListQuery(page, searchText, userId));
+    >(new GetUserDomainsListQuery(page, searchText, userId, take));
   }
 
   deleteDomain(domainId: string, userId: string) {

@@ -32,9 +32,6 @@ export class GetUserKeywordsListQueryHandler
     const deviceFilterValue = device ? _device.value : undefined;
     const domainIdFilterValue = domainId ? domainId : undefined;
 
-    // todo;
-    // const take = 30;
-
     const skip = (page - 1) * take;
 
     const data = await this.userKeywordsListRepository.findAllUserKeywords(
