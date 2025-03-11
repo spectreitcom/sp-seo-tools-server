@@ -42,6 +42,9 @@ export class PrismaUserKeywordsListRepository
       },
       take,
       skip,
+      orderBy: {
+        timestamp: 'desc',
+      },
     });
 
     const results: UserKeywordsListItemDto[] = [];

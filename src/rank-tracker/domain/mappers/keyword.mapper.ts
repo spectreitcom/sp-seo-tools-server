@@ -35,6 +35,7 @@ export class KeywordMapper {
       device,
       localizationId,
       testingModeActive,
+      rtKeyword.timestamp,
     );
   }
 }

@@ -90,6 +90,7 @@ export class PrismaKeywordRepository implements KeywordRepository {
         domainId: keyword.getDomainId(),
         device: keyword.getDevice().value,
         localizationId: keyword.getLocalizationId(),
+        timestamp: keyword.getTimestamp(),
       },
     });
   }

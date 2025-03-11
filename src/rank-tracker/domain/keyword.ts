@@ -18,6 +18,7 @@ export class Keyword extends AggregateRoot {
     private readonly device: Device,
     private readonly localizationId: string,
     private readonly testingModeActive: boolean,
+    private readonly timestamp: number,
   ) {
     super();
     if (!this.device.isValid()) {
@@ -55,5 +56,9 @@ export class Keyword extends AggregateRoot {
 
   getLocalizationId() {
     return this.localizationId;
+  }
+
+  getTimestamp() {
+    return this.timestamp;
   }
 }

@@ -59,6 +59,7 @@ model RtKeyword {
   device          String?
   localizationId  String
   localization    RtLocalization     @relation(fields: [localizationId], references: [id])
+  timestamp       Int
 }
 
 model RtDomainPosition {

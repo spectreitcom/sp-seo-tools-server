@@ -2,6 +2,7 @@ import { Keyword } from '../keyword';
 import { randomUUID } from 'crypto';
 import { AvailableKeywordsQuantity } from '../value-objects/available-keywords-quantity';
 import { Device } from '../value-objects/device';
+import * as moment from 'moment';
 
 export class KeywordFactory {
   static create(
@@ -27,6 +28,7 @@ export class KeywordFactory {
       new Device(device),
       localizationId,
       testingModeActive,
+      moment().unix(),
     );
   }
 }
