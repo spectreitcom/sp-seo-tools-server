@@ -1,7 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { DevicesService } from '../../application/services/devices.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
-import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 
 @Controller('rank-tracker/devices')
 export class DevicesController {
@@ -9,8 +8,8 @@ export class DevicesController {
 
   @Get()
   @UseGuards(AuthGuard)
-  getAllAvailableForUserDevices(@CurrentUserId() userId: string) {
-    return this.devicesService.getAllAvailableForUserDevices(userId);
+  getAllAvailableForUserDevices() {
+    return this.devicesService.getAllAvailableForUserDevices();
   }
 
   @Get('all')

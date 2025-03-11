@@ -1,6 +1,5 @@
 import { LocalizationFactory } from '../localization.factory';
 import { Localization } from '../../localization';
-import { randomUUID } from 'crypto';
 
 describe('LocalizationFactory', () => {
   describe('create', () => {

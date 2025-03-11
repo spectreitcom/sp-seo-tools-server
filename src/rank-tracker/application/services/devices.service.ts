@@ -16,10 +16,10 @@ export class DevicesService {
     >(new GetAllDevicesQuery());
   }
 
-  getAllAvailableForUserDevices(userId: string) {
+  getAllAvailableForUserDevices() {
     return this.queryBus.execute<
       GetAllAvailableForUserDevicesQuery,
       GetAllAvailableForUserDevicesQueryResponse
-    >(new GetAllAvailableForUserDevicesQuery(userId));
+    >(new GetAllAvailableForUserDevicesQuery());
   }
 }
