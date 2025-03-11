@@ -34,6 +34,7 @@ export class KeywordService {
     localizationId: string | null | undefined,
     device: string | null | undefined,
     domainId: string | null | undefined,
+    take: number,
   ) {
     return this.queryBus.execute<
       GetUserKeywordsListQuery,
@@ -46,6 +47,7 @@ export class KeywordService {
         domainId,
         userId,
         page,
+        take,
       ),
     );
   }

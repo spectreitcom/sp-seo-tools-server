@@ -8,5 +8,6 @@ export class GetUserKeywordsListQuery implements IQuery {
     public readonly domainId: string | null | undefined,
     public readonly userId: string,
     public readonly page: number,
+    public readonly take: number,
   ) {}
 }

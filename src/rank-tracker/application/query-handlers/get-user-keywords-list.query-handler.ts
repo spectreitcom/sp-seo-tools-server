@@ -21,7 +21,7 @@ export class GetUserKeywordsListQueryHandler
   async execute(
     query: GetUserKeywordsListQuery,
   ): Promise<GetUserKeywordsListQueryResponse> {
-    const { domainId, page, localizationId, searchText, device, userId } =
+    const { domainId, page, localizationId, searchText, device, userId, take } =
       query;
     const _device = new Device(device);
 
@@ -32,7 +32,8 @@ export class GetUserKeywordsListQueryHandler
     const deviceFilterValue = device ? _device.value : undefined;
     const domainIdFilterValue = domainId ? domainId : undefined;
 
-    const take = 30;
+    // todo;
+    // const take = 30;
 
     const skip = (page - 1) * take;
 
