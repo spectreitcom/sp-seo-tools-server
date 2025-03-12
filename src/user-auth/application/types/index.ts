@@ -1,5 +1,6 @@
-export type CommandResponse = {
+export type GoogleAuthResponse = {
   accessToken: string;
+  refreshToken: string;
 };
 
 export type GoogleAuthenticateResponse = {
@@ -11,4 +12,5 @@ export type GoogleAuthenticateResponse = {
 export type TokenPayload = {
   sub: string;
   email: string;
+  tokenId?: string;
 };

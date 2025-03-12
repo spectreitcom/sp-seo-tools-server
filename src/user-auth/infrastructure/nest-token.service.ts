@@ -13,6 +13,7 @@ export class NestTokenService implements TokenService {
       email,
     } as TokenPayload);
   }
+
   async verify(token: string): Promise<TokenPayload | null> {
     try {
       // returning the result of the verification directly from verifyAsync doesnt work properly
@@ -22,5 +23,22 @@ export class NestTokenService implements TokenService {
     } catch (_) {
       return null;
     }
+  }
+
+  signRefreshToken(
+    userId: string,
+    email: string,
+    tokenId: string,
+  ): Promise<string> {
+    return this.jwtService.signAsync(
+      {
+        sub: userId,
+        email,
+        tokenId,
+      } as TokenPayload,
+      {
+        expiresIn: 60 * 60 * 24,
+      },
+    );
   }
 }

@@ -5,6 +5,9 @@ export default Joi.object({
     .valid('development', 'production')
     .default('development')
     .required(),
+  REDIS_HOST: Joi.string().required(),
+  REDIS_PORT: Joi.number().default(6379).required(),
+  REDIS_URL: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
   ADMIN_JWT_SECRET: Joi.string().required(),
   ADMIN_JWT_TOKEN_AUDIENCE: Joi.string().required(),

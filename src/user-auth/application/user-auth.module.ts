@@ -5,6 +5,7 @@ import { UserAuthService } from './services/user-auth.service';
 import { UserAuthController } from '../presenters/http/user-auth.controller';
 import { GoogleAuthenticateCommandHandler } from './command-handlers/google-authenticate.command-handler';
 import { GetCurrentUserQueryHandler } from './query-handlers/get-current-user.query-handler';
+import { RefreshTokenCommandHandler } from './command-handlers/refresh-token.command-handler';
 
 @Module({
   imports: [InfrastructureModule],
@@ -14,6 +15,7 @@ import { GetCurrentUserQueryHandler } from './query-handlers/get-current-user.qu
     UserAuthService,
     GoogleAuthenticateCommandHandler,
     GetCurrentUserQueryHandler,
+    RefreshTokenCommandHandler,
   ],
   exports: [UserAuthFacade],
 })

@@ -12,6 +12,8 @@ import { RequestService } from '../application/ports/request.service';
 import { NestRequestService } from './nest-request.service';
 import { AccessService } from '../application/ports/access.service';
 import { NestAccessService } from './nest-access.service';
+import { RefreshTokenIdsStorageStorage } from '../application/ports/refresh-token-ids-storage.storage';
+import { AppRefreshTokenIdsStorage } from './app-refresh-token-ids-storage.storage';
 
 @Module({
   imports: [
@@ -51,6 +53,10 @@ import { NestAccessService } from './nest-access.service';
       provide: AccessService,
       useClass: NestAccessService,
     },
+    {
+      provide: RefreshTokenIdsStorageStorage,
+      useClass: AppRefreshTokenIdsStorage,
+    },
   ],
   exports: [
     GoogleAuthenticationService,
@@ -58,6 +64,7 @@ import { NestAccessService } from './nest-access.service';
     TokenService,
     RequestService,
     AccessService,
+    RefreshTokenIdsStorageStorage,
   ],
 })
 export class InfrastructureModule {}
