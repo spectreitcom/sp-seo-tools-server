@@ -23,16 +23,7 @@ export class RefreshTokenCommandHandler
       const { sub, tokenId } = await this.tokenService.verify(token);
       const user = await this.getUser(sub);
 
-      const isValid = await this.refreshTokenIdsStorageStorage.validate(
-        user.id,
-        tokenId,
-      );
-
-      if (isValid) {
-        await this.refreshTokenIdsStorageStorage.invalidate(user.id);
-      } else {
-        throw new UnauthorizedException();
-      }
+      await this.validateToken(user.id, tokenId);
 
       const refreshTokenId = randomUUID();
 
@@ -60,5 +51,18 @@ export class RefreshTokenCommandHandler
       throw new UnauthorizedException();
     }
     return user;
+  }
+
+  private async validateToken(userId: string, tokenId: string) {
+    const isValid = await this.refreshTokenIdsStorageStorage.validate(
+      userId,
+      tokenId,
+    );
+
+    if (isValid) {
+      await this.refreshTokenIdsStorageStorage.invalidate(userId);
+    } else {
+      throw new UnauthorizedException();
+    }
   }
 }
