@@ -9,8 +9,7 @@ export class PositionCheckerCron implements CronServiceInterface {
     private readonly positionCheckerQueueService: PositionCheckerQueueService,
   ) {}
 
-  // @Cron(CronExpression.EVERY_DAY_AT_1AM) //todo;
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
   handle() {
     this.positionCheckerQueueService.checkPositions();
   }
