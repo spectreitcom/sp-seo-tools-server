@@ -9,7 +9,7 @@ export class ExpiresAt {
 
   isExpired() {
     const nowObj = moment();
-    return this.momentObject.isBefore(nowObj);
+    return this.momentObject.isBefore(nowObj, 'seconds');
   }
 
   equals(expiresAt: ExpiresAt) {

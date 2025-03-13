@@ -5,7 +5,6 @@ import { AddDomainCommandHandler } from './command-handlers/add-domain.command-h
 import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
 import { DomainsController } from '../presenters/http/domains.controller';
 import { DomainService } from './services/domain.service';
-import { ActivateTestingModeCommand } from './commands/activate-testing-mode.command';
 import { DeactivateTestingModeCommandHandler } from './command-handlers/deactivate-testing-mode.command-handler';
 import { TestingModeService } from './services/testing-mode.service';
 import { TestingModeCheckerCron } from './cron/testing-mode-checker.cron';
@@ -32,6 +31,8 @@ import { GetAllAvailableForUserDevicesQueryHandler } from './query-handlers/get-
 import { GetUserKeywordQueryHandler } from './query-handlers/get-user-keyword.query-handler';
 import { GetUserDomainQueryHandler } from './query-handlers/get-user-domain.query-handler';
 import { GetAvailableKeywordsQuantityQueryHandler } from './query-handlers/get-available-keywords-quantity.query-handler';
+import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-testing-mode-info.query-handler';
+import { ActivateTestingModeCommandHandler } from './command-handlers/activate-testing-mode.command-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -47,7 +48,6 @@ import { GetAvailableKeywordsQuantityQueryHandler } from './query-handlers/get-a
     AddDomainCommandHandler,
     LocalizationCreatedEventHandler,
     DomainService,
-    ActivateTestingModeCommand,
     DeactivateTestingModeCommandHandler,
     TestingModeService,
     TestingModeCheckerCron,
@@ -69,6 +69,8 @@ import { GetAvailableKeywordsQuantityQueryHandler } from './query-handlers/get-a
     GetUserKeywordQueryHandler,
     GetUserDomainQueryHandler,
     GetAvailableKeywordsQuantityQueryHandler,
+    GetUserTestingModeInfoQueryHandler,
+    ActivateTestingModeCommandHandler,
   ],
 })
 export class RankTrackerModule {}

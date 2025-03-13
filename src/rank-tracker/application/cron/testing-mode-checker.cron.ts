@@ -9,7 +9,7 @@ export class TestingModeCheckerCron implements CronServiceInterface {
     private readonly testingModeCheckerQueueService: TestingModeCheckerQueueService,
   ) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  @Cron(CronExpression.EVERY_10_MINUTES)
   async handle() {
     await this.testingModeCheckerQueueService.checkTestingModes();
   }

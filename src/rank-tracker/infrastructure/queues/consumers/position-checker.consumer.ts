@@ -11,6 +11,7 @@ import { randomUUID } from 'crypto';
 import * as moment from 'moment';
 import { GoogleScraperFacade } from '../../../../google-scraper/application/google-scraper.facade';
 import { SearchResult } from '../../types';
+import { TestingModeRepository } from '../../../application/ports/testing-mode.repository';
 
 const TAKE = 100;
 
@@ -23,6 +24,7 @@ export class PositionCheckerConsumer extends WorkerHost {
     private readonly userSubscriptionInfoRepository: UserSubscriptionInfoRepository,
     private readonly domainPositionRepository: DomainPositionRepository,
     private readonly googleScraperFacade: GoogleScraperFacade,
+    private readonly testingModeRepository: TestingModeRepository,
   ) {
     super();
   }
@@ -45,21 +47,42 @@ export class PositionCheckerConsumer extends WorkerHost {
         const userSubscriptionInfo =
           await this.userSubscriptionInfoRepository.findByUser(domain.userId);
 
-        const searchResults = await this.googleScraperFacade.getResults(
-          localization.countryCode,
-          userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
-          keyword.getKeywordText(),
+        const testingMode = await this.testingModeRepository.findByUserId(
+          domain.userId,
         );
 
-        await this.processSearchResults(
-          searchResults,
-          domain.text,
-          keyword.getKeywordId(),
-        );
+        if (testingMode && testingMode.getActive()) {
+          const searchResults = await this.googleScraperFacade.getResults(
+            localization.countryCode,
+            testingMode.getMaxSearchedPages() * 10 + 1,
+            keyword.getKeywordText(),
+          );
+
+          await this.processSearchResults(
+            searchResults,
+            domain.text,
+            keyword.getKeywordId(),
+          );
+
+          continue;
+        }
+
+        if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
+          const searchResults = await this.googleScraperFacade.getResults(
+            localization.countryCode,
+            userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
+            keyword.getKeywordText(),
+          );
+
+          await this.processSearchResults(
+            searchResults,
+            domain.text,
+            keyword.getKeywordId(),
+          );
+        }
       }
 
       skip = TAKE * (skip + 1);
-
       keywords = await this.keywordRepository.findAll(TAKE, skip);
     }
   }

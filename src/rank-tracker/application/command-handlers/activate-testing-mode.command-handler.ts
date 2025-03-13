@@ -32,7 +32,7 @@ export class ActivateTestingModeCommandHandler
       !!userSubscriptionInfo,
       expiresAt,
       5,
-      10,
+      1,
     );
 
     testingMode.activate();

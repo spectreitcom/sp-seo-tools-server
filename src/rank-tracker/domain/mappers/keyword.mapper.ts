@@ -14,11 +14,23 @@ export class KeywordMapper {
     usedKeywordsQty: number,
     rtTestingMode: RtTestingMode,
   ) {
+    let maxKeywordsQty = 0;
+
+    if (rtTestingMode && rtTestingMode.active) {
+      maxKeywordsQty = rtTestingMode.maxKeywordsQty;
+    }
+
+    if (rtUserSubscriptionInfo && rtUserSubscriptionInfo.active) {
+      maxKeywordsQty = rtUserSubscriptionInfo.maxKeywordsQty;
+    }
+
     const keywordId = rtKeyword.id;
-    const activeSub = rtUserSubscriptionInfo.active;
+    const activeSub = rtUserSubscriptionInfo
+      ? rtUserSubscriptionInfo.active
+      : false;
     const availableKeywordQuantity = new AvailableKeywordsQuantity(
       usedKeywordsQty,
-      rtUserSubscriptionInfo.maxKeywordsQty,
+      maxKeywordsQty,
     );
     const domainId = rtKeyword.domainId;
     const keywordText = rtKeyword.text;

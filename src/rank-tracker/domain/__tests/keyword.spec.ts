@@ -8,6 +8,7 @@ import { randomUUID } from 'crypto';
 import { AvailableKeywordsQuantity } from '../value-objects/available-keywords-quantity';
 import { Device } from '../value-objects/device';
 import { DESKTOP_DEVICE } from '../../application/constants';
+import * as moment from 'moment';
 
 const DOMAIN_ID = randomUUID();
 const KEYWORD_ID = randomUUID();
@@ -26,6 +27,7 @@ describe('Keyword', () => {
       device,
       LOCALIZATION_ID,
       false,
+      moment().unix(),
     );
 
     keyword.create();
@@ -46,6 +48,7 @@ describe('Keyword', () => {
       device,
       LOCALIZATION_ID,
       true,
+      moment().unix(),
     );
 
     keyword.create();
@@ -65,6 +68,7 @@ describe('Keyword', () => {
       device,
       LOCALIZATION_ID,
       false,
+      moment().unix(),
     );
     expect(() => keyword.create()).toThrow(InactiveSubscriptionError);
   });
@@ -80,6 +84,7 @@ describe('Keyword', () => {
       device,
       LOCALIZATION_ID,
       false,
+      moment().unix(),
     );
     expect(() => keyword.create()).toThrow(IsKeywordsQuantityExceededError);
   });
@@ -97,6 +102,7 @@ describe('Keyword', () => {
           device,
           LOCALIZATION_ID,
           false,
+          moment().unix(),
         ),
     ).toThrow(InvalidDeviceError);
   });
