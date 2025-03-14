@@ -52,7 +52,7 @@ export class KeywordsController {
     return this.keywordService.getAvailableKeywordsQuantity(userId);
   }
 
-  @Get(':keyword')
+  @Get(':keywordId')
   @UseGuards(AuthGuard)
   getUserKeyword(
     @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
