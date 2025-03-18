@@ -6,8 +6,6 @@ type CommandOptions = {
   user: string;
 };
 
-//4182021b-afd7-4c47-9127-0d94c52dc1fc todo: remove it
-
 @Command({
   name: 'rt-seed',
   description: 'Creates a dummy data for rank tracker module',

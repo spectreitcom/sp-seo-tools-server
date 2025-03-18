@@ -5,7 +5,6 @@ import { AddDomainCommandHandler } from './command-handlers/add-domain.command-h
 import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
 import { DomainsController } from '../presenters/http/domains.controller';
 import { DomainService } from './services/domain.service';
-import { DeactivateTestingModeCommandHandler } from './command-handlers/deactivate-testing-mode.command-handler';
 import { TestingModeService } from './services/testing-mode.service';
 import { TestingModeCheckerCron } from './cron/testing-mode-checker.cron';
 import { GetUserKeywordsListQueryHandler } from './query-handlers/get-user-keywords-list.query-handler';
@@ -53,7 +52,6 @@ import { SeedCommand } from './cli/seed.command';
     AddDomainCommandHandler,
     LocalizationCreatedEventHandler,
     DomainService,
-    DeactivateTestingModeCommandHandler,
     TestingModeService,
     TestingModeCheckerCron,
     GetUserKeywordsListQueryHandler,

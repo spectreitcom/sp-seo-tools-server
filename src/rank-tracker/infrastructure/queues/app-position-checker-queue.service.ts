@@ -3,7 +3,7 @@ import { PositionCheckerQueueService } from '../../application/ports/position-ch
 import { PositionCheckerProducer } from './producers/position-checker.producer';
 
 @Injectable()
-export class NestPositionCheckerQueueService
+export class AppPositionCheckerQueueService
   implements PositionCheckerQueueService
 {
   constructor(

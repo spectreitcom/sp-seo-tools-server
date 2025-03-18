@@ -10,13 +10,13 @@ import { DESKTOP_DEVICE } from '../application/constants';
 import { Keyword } from '../domain/keyword';
 import * as moment from 'moment/moment';
 import { randomNumberFromRange } from '../../shared/utils';
-import { DomainPosition } from '../domain/domain-position';
 import { LocalizationRepository } from '../application/ports/localization.repository';
 import { DomainRepository } from '../application/ports/domain.repository';
 import { KeywordRepository } from '../application/ports/keyword.repository';
 import { DomainPositionRepository } from '../application/ports/domain-position.repository';
 import { DatabaseService } from '../../database/database.service';
 import { PrismaClient } from '@prisma/client';
+import { DomainPositionFactory } from '../domain/factories/domain-position.factory';
 
 @Injectable()
 export class AppSeederService implements SeederService {
@@ -146,8 +146,7 @@ export class AppSeederService implements SeederService {
     while (nextDate.isSameOrBefore(maxDateMoment, 'day')) {
       const timestamp = nextDate.unix();
       const position = randomNumberFromRange(0, 50);
-      const domainPosition = new DomainPosition(
-        randomUUID(),
+      const domainPosition = DomainPositionFactory.create(
         keywordId,
         position,
         timestamp,

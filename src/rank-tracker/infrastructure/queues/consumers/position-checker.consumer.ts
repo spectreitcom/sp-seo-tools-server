@@ -6,12 +6,10 @@ import { DomainRepository } from '../../../application/ports/domain.repository';
 import { LocalizationRepository } from '../../../application/ports/localization.repository';
 import { UserSubscriptionInfoRepository } from '../../../application/ports/user-subscription-info.repository';
 import { DomainPositionRepository } from '../../../application/ports/domain-position.repository';
-import { DomainPosition } from '../../../domain/domain-position';
-import { randomUUID } from 'crypto';
-import * as moment from 'moment';
 import { GoogleScraperFacade } from '../../../../google-scraper/application/google-scraper.facade';
 import { SearchResult } from '../../types';
 import { TestingModeRepository } from '../../../application/ports/testing-mode.repository';
+import { DomainPositionFactory } from '../../../domain/factories/domain-position.factory';
 
 const TAKE = 100;
 
@@ -93,14 +91,10 @@ export class PositionCheckerConsumer extends WorkerHost {
     keywordId: string,
   ) {
     const position = PositionChecker.getHighestPosition(searchResults, domain);
-
-    const domainPosition = new DomainPosition(
-      randomUUID(),
+    const domainPosition = DomainPositionFactory.create(
       keywordId,
       position === -1 ? 0 : position,
-      moment().unix(),
     );
-
     await this.domainPositionRepository.save(domainPosition);
   }
 }

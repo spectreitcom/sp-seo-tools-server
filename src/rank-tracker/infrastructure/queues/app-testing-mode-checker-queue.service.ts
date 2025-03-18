@@ -3,7 +3,7 @@ import { TestingModeCheckerQueueService } from '../../application/ports/testing-
 import { TestingModeCheckerProducer } from './producers/testing-mode-checker.producer';
 
 @Injectable()
-export class NestTestingModeCheckerQueueService
+export class AppTestingModeCheckerQueueService
   implements TestingModeCheckerQueueService
 {
   constructor(

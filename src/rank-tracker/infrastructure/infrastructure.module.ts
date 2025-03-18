@@ -7,7 +7,7 @@ import {
   TESTING_MODE_CHECKER_QUEUE,
 } from './queues/constants';
 import { PositionCheckerQueueService } from '../application/ports/position-checker-queue.service';
-import { NestPositionCheckerQueueService } from './queues/nest-position-checker-queue.service';
+import { AppPositionCheckerQueueService } from './queues/app-position-checker-queue.service';
 import { DomainRepository } from '../application/ports/domain.repository';
 import { PrismaDomainRepository } from './persistence/repositories/prisma-domain.repository';
 import { DatabaseModule } from '../../database/database.module';
@@ -18,7 +18,7 @@ import { PrismaLocalizationRepository } from './persistence/repositories/prisma-
 import { TestingModeRepository } from '../application/ports/testing-mode.repository';
 import { PrismaTestingModeRepository } from './persistence/repositories/prisma-testing-mode.repository';
 import { TestingModeCheckerQueueService } from '../application/ports/testing-mode-checker-queue.service';
-import { NestTestingModeCheckerQueueService } from './queues/nest-testing-mode-checker-queue.service';
+import { AppTestingModeCheckerQueueService } from './queues/app-testing-mode-checker-queue.service';
 import { TestingModeCheckerProducer } from './queues/producers/testing-mode-checker.producer';
 import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-checker.consumer';
 import { UserSubscriptionInfoRepository } from '../application/ports/user-subscription-info.repository';
@@ -61,7 +61,7 @@ import { AppSeederService } from './app-seeder.service';
     },
     {
       provide: PositionCheckerQueueService,
-      useClass: NestPositionCheckerQueueService,
+      useClass: AppPositionCheckerQueueService,
     },
     {
       provide: LocalizationRepository,
@@ -73,7 +73,7 @@ import { AppSeederService } from './app-seeder.service';
     },
     {
       provide: TestingModeCheckerQueueService,
-      useClass: NestTestingModeCheckerQueueService,
+      useClass: AppTestingModeCheckerQueueService,
     },
     {
       provide: UserSubscriptionInfoRepository,
