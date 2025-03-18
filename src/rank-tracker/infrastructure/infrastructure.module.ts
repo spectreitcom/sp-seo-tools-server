@@ -34,6 +34,8 @@ import { PrismaLocalizationsCountryCodeRepository } from './persistence/reposito
 import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
 import { DomainPositionHistoryRepository } from '../application/ports/domain-position-history.repository';
 import { PrismaDomainPositionHistoryRepository } from './persistence/repositories/prisma-domain-position-history.repository';
+import { SeederService } from '../application/ports/seeder.service';
+import { AppSeederService } from './app-seeder.service';
 
 @Module({
   imports: [
@@ -97,6 +99,10 @@ import { PrismaDomainPositionHistoryRepository } from './persistence/repositorie
       provide: DomainPositionHistoryRepository,
       useClass: PrismaDomainPositionHistoryRepository,
     },
+    {
+      provide: SeederService,
+      useClass: AppSeederService,
+    },
     PositionCheckerProducer,
     PositionCheckerConsumer,
     TestingModeCheckerProducer,
@@ -114,6 +120,8 @@ import { PrismaDomainPositionHistoryRepository } from './persistence/repositorie
     UserDomainsListRepository,
     LocalizationsCountryCodeRepository,
     DomainPositionHistoryRepository,
+    DomainPositionRepository,
+    SeederService,
   ],
 })
 export class InfrastructureModule {}

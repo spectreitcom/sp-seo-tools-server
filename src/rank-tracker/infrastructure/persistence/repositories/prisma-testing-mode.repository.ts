@@ -55,6 +55,7 @@ export class PrismaTestingModeRepository implements TestingModeRepository {
     return !!testingModeModel;
   }
 
+  // todo: n+1 problem
   async findAllActive(take: number, skip: number): Promise<TestingMode[]> {
     const testingModeModels = await this.databaseService.rtTestingMode.findMany(
       {

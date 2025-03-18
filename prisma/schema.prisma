@@ -67,7 +67,7 @@ model RtDomainPosition {
   keywordId String
   keyword   RtKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
   position  Int       @default(0)
-  timestamp Int
+  timestamp Int       @unique
 }
 
 model RtUserSubscriptionInfo {
@@ -83,7 +83,7 @@ model RtLocalization {
   domainParam      String
   keywords         RtKeyword[]
   countryCode      String      @unique
-  seLocalizationId String
+  seLocalizationId String // todo: should be removed ????;
   name             String
 }
 

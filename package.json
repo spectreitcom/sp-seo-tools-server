@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "create-admin": "node dist/src/admin-auth/application/cli/cli.js create-admin",
-    "ranktrackerpayment:listen": "stripe listen --forward-to http://localhost:3000/api/rank-tracker-subscription/webhook"
+    "ranktrackerpayment:listen": "stripe listen --forward-to http://localhost:3000/api/rank-tracker-subscription/webhook",
+    "rtseeder": "node dist/src/rank-tracker/application/cli/cli.js rt-seed"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",

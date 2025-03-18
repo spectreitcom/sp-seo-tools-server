@@ -3,19 +3,21 @@ import { LocalizationRepository } from '../../../application/ports/localization.
 import { Localization } from '../../../domain/localization';
 import { DatabaseService } from '../../../../database/database.service';
 import { LocalizationMapper } from '../../../domain/mappers/localization.mapper';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaLocalizationRepository implements LocalizationRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async save(localization: Localization): Promise<void> {
-    const localizationModel =
-      await this.databaseService.rtLocalization.findFirst({
-        where: { id: localization.localizationId },
-      });
+  async save(localization: Localization, prisma?: PrismaClient): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+
+    const localizationModel = await prismaClient.rtLocalization.findFirst({
+      where: { id: localization.localizationId },
+    });
 
     if (localizationModel) {
-      await this.databaseService.rtLocalization.update({
+      await prismaClient.rtLocalization.update({
         where: { id: localization.localizationId },
         data: {
           countryCode: localization.countryCode,
@@ -27,7 +29,7 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
       return;
     }
 
-    await this.databaseService.rtLocalization.create({
+    await prismaClient.rtLocalization.create({
       data: {
         id: localization.localizationId,
         domainParam: localization.domainParam,
@@ -38,21 +40,37 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
     });
   }
 
-  async findById(localizationId: string): Promise<Localization> {
-    const localizationModel =
-      await this.databaseService.rtLocalization.findFirst({
-        where: {
-          id: localizationId,
-        },
-      });
+  async findById(
+    localizationId: string,
+    prisma?: PrismaClient,
+  ): Promise<Localization> {
+    const prismaClient = prisma ?? this.databaseService;
+    const localizationModel = await prismaClient.rtLocalization.findFirst({
+      where: {
+        id: localizationId,
+      },
+    });
 
     if (!localizationModel) return null;
 
     return LocalizationMapper.toDomain(localizationModel);
   }
 
-  async findAll(): Promise<Localization[]> {
-    const models = await this.databaseService.rtLocalization.findMany();
+  async findAll(prisma?: PrismaClient): Promise<Localization[]> {
+    const prismaClient = prisma ?? this.databaseService;
+    const models = await prismaClient.rtLocalization.findMany();
     return models.map((model) => LocalizationMapper.toDomain(model));
+  }
+
+  async findByCountryCode(
+    countryCode: string,
+    prisma?: PrismaClient,
+  ): Promise<Localization> {
+    const prismaClient = prisma ?? this.databaseService;
+    const model = await prismaClient.rtLocalization.findUnique({
+      where: { countryCode },
+    });
+    if (!model) return null;
+    return LocalizationMapper.toDomain(model);
   }
 }

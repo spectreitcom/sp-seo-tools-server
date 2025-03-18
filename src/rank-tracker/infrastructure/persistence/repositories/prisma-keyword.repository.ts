@@ -3,13 +3,16 @@ import { Keyword } from '../../../domain/keyword';
 import { DatabaseService } from '../../../../database/database.service';
 import { KeywordMapper } from '../../../domain/mappers/keyword.mapper';
 import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaKeywordRepository implements KeywordRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async save(keyword: Keyword): Promise<void> {
-    const keywordEntity = await this.databaseService.rtKeyword.findUnique({
+  async save(keyword: Keyword, prisma?: PrismaClient): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+
+    const keywordEntity = await prismaClient.rtKeyword.findUnique({
       where: {
         id: keyword.getKeywordId(),
       },
@@ -20,11 +23,16 @@ export class PrismaKeywordRepository implements KeywordRepository {
       return;
     }
 
-    await this.create(keyword);
+    await this.create(keyword, prisma);
   }
 
-  async findById(keywordId: string, userId: string): Promise<Keyword> {
-    const rtKeyword = await this.databaseService.rtKeyword.findFirst({
+  async findById(
+    keywordId: string,
+    userId: string,
+    prisma?: PrismaClient,
+  ): Promise<Keyword> {
+    const prismaClient = prisma ?? this.databaseService;
+    const rtKeyword = await prismaClient.rtKeyword.findFirst({
       where: { id: keywordId },
       include: {
         domain: true,
@@ -34,13 +42,13 @@ export class PrismaKeywordRepository implements KeywordRepository {
     if (!rtKeyword) return null;
 
     const rtUserSubscriptionInfo =
-      await this.databaseService.rtUserSubscriptionInfo.findFirst({
+      await prismaClient.rtUserSubscriptionInfo.findFirst({
         where: {
           userId,
         },
       });
 
-    const usedKeywordsQty = await this.databaseService.rtKeyword.count({
+    const usedKeywordsQty = await prismaClient.rtKeyword.count({
       where: {
         domain: {
           userId,
@@ -48,7 +56,7 @@ export class PrismaKeywordRepository implements KeywordRepository {
       },
     });
 
-    const rtTestingMode = await this.databaseService.rtTestingMode.findUnique({
+    const rtTestingMode = await prismaClient.rtTestingMode.findUnique({
       where: { userId },
     });
 
@@ -60,8 +68,12 @@ export class PrismaKeywordRepository implements KeywordRepository {
     );
   }
 
-  async getUsedKeywordsQty(userId: string): Promise<number> {
-    return this.databaseService.rtKeyword.count({
+  async getUsedKeywordsQty(
+    userId: string,
+    prisma?: PrismaClient,
+  ): Promise<number> {
+    const prismaClient = prisma ?? this.databaseService;
+    return prismaClient.rtKeyword.count({
       where: {
         domain: {
           userId: userId,
@@ -70,8 +82,9 @@ export class PrismaKeywordRepository implements KeywordRepository {
     });
   }
 
-  private async update(keyword: Keyword) {
-    this.databaseService.rtKeyword.update({
+  private async update(keyword: Keyword, prisma?: PrismaClient) {
+    const prismaClient = prisma ?? this.databaseService;
+    prismaClient.rtKeyword.update({
       where: { id: keyword.getKeywordId() },
       data: {
         text: keyword.getKeywordText(),
@@ -82,8 +95,9 @@ export class PrismaKeywordRepository implements KeywordRepository {
     });
   }
 
-  private async create(keyword: Keyword) {
-    await this.databaseService.rtKeyword.create({
+  private async create(keyword: Keyword, prisma?: PrismaClient) {
+    const prismaClient = prisma ?? this.databaseService;
+    await prismaClient.rtKeyword.create({
       data: {
         id: keyword.getKeywordId(),
         text: keyword.getKeywordText(),
@@ -95,8 +109,14 @@ export class PrismaKeywordRepository implements KeywordRepository {
     });
   }
 
-  async findAll(take: number, skip: number): Promise<Keyword[]> {
-    const keywordModels = await this.databaseService.rtKeyword.findMany({
+  // todo: n+1 problem
+  async findAll(
+    take: number,
+    skip: number,
+    prisma?: PrismaClient,
+  ): Promise<Keyword[]> {
+    const prismaClient = prisma ?? this.databaseService;
+    const keywordModels = await prismaClient.rtKeyword.findMany({
       take,
       skip,
     });
@@ -104,26 +124,27 @@ export class PrismaKeywordRepository implements KeywordRepository {
     const keywords: Keyword[] = [];
 
     for (const keywordModel of keywordModels) {
-      const domainModel = await this.databaseService.rtDomain.findUnique({
+      const domainModel = await prismaClient.rtDomain.findUnique({
         where: {
           id: keywordModel.domainId,
         },
       });
 
       const userSubscriptionInfoModel =
-        await this.databaseService.rtUserSubscriptionInfo.findFirst({
+        await prismaClient.rtUserSubscriptionInfo.findFirst({
           where: {
             userId: domainModel.userId,
           },
         });
 
-      const usedKeywordsQty = await this.getUsedKeywordsQty(domainModel.userId);
-
-      const rtTestingMode = await this.databaseService.rtTestingMode.findUnique(
-        {
-          where: { userId: domainModel.userId },
-        },
+      const usedKeywordsQty = await this.getUsedKeywordsQty(
+        domainModel.userId,
+        prismaClient,
       );
+
+      const rtTestingMode = await prismaClient.rtTestingMode.findUnique({
+        where: { userId: domainModel.userId },
+      });
 
       const keyword = KeywordMapper.toDomain(
         keywordModel,
@@ -137,8 +158,13 @@ export class PrismaKeywordRepository implements KeywordRepository {
     return keywords;
   }
 
-  async isOwnerOf(userId: string, keywordId: string): Promise<boolean> {
-    const keywordModel = await this.databaseService.rtKeyword.findUnique({
+  async isOwnerOf(
+    userId: string,
+    keywordId: string,
+    prisma?: PrismaClient,
+  ): Promise<boolean> {
+    const prismaClient = prisma ?? this.databaseService;
+    const keywordModel = await prismaClient.rtKeyword.findUnique({
       where: {
         id: keywordId,
         domain: {
@@ -149,9 +175,59 @@ export class PrismaKeywordRepository implements KeywordRepository {
     return !!keywordModel;
   }
 
-  async delete(keywordId: string): Promise<void> {
-    await this.databaseService.rtKeyword.delete({
+  async delete(keywordId: string, prisma?: PrismaClient): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+    await prismaClient.rtKeyword.delete({
       where: { id: keywordId },
     });
+  }
+
+  // todo: n+1 problem
+  async findByText(text: string, prisma?: PrismaClient): Promise<Keyword[]> {
+    const prismaClient = prisma ?? this.databaseService;
+    const models = await prismaClient.rtKeyword.findMany({
+      where: {
+        text,
+      },
+    });
+
+    if (!models.length) return [];
+
+    const keywords: Keyword[] = [];
+
+    for (const model of models) {
+      const domainModel = await prismaClient.rtDomain.findUnique({
+        where: {
+          id: model.domainId,
+        },
+      });
+
+      const userSubscriptionInfoModel =
+        await prismaClient.rtUserSubscriptionInfo.findFirst({
+          where: {
+            userId: domainModel.userId,
+          },
+        });
+
+      const usedKeywordsQty = await this.getUsedKeywordsQty(
+        domainModel.userId,
+        prismaClient,
+      );
+
+      const rtTestingMode = await prismaClient.rtTestingMode.findUnique({
+        where: { userId: domainModel.userId },
+      });
+
+      keywords.push(
+        KeywordMapper.toDomain(
+          model,
+          userSubscriptionInfoModel,
+          usedKeywordsQty,
+          rtTestingMode,
+        ),
+      );
+    }
+
+    return keywords;
   }
 }

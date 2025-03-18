@@ -36,6 +36,7 @@ import { ActivateTestingModeCommandHandler } from './command-handlers/activate-t
 import { GetDomainPositionHistoryQueryHandler } from './query-handlers/get-domain-position-history.query-handler';
 import { DomainHistoryPositionService } from './services/domain-history-position.service';
 import { DomainPositionHistoryController } from '../presenters/http/domain-position-history.controller';
+import { SeedCommand } from './cli/seed.command';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -77,6 +78,7 @@ import { DomainPositionHistoryController } from '../presenters/http/domain-posit
     ActivateTestingModeCommandHandler,
     GetDomainPositionHistoryQueryHandler,
     DomainHistoryPositionService,
+    SeedCommand,
   ],
 })
 export class RankTrackerModule {}

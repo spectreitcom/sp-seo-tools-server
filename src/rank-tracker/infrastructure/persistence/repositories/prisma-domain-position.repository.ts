@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DomainPositionRepository } from '../../../application/ports/domain-position.repository';
 import { DomainPosition } from 'src/rank-tracker/domain/domain-position';
 import { DatabaseService } from '../../../../database/database.service';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaDomainPositionRepository
@@ -9,14 +10,18 @@ export class PrismaDomainPositionRepository
 {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async save(domainPosition: DomainPosition): Promise<void> {
-    const domainPositionModel =
-      await this.databaseService.rtDomainPosition.findUnique({
-        where: { id: domainPosition.domainPositionId },
-      });
+  async save(
+    domainPosition: DomainPosition,
+    prisma?: PrismaClient,
+  ): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+
+    const domainPositionModel = await prismaClient.rtDomainPosition.findUnique({
+      where: { id: domainPosition.domainPositionId },
+    });
 
     if (domainPositionModel) {
-      await this.databaseService.rtDomainPosition.update({
+      await prismaClient.rtDomainPosition.update({
         where: { id: domainPosition.domainPositionId },
         data: {
           position: domainPosition.position,
@@ -27,7 +32,7 @@ export class PrismaDomainPositionRepository
       return;
     }
 
-    await this.databaseService.rtDomainPosition.create({
+    await prismaClient.rtDomainPosition.create({
       data: {
         id: domainPosition.domainPositionId,
         position: domainPosition.position,

@@ -3,18 +3,21 @@ import { DomainRepository } from '../../../application/ports/domain.repository';
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../../../database/database.service';
 import { DomainMapper } from '../../../domain/mappers/domain.mapper';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaDomainRepository implements DomainRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async save(domain: Domain): Promise<void> {
-    const rtDomain = await this.databaseService.rtDomain.findFirst({
+  async save(domain: Domain, prisma?: PrismaClient): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+
+    const rtDomain = await prismaClient.rtDomain.findFirst({
       where: { id: domain.domainId },
     });
 
     if (rtDomain) {
-      await this.databaseService.rtDomain.update({
+      await prismaClient.rtDomain.update({
         where: { id: domain.domainId },
         data: {
           text: domain.text,
@@ -23,7 +26,7 @@ export class PrismaDomainRepository implements DomainRepository {
       return;
     }
 
-    await this.databaseService.rtDomain.create({
+    await prismaClient.rtDomain.create({
       data: {
         id: domain.domainId,
         userId: domain.userId,
@@ -33,16 +36,22 @@ export class PrismaDomainRepository implements DomainRepository {
     });
   }
 
-  async findById(domainId: string): Promise<Domain> {
-    const rtDomain = await this.databaseService.rtDomain.findFirst({
+  async findById(domainId: string, prisma?: PrismaClient): Promise<Domain> {
+    const prismaClient = prisma ?? this.databaseService;
+    const rtDomain = await prismaClient.rtDomain.findFirst({
       where: { id: domainId },
     });
     if (!rtDomain) return null;
     return DomainMapper.toDomain(rtDomain);
   }
 
-  async domainExists(domainText: string, userId: string): Promise<boolean> {
-    const rtDomain = await this.databaseService.rtDomain.findFirst({
+  async domainExists(
+    domainText: string,
+    userId: string,
+    prisma?: PrismaClient,
+  ): Promise<boolean> {
+    const prismaClient = prisma ?? this.databaseService;
+    const rtDomain = await prismaClient.rtDomain.findFirst({
       where: {
         userId: userId,
         text: domainText,
@@ -51,9 +60,19 @@ export class PrismaDomainRepository implements DomainRepository {
     return !!rtDomain;
   }
 
-  async remove(domainId: string): Promise<void> {
-    await this.databaseService.rtDomain.delete({
+  async remove(domainId: string, prisma?: PrismaClient): Promise<void> {
+    const prismaClient = prisma ?? this.databaseService;
+    await prismaClient.rtDomain.delete({
       where: { id: domainId },
     });
+  }
+
+  async findByText(text: string, prisma?: PrismaClient): Promise<Domain[]> {
+    const prismaClient = prisma ?? this.databaseService;
+    const models = await prismaClient.rtDomain.findMany({
+      where: { text },
+    });
+    if (!models.length) return [];
+    return models.map((model) => DomainMapper.toDomain(model));
   }
 }
