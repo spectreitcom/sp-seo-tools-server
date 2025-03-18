@@ -1,33 +1,31 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
-import { HashingService } from '../ports/hashing.service';
 import { isEmail } from 'class-validator';
-import { AdminUserRepository } from '../ports/admin-user.repository';
+import { CreateAdminCliCommandService } from '../ports/create-admin-cli-command.service';
 
 type CommandOptions = {
   email: string;
-  password: Promise<string>;
+  password: string;
 };
 
 @Command({ name: 'create-admin', description: 'creates an admin user' })
 export class CreateAdminCommand extends CommandRunner {
   constructor(
-    private readonly hashingService: HashingService,
-    private readonly adminUserRepository: AdminUserRepository,
+    private readonly createAdminCliCommandService: CreateAdminCliCommandService,
   ) {
     super();
   }
 
   async run(_: string[], options?: CommandOptions): Promise<void> {
     const email = options.email;
-    const hashedPassword = await options.password;
+    const password = options.password;
 
-    const exists = await this.adminUserRepository.exists(email);
-
-    if (exists) {
-      throw new Error('User already exists in database');
+    try {
+      await this.createAdminCliCommandService.createAdmin(email, password);
+      process.exit();
+    } catch (e) {
+      console.log(e);
+      process.exit(1);
     }
-
-    await this.adminUserRepository.create(email, hashedPassword);
   }
 
   @Option({
@@ -46,6 +44,6 @@ export class CreateAdminCommand extends CommandRunner {
     required: true,
   })
   private parsePassword(value: string) {
-    return this.hashingService.hash(value);
+    return value;
   }
 }

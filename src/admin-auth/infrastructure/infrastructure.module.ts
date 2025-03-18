@@ -7,9 +7,11 @@ import { DatabaseModule } from '../../database/database.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { TokenService } from '../application/ports/token.service';
-import { NestJwtService } from './nest-jwt.service';
+import { AppJwtService } from './app-jwt.service';
 import { RequestService } from '../application/ports/request.service';
-import { NestRequestService } from './nest-request.service';
+import { AppRequestService } from './app-request.service';
+import { CreateAdminCliCommandService } from '../application/ports/create-admin-cli-command.service';
+import { AppCreateAdminCliCommandService } from './app-create-admin-cli-command.service';
 
 @Module({
   imports: [
@@ -39,13 +41,23 @@ import { NestRequestService } from './nest-request.service';
     },
     {
       provide: TokenService,
-      useClass: NestJwtService,
+      useClass: AppJwtService,
     },
     {
       provide: RequestService,
-      useClass: NestRequestService,
+      useClass: AppRequestService,
+    },
+    {
+      provide: CreateAdminCliCommandService,
+      useClass: AppCreateAdminCliCommandService,
     },
   ],
-  exports: [HashingService, AdminUserRepository, TokenService, RequestService],
+  exports: [
+    HashingService,
+    AdminUserRepository,
+    TokenService,
+    RequestService,
+    CreateAdminCliCommandService,
+  ],
 })
 export class InfrastructureModule {}
