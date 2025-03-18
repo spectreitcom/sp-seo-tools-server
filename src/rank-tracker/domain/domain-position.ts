@@ -1,5 +1,3 @@
-// todo: create factory
-
 export class DomainPosition {
   constructor(
     public readonly domainPositionId: string,

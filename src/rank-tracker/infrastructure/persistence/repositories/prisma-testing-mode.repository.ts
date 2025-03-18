@@ -55,7 +55,6 @@ export class PrismaTestingModeRepository implements TestingModeRepository {
     return !!testingModeModel;
   }
 
-  // todo: n+1 problem
   async findAllActive(take: number, skip: number): Promise<TestingMode[]> {
     const testingModeModels = await this.databaseService.rtTestingMode.findMany(
       {
@@ -67,16 +66,29 @@ export class PrismaTestingModeRepository implements TestingModeRepository {
       },
     );
 
+    const userIds: string[] = [];
+
+    for (const testingModeModel of testingModeModels) {
+      if (!userIds.includes(testingModeModel.userId)) {
+        userIds.push(testingModeModel.userId);
+      }
+    }
+
+    const subscriptionInfos =
+      await this.databaseService.rtUserSubscriptionInfo.findMany({
+        where: {
+          userId: {
+            in: userIds,
+          },
+        },
+      });
+
     const testingModes: TestingMode[] = [];
 
     for (const testingModeModel of testingModeModels) {
-      const subscriptionInfo =
-        await this.databaseService.rtUserSubscriptionInfo.findFirst({
-          where: {
-            userId: testingModeModel.userId,
-          },
-        });
-
+      const subscriptionInfo = subscriptionInfos.find(
+        (si) => si.userId == testingModeModel.userId,
+      );
       testingModes.push(
         TestingModeMapper.toDomain(testingModeModel, true, !!subscriptionInfo),
       );

@@ -9,7 +9,6 @@ export class PrismaUserDomainsListRepository
 {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  // todo: n+1 problem
   async findAll(
     userId: string,
     take: number,

@@ -72,19 +72,18 @@ model RtDomainPosition {
 
 model RtUserSubscriptionInfo {
   id               String  @id @default(uuid())
-  userId           String
+  userId           String  @unique
   active           Boolean
   maxKeywordsQty   Int
   maxSearchedPages Int
 }
 
 model RtLocalization {
-  id               String      @id @default(uuid())
-  domainParam      String
-  keywords         RtKeyword[]
-  countryCode      String      @unique
-  seLocalizationId String // todo: should be removed ????;
-  name             String
+  id          String      @id @default(uuid())
+  domainParam String
+  keywords    RtKeyword[]
+  countryCode String      @unique
+  name        String
 }
 
 model RtTestingMode {

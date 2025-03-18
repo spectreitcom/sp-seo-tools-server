@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { SeederService } from '../application/ports/seeder.service';
 import { Localization } from '../domain/localization';
 import { LocalizationFactory } from '../domain/factories/localization.factory';
-import { randomUUID } from 'crypto';
 import { DomainFactory } from '../domain/factories/domain.factory';
 import { Domain } from '../domain/domain';
 import { KeywordFactory } from '../domain/factories/keyword.factory';
@@ -57,7 +56,7 @@ export class AppSeederService implements SeederService {
 
   private async seedLocalizations(prisma: PrismaClient) {
     const localizationsToCreate: Localization[] = [
-      LocalizationFactory.create('google.pl', randomUUID(), 'pl', 'Poland'),
+      LocalizationFactory.create('google.pl', 'pl', 'Poland'),
     ];
 
     const localizationsCreated: Localization[] = [];

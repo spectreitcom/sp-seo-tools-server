@@ -3,6 +3,7 @@ import { UserKeywordsListRepository } from '../../../application/ports/user-keyw
 import { UserKeywordsListItemDto } from '../../../application/dto/user-keywords-list-item.dto';
 import { DatabaseService } from '../../../../database/database.service';
 import { DeviceMapper } from '../../device.mapper';
+import { RtDomainPosition } from '@prisma/client';
 
 @Injectable()
 export class PrismaUserKeywordsListRepository
@@ -47,18 +48,37 @@ export class PrismaUserKeywordsListRepository
       },
     });
 
+    const domainPositions =
+      await this.databaseService.rtDomainPosition.findMany({
+        where: {
+          keywordId: {
+            in: models.map((model) => model.id),
+          },
+        },
+        orderBy: {
+          timestamp: 'desc',
+        },
+      });
+
     const results: UserKeywordsListItemDto[] = [];
 
     for (const model of models) {
-      const domainPosition =
-        await this.databaseService.rtDomainPosition.findFirst({
-          where: {
-            keywordId: model.id,
-          },
-          orderBy: {
-            timestamp: 'desc',
-          },
-        });
+      const _domainPositions = domainPositions.filter(
+        (dp) => dp.keywordId === model.id,
+      );
+
+      let domainPosition: RtDomainPosition | null = null;
+
+      for (const _domainPosition of _domainPositions) {
+        if (!domainPosition) {
+          domainPosition = _domainPosition;
+          continue;
+        }
+
+        if (_domainPosition.timestamp > domainPosition.timestamp) {
+          domainPosition = _domainPosition;
+        }
+      }
 
       results.push(
         new UserKeywordsListItemDto(

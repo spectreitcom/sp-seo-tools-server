@@ -22,7 +22,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         data: {
           countryCode: localization.countryCode,
           domainParam: localization.domainParam,
-          seLocalizationId: localization.seLocalizationId,
           name: localization.name,
         },
       });
@@ -34,7 +33,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         id: localization.localizationId,
         domainParam: localization.domainParam,
         countryCode: localization.countryCode,
-        seLocalizationId: localization.seLocalizationId,
         name: localization.name,
       },
     });

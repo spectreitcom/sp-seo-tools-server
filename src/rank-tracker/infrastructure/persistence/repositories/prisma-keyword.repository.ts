@@ -109,42 +109,71 @@ export class PrismaKeywordRepository implements KeywordRepository {
     });
   }
 
-  // todo: n+1 problem
   async findAll(
     take: number,
     skip: number,
     prisma?: PrismaClient,
   ): Promise<Keyword[]> {
     const prismaClient = prisma ?? this.databaseService;
+
     const keywordModels = await prismaClient.rtKeyword.findMany({
       take,
       skip,
     });
 
-    const keywords: Keyword[] = [];
+    const domainModels = await prismaClient.rtDomain.findMany({
+      where: {
+        id: {
+          in: keywordModels.map((keywordModel) => keywordModel.domainId),
+        },
+      },
+    });
 
-    for (const keywordModel of keywordModels) {
-      const domainModel = await prismaClient.rtDomain.findUnique({
+    const userIds: string[] = [];
+
+    for (const domainModel of domainModels) {
+      if (!userIds.includes(domainModel.userId)) {
+        userIds.push(domainModel.userId);
+      }
+    }
+
+    const userSubscriptionInfoModels =
+      await prismaClient.rtUserSubscriptionInfo.findMany({
         where: {
-          id: keywordModel.domainId,
+          userId: {
+            in: userIds,
+          },
         },
       });
 
-      const userSubscriptionInfoModel =
-        await prismaClient.rtUserSubscriptionInfo.findFirst({
-          where: {
-            userId: domainModel.userId,
-          },
-        });
+    const rtTestingModes = await prismaClient.rtTestingMode.findMany({
+      where: {
+        userId: {
+          in: userIds,
+        },
+      },
+    });
 
+    const keywords: Keyword[] = [];
+
+    for (const keywordModel of keywordModels) {
+      const domainModel = domainModels.find(
+        (dm) => dm.id === keywordModel.domainId,
+      );
+
+      const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
+        (us) => us.userId === domainModel.userId,
+      );
+
+      // For now, I am not sure how to do it better
       const usedKeywordsQty = await this.getUsedKeywordsQty(
         domainModel.userId,
         prismaClient,
       );
 
-      const rtTestingMode = await prismaClient.rtTestingMode.findUnique({
-        where: { userId: domainModel.userId },
-      });
+      const rtTestingMode = rtTestingModes.find(
+        (tm) => tm.userId === domainModel.userId,
+      );
 
       const keyword = KeywordMapper.toDomain(
         keywordModel,
@@ -182,7 +211,6 @@ export class PrismaKeywordRepository implements KeywordRepository {
     });
   }
 
-  // todo: n+1 problem
   async findByText(text: string, prisma?: PrismaClient): Promise<Keyword[]> {
     const prismaClient = prisma ?? this.databaseService;
     const models = await prismaClient.rtKeyword.findMany({
@@ -193,30 +221,57 @@ export class PrismaKeywordRepository implements KeywordRepository {
 
     if (!models.length) return [];
 
-    const keywords: Keyword[] = [];
+    const domainModels = await prismaClient.rtDomain.findMany({
+      where: {
+        id: {
+          in: models.map((keywordModel) => keywordModel.domainId),
+        },
+      },
+    });
 
-    for (const model of models) {
-      const domainModel = await prismaClient.rtDomain.findUnique({
+    const userIds: string[] = [];
+
+    for (const domainModel of domainModels) {
+      if (!userIds.includes(domainModel.userId)) {
+        userIds.push(domainModel.userId);
+      }
+    }
+
+    const userSubscriptionInfoModels =
+      await prismaClient.rtUserSubscriptionInfo.findMany({
         where: {
-          id: model.domainId,
+          userId: {
+            in: userIds,
+          },
         },
       });
 
-      const userSubscriptionInfoModel =
-        await prismaClient.rtUserSubscriptionInfo.findFirst({
-          where: {
-            userId: domainModel.userId,
-          },
-        });
+    const rtTestingModes = await prismaClient.rtTestingMode.findMany({
+      where: {
+        userId: {
+          in: userIds,
+        },
+      },
+    });
 
+    const keywords: Keyword[] = [];
+
+    for (const model of models) {
+      const domainModel = domainModels.find((dm) => dm.id === model.domainId);
+
+      const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
+        (us) => us.userId === domainModel.userId,
+      );
+
+      // For now, I am not sure how to do it better
       const usedKeywordsQty = await this.getUsedKeywordsQty(
         domainModel.userId,
         prismaClient,
       );
 
-      const rtTestingMode = await prismaClient.rtTestingMode.findUnique({
-        where: { userId: domainModel.userId },
-      });
+      const rtTestingMode = rtTestingModes.find(
+        (tm) => tm.userId === domainModel.userId,
+      );
 
       keywords.push(
         KeywordMapper.toDomain(
