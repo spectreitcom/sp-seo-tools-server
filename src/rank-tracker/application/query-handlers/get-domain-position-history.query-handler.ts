@@ -45,8 +45,6 @@ export class GetDomainPositionHistoryQueryHandler
       toDateMoment = moment(`${toDate} 23:59:59`);
     }
 
-    console.log(toDateMoment.isAfter(fromDateMoment, 'day')); // todo;
-
     const isDateRangeOutOfRange =
       toDateMoment.isAfter(maxDateMoment, 'day') ||
       fromDateMoment.isBefore(minDateMoment, 'day') ||
