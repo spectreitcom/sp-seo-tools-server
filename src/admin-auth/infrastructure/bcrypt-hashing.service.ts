@@ -8,6 +8,7 @@ export class BcryptHashingService implements HashingService {
     const salt = await genSalt();
     return hash(plainText, salt);
   }
+
   compare(plainText: string, hashedText: string): Promise<boolean> {
     return compare(plainText, hashedText);
   }

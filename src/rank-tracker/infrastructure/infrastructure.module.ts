@@ -32,6 +32,8 @@ import { PrismaUserDomainsListRepository } from './persistence/repositories/pris
 import { LocalizationsCountryCodeRepository } from '../application/ports/localizations-country-code.repository';
 import { PrismaLocalizationsCountryCodeRepository } from './persistence/repositories/prisma-localizations-country-code.repository';
 import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
+import { DomainPositionHistoryRepository } from '../application/ports/domain-position-history.repository';
+import { PrismaDomainPositionHistoryRepository } from './persistence/repositories/prisma-domain-position-history.repository';
 
 @Module({
   imports: [
@@ -91,6 +93,10 @@ import { GoogleScraperModule } from '../../google-scraper/application/google-scr
       provide: LocalizationsCountryCodeRepository,
       useClass: PrismaLocalizationsCountryCodeRepository,
     },
+    {
+      provide: DomainPositionHistoryRepository,
+      useClass: PrismaDomainPositionHistoryRepository,
+    },
     PositionCheckerProducer,
     PositionCheckerConsumer,
     TestingModeCheckerProducer,
@@ -107,6 +113,7 @@ import { GoogleScraperModule } from '../../google-scraper/application/google-scr
     UserKeywordsListRepository,
     UserDomainsListRepository,
     LocalizationsCountryCodeRepository,
+    DomainPositionHistoryRepository,
   ],
 })
 export class InfrastructureModule {}

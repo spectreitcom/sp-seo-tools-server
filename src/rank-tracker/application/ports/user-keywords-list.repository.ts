@@ -10,6 +10,7 @@ export abstract class UserKeywordsListRepository {
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<UserKeywordsListItemDto[]>;
+
   abstract countAllWithSearchParams(
     userId: string,
     searchText: string | null | undefined,
@@ -17,7 +18,9 @@ export abstract class UserKeywordsListRepository {
     device: string | undefined,
     domainId: string | null | undefined,
   ): Promise<number>;
+
   abstract countAllForUser(userId: string): Promise<number>;
+
   abstract findById(
     userId: string,
     keywordId: string,

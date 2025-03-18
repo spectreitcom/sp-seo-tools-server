@@ -32,7 +32,7 @@ export class KeywordsController {
     @Query('localizationId') localizationId: string,
     @Query('device') device: string,
     @Query('domainId') domainId: string,
-    @Query('take') take: string,
+    @Query('take') take: number,
     @CurrentUserId() userId: string,
   ) {
     return this.keywordService.getUserKeywordsList(
@@ -42,7 +42,7 @@ export class KeywordsController {
       localizationId,
       device,
       domainId,
-      +take ? +take : 30,
+      take ? take : 30,
     );
   }
 
