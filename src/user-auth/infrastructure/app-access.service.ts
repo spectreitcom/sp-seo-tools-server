@@ -6,7 +6,7 @@ import { TokenService } from '../application/ports/token.service';
 import { TokenPayload } from '../application/types';
 
 @Injectable()
-export class NestAccessService implements AccessService {
+export class AppAccessService implements AccessService {
   constructor(
     private readonly requestService: RequestService,
     private readonly tokenService: TokenService,

@@ -6,6 +6,7 @@ import { UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from '../ports/user.repository';
 import { RefreshTokenIdsStorageStorage } from '../ports/refresh-token-ids-storage.storage';
 import { randomUUID } from 'crypto';
+import { TokenHelperService } from '../ports/token-helper.service';
 
 @CommandHandler(RefreshTokenCommand)
 export class RefreshTokenCommandHandler
@@ -15,6 +16,7 @@ export class RefreshTokenCommandHandler
     private readonly tokenService: TokenService,
     private readonly userRepository: UserRepository,
     private readonly refreshTokenIdsStorageStorage: RefreshTokenIdsStorageStorage,
+    private readonly tokenHelperService: TokenHelperService,
   ) {}
 
   async execute(command: RefreshTokenCommand): Promise<GoogleAuthResponse> {
@@ -24,17 +26,14 @@ export class RefreshTokenCommandHandler
       const user = await this.getUser(sub);
 
       await this.validateToken(user.id, tokenId);
-
       const refreshTokenId = randomUUID();
 
-      const accessToken = await this.tokenService.sign(user.id, user.email);
-      const refreshToken = await this.tokenService.signRefreshToken(
-        user.id,
-        user.email,
-        refreshTokenId,
-      );
-
-      await this.refreshTokenIdsStorageStorage.insert(user.id, refreshTokenId);
+      const [accessToken, refreshToken] =
+        await this.tokenHelperService.getTokens(
+          user.id,
+          user.email,
+          refreshTokenId,
+        );
 
       return {
         accessToken,

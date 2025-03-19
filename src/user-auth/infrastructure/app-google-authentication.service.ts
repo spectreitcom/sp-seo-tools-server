@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { GoogleAuthenticateError } from './exceptions';
 
 @Injectable()
-export class NestGoogleAuthenticationService
+export class AppGoogleAuthenticationService
   implements GoogleAuthenticationService
 {
   private readonly oauthClient: OAuth2Client;

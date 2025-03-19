@@ -1,10 +1,10 @@
-import { NestRequestService } from '../nest-request.service';
+import { AppRequestService } from '../app-request.service';
 
 describe('NestRequestService', () => {
-  let nestRequestService: NestRequestService;
+  let nestRequestService: AppRequestService;
 
   beforeEach(() => {
-    nestRequestService = new NestRequestService();
+    nestRequestService = new AppRequestService();
   });
 
   describe('extractToken', () => {

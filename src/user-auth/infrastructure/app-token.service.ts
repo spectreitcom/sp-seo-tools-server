@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from '../application/types';
 
 @Injectable()
-export class NestTokenService implements TokenService {
+export class AppTokenService implements TokenService {
   constructor(private readonly jwtService: JwtService) {}
 
   sign(userId: string, email: string): Promise<string> {

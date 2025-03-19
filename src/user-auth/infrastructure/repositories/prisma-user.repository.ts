@@ -24,6 +24,7 @@ export class PrismaUserRepository implements UserRepository {
       },
     });
   }
+
   findByGoogleId(googleId: string): Promise<User> {
     return this.databaseService.user.findFirst({
       where: {
