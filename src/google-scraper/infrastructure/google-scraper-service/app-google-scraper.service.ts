@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleScraperService } from '../../application/ports/google-scraper.service';
 import {
+  Device,
   GetDataResponse,
   SearchResult,
   SendQueryResponse,
@@ -33,12 +34,14 @@ export class AppGoogleScraperService implements GoogleScraperService {
     localizationCode: string,
     resultsNumber: number,
     query: string,
+    device: Device,
   ): Promise<SearchResult[]> {
     try {
       const { response_id } = await this.sendQuery(
         localizationCode,
         resultsNumber,
         query,
+        device,
       );
 
       await sleep(5 * 1000);
@@ -69,10 +72,23 @@ export class AppGoogleScraperService implements GoogleScraperService {
     }
   }
 
+  private getMobile(device: Device): string | number | undefined {
+    switch (device) {
+      case 'mobile':
+        return 'ios';
+      case 'tablet':
+        return 'ipad';
+      default:
+      case 'desktop':
+        return 0;
+    }
+  }
+
   private async sendQuery(
     localizationCode: string,
     resultsNumber: number,
     query: string,
+    device: Device,
   ) {
     const response = await firstValueFrom(
       this.http.post<SendQueryResponse>(
@@ -86,6 +102,8 @@ export class AppGoogleScraperService implements GoogleScraperService {
             gl: localizationCode,
           },
           brd_json: 'json',
+          brd_browser: 'chrome',
+          brd_mobile: this.getMobile(device),
         },
         {
           params: {

@@ -20,3 +20,5 @@ export type GetDataResponse = {
     image_base64?: string;
   }[];
 };
+
+export type Device = 'desktop' | 'mobile' | 'tablet';

@@ -10,6 +10,12 @@ import { GoogleScraperFacade } from '../../../../google-scraper/application/goog
 import { SearchResult } from '../../types';
 import { TestingModeRepository } from '../../../application/ports/testing-mode.repository';
 import { DomainPositionFactory } from '../../../domain/factories/domain-position.factory';
+import { Device } from '../../../domain/value-objects/device';
+import {
+  DESKTOP_DEVICE,
+  MOBILE_DEVICE,
+  TABLET_DEVICE,
+} from '../../../application/constants';
 
 const TAKE = 100;
 
@@ -54,6 +60,7 @@ export class PositionCheckerConsumer extends WorkerHost {
             localization.countryCode,
             testingMode.getMaxSearchedPages() * 10 + 1,
             keyword.getKeywordText(),
+            this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
           );
 
           await this.processSearchResults(
@@ -70,6 +77,7 @@ export class PositionCheckerConsumer extends WorkerHost {
             localization.countryCode,
             userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
             keyword.getKeywordText(),
+            this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
           );
 
           await this.processSearchResults(
@@ -82,6 +90,17 @@ export class PositionCheckerConsumer extends WorkerHost {
 
       skip = TAKE * (skip + 1);
       keywords = await this.keywordRepository.findAll(TAKE, skip);
+    }
+  }
+
+  private mapDeviceToGoogleScraperDevice(device: Device) {
+    switch (device.value) {
+      case DESKTOP_DEVICE:
+        return 'desktop';
+      case MOBILE_DEVICE:
+        return 'mobile';
+      case TABLET_DEVICE:
+        return 'tablet';
     }
   }
 
