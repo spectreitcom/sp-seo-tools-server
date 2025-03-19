@@ -38,10 +38,10 @@ export class KeywordsController {
     return this.keywordService.getUserKeywordsList(
       userId,
       page && page > 0 ? page : 1,
-      searchText,
-      localizationId,
-      device,
-      domainId,
+      searchText ? searchText : undefined,
+      localizationId ? localizationId : undefined,
+      device ? device : undefined,
+      domainId ? domainId : undefined,
       take ? take : 30,
     );
   }
