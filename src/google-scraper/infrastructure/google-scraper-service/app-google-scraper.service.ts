@@ -9,9 +9,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { sleep } from '../../../shared/utils';
-
-const MAX_ITER_COUNT = 100;
 
 @Injectable()
 export class AppGoogleScraperService implements GoogleScraperService {
@@ -31,29 +28,13 @@ export class AppGoogleScraperService implements GoogleScraperService {
   }
 
   async getResults(
-    localizationCode: string,
+    responseId: string,
     resultsNumber: number,
-    query: string,
-    device: Device,
-  ): Promise<SearchResult[]> {
+  ): Promise<SearchResult[] | null> {
     try {
-      const { response_id } = await this.sendQuery(
-        localizationCode,
-        resultsNumber,
-        query,
-        device,
-      );
+      const response = await this.getData(responseId);
 
-      await sleep(5 * 1000);
-
-      let response = await this.getData(response_id);
-      let counter = 0;
-
-      while (response.status === 202 && counter < MAX_ITER_COUNT) {
-        await sleep(5 * 1000);
-        response = await this.getData(response_id);
-        counter++;
-      }
+      if (response.status === 202 || response.status === 101) return null;
 
       const results: SearchResult[] = [];
 
@@ -72,6 +53,47 @@ export class AppGoogleScraperService implements GoogleScraperService {
     }
   }
 
+  async sendQuery(
+    localizationCode: string,
+    resultsNumber: number,
+    query: string,
+    device: Device,
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<SendQueryResponse>(
+          `${this.baseUrl}/serp/req`,
+          {
+            country: localizationCode,
+            query: {
+              q: query,
+              num: resultsNumber,
+              hl: localizationCode,
+              gl: localizationCode,
+            },
+            brd_json: 'json',
+            brd_browser: 'chrome',
+            brd_mobile: this.getMobile(device),
+          },
+          {
+            params: {
+              customer: this.customer,
+              zone: this.zone,
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${this.token}`,
+            },
+          },
+        ),
+      );
+
+      return response.data;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   private getMobile(device: Device): string | number | undefined {
     switch (device) {
       case 'mobile':
@@ -84,44 +106,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
     }
   }
 
-  private async sendQuery(
-    localizationCode: string,
-    resultsNumber: number,
-    query: string,
-    device: Device,
-  ) {
-    const response = await firstValueFrom(
-      this.http.post<SendQueryResponse>(
-        `${this.baseUrl}/serp/req`,
-        {
-          country: localizationCode,
-          query: {
-            q: query,
-            num: resultsNumber,
-            hl: localizationCode,
-            gl: localizationCode,
-          },
-          brd_json: 'json',
-          brd_browser: 'chrome',
-          brd_mobile: this.getMobile(device),
-        },
-        {
-          params: {
-            customer: this.customer,
-            zone: this.zone,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.token}`,
-          },
-        },
-      ),
-    );
-
-    return response.data;
-  }
-
-  private async getData(responseId: string) {
+  async getData(responseId: string) {
     return await firstValueFrom(
       this.http.get<GetDataResponse>(`${this.baseUrl}/serp/get_result`, {
         params: {

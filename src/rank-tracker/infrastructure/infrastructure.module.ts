@@ -3,6 +3,7 @@ import { KeywordRepository } from '../application/ports/keyword.repository';
 import { PrismaKeywordRepository } from './persistence/repositories/prisma-keyword.repository';
 import { BullModule } from '@nestjs/bullmq';
 import {
+  DOMAIN_POSITION_PROCESSING_QUEUE,
   POSITION_CHECKER_QUEUE,
   TESTING_MODE_CHECKER_QUEUE,
 } from './queues/constants';
@@ -36,6 +37,10 @@ import { DomainPositionHistoryRepository } from '../application/ports/domain-pos
 import { PrismaDomainPositionHistoryRepository } from './persistence/repositories/prisma-domain-position-history.repository';
 import { SeederService } from '../application/ports/seeder.service';
 import { AppSeederService } from './app-seeder.service';
+import { DomainPositionProcessingQueueService } from '../application/ports/domain-position-processing-queue.service';
+import { AppDomainPositionProcessingQueueService } from './queues/app-domain-position-processing-queue.service';
+import { DomainPositionProcessingProducer } from './queues/producers/domain-position-processing.producer';
+import { DomainPositionProcessingConsumer } from './queues/consumers/domain-position-processing.consumer';
 
 @Module({
   imports: [
@@ -45,6 +50,9 @@ import { AppSeederService } from './app-seeder.service';
       },
       {
         name: TESTING_MODE_CHECKER_QUEUE,
+      },
+      {
+        name: DOMAIN_POSITION_PROCESSING_QUEUE,
       },
     ),
     DatabaseModule,
@@ -103,10 +111,16 @@ import { AppSeederService } from './app-seeder.service';
       provide: SeederService,
       useClass: AppSeederService,
     },
+    {
+      provide: DomainPositionProcessingQueueService,
+      useClass: AppDomainPositionProcessingQueueService,
+    },
     PositionCheckerProducer,
     PositionCheckerConsumer,
     TestingModeCheckerProducer,
     TestingModeCheckerConsumer,
+    DomainPositionProcessingProducer,
+    DomainPositionProcessingConsumer,
   ],
   exports: [
     KeywordRepository,
@@ -122,6 +136,7 @@ import { AppSeederService } from './app-seeder.service';
     DomainPositionHistoryRepository,
     DomainPositionRepository,
     SeederService,
+    DomainPositionProcessingQueueService,
   ],
 })
 export class InfrastructureModule {}

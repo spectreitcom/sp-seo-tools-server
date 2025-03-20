@@ -285,4 +285,76 @@ export class PrismaKeywordRepository implements KeywordRepository {
 
     return keywords;
   }
+
+  async findAllWithIds(keywordIds: string[]): Promise<Keyword[]> {
+    const models = await this.databaseService.rtKeyword.findMany({
+      where: {
+        id: {
+          in: keywordIds,
+        },
+      },
+    });
+
+    if (!models.length) return [];
+
+    const domainModels = await this.databaseService.rtDomain.findMany({
+      where: {
+        id: {
+          in: models.map((keywordModel) => keywordModel.domainId),
+        },
+      },
+    });
+
+    const userIds: string[] = [];
+
+    for (const domainModel of domainModels) {
+      if (!userIds.includes(domainModel.userId)) {
+        userIds.push(domainModel.userId);
+      }
+    }
+
+    const userSubscriptionInfoModels =
+      await this.databaseService.rtUserSubscriptionInfo.findMany({
+        where: {
+          userId: {
+            in: userIds,
+          },
+        },
+      });
+
+    const rtTestingModes = await this.databaseService.rtTestingMode.findMany({
+      where: {
+        userId: {
+          in: userIds,
+        },
+      },
+    });
+
+    const keywords: Keyword[] = [];
+
+    for (const model of models) {
+      const domainModel = domainModels.find((dm) => dm.id === model.domainId);
+
+      const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
+        (us) => us.userId === domainModel.userId,
+      );
+
+      // For now, I am not sure how to do it better
+      const usedKeywordsQty = await this.getUsedKeywordsQty(domainModel.userId);
+
+      const rtTestingMode = rtTestingModes.find(
+        (tm) => tm.userId === domainModel.userId,
+      );
+
+      keywords.push(
+        KeywordMapper.toDomain(
+          model,
+          userSubscriptionInfoModel,
+          usedKeywordsQty,
+          rtTestingMode,
+        ),
+      );
+    }
+    return keywords;
+  }
 }

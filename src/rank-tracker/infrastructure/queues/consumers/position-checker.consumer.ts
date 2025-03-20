@@ -1,13 +1,11 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { POSITION_CHECKER_QUEUE } from '../constants';
-import { PositionChecker } from '../position-checker';
 import { KeywordRepository } from '../../../application/ports/keyword.repository';
 import { DomainRepository } from '../../../application/ports/domain.repository';
 import { LocalizationRepository } from '../../../application/ports/localization.repository';
 import { UserSubscriptionInfoRepository } from '../../../application/ports/user-subscription-info.repository';
 import { DomainPositionRepository } from '../../../application/ports/domain-position.repository';
 import { GoogleScraperFacade } from '../../../../google-scraper/application/google-scraper.facade';
-import { SearchResult } from '../../types';
 import { TestingModeRepository } from '../../../application/ports/testing-mode.repository';
 import { DomainPositionFactory } from '../../../domain/factories/domain-position.factory';
 import { Device } from '../../../domain/value-objects/device';
@@ -16,6 +14,8 @@ import {
   MOBILE_DEVICE,
   TABLET_DEVICE,
 } from '../../../application/constants';
+import { EventPublisher } from '@nestjs/cqrs';
+import { sleep } from '../../../../shared/utils';
 
 const TAKE = 100;
 
@@ -29,6 +29,7 @@ export class PositionCheckerConsumer extends WorkerHost {
     private readonly domainPositionRepository: DomainPositionRepository,
     private readonly googleScraperFacade: GoogleScraperFacade,
     private readonly testingModeRepository: TestingModeRepository,
+    private readonly eventPublisher: EventPublisher,
   ) {
     super();
   }
@@ -40,6 +41,8 @@ export class PositionCheckerConsumer extends WorkerHost {
 
     while (!!keywords.length) {
       for (const keyword of keywords) {
+        await sleep(5000);
+
         const domain = await this.domainRepository.findById(
           keyword.getDomainId(),
         );
@@ -56,41 +59,45 @@ export class PositionCheckerConsumer extends WorkerHost {
         );
 
         if (testingMode && testingMode.getActive()) {
-          const searchResults = await this.googleScraperFacade.getResults(
-            localization.countryCode,
-            testingMode.getMaxSearchedPages() * 10 + 1,
-            keyword.getKeywordText(),
-            this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
-          );
-
-          await this.processSearchResults(
-            searchResults,
-            domain.text,
-            keyword.getKeywordId(),
-          );
-
-          continue;
+          try {
+            const { response_id } = await this.googleScraperFacade.sendQuery(
+              localization.countryCode,
+              testingMode.getMaxSearchedPages() * 10 + 1,
+              keyword.getKeywordText(),
+              this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
+            );
+            await this.createDomainPosition(
+              keyword.getKeywordId(),
+              response_id,
+            );
+          } catch (error) {
+            console.error('send query error', error);
+          }
         }
 
         if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
-          const searchResults = await this.googleScraperFacade.getResults(
+          const { response_id } = await this.googleScraperFacade.sendQuery(
             localization.countryCode,
             userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
             keyword.getKeywordText(),
             this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
           );
 
-          await this.processSearchResults(
-            searchResults,
-            domain.text,
-            keyword.getKeywordId(),
-          );
+          await this.createDomainPosition(keyword.getKeywordId(), response_id);
         }
       }
 
       skip = TAKE * (skip + 1);
       keywords = await this.keywordRepository.findAll(TAKE, skip);
     }
+  }
+
+  private async createDomainPosition(keywordId: string, processId: string) {
+    const domainPosition = DomainPositionFactory.create(keywordId, processId);
+    this.eventPublisher.mergeObjectContext(domainPosition);
+    domainPosition.create();
+    await this.domainPositionRepository.save(domainPosition);
+    domainPosition.commit();
   }
 
   private mapDeviceToGoogleScraperDevice(device: Device) {
@@ -102,18 +109,5 @@ export class PositionCheckerConsumer extends WorkerHost {
       case TABLET_DEVICE:
         return 'tablet';
     }
-  }
-
-  private async processSearchResults(
-    searchResults: SearchResult[],
-    domain: string,
-    keywordId: string,
-  ) {
-    const position = PositionChecker.getHighestPosition(searchResults, domain);
-    const domainPosition = DomainPositionFactory.create(
-      keywordId,
-      position === -1 ? 0 : position,
-    );
-    await this.domainPositionRepository.save(domainPosition);
   }
 }

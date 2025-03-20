@@ -5,7 +5,10 @@ import { DomainPosition } from '../../domain-position';
 describe('DomainPositionFactory', () => {
   describe('create', () => {
     it('should create DomainPositionInstance', () => {
-      const domainPosition = DomainPositionFactory.create(randomUUID(), 4);
+      const domainPosition = DomainPositionFactory.create(
+        randomUUID(),
+        randomUUID(),
+      );
       expect(domainPosition).toBeInstanceOf(DomainPosition);
     });
   });

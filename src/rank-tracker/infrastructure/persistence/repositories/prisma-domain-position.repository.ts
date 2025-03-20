@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { DomainPositionRepository } from '../../../application/ports/domain-position.repository';
 import { DomainPosition } from 'src/rank-tracker/domain/domain-position';
 import { DatabaseService } from '../../../../database/database.service';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, RtDomainPositionStaus } from '@prisma/client';
+import { DomainPositionMapper } from '../../../domain/mappers/domain-position.mapper';
 
 @Injectable()
 export class PrismaDomainPositionRepository
@@ -17,16 +18,18 @@ export class PrismaDomainPositionRepository
     const prismaClient = prisma ?? this.databaseService;
 
     const domainPositionModel = await prismaClient.rtDomainPosition.findUnique({
-      where: { id: domainPosition.domainPositionId },
+      where: { id: domainPosition.getDomainPositionId() },
     });
 
     if (domainPositionModel) {
       await prismaClient.rtDomainPosition.update({
-        where: { id: domainPosition.domainPositionId },
+        where: { id: domainPosition.getDomainPositionId() },
         data: {
-          position: domainPosition.position,
-          keywordId: domainPosition.keywordId,
-          timestamp: domainPosition.timestamp,
+          position: domainPosition.getPosition(),
+          keywordId: domainPosition.getKeywordId(),
+          timestamp: domainPosition.getTimestamp(),
+          processId: domainPosition.getProcessId(),
+          status: domainPosition.getStatus(),
         },
       });
       return;
@@ -34,11 +37,29 @@ export class PrismaDomainPositionRepository
 
     await prismaClient.rtDomainPosition.create({
       data: {
-        id: domainPosition.domainPositionId,
-        position: domainPosition.position,
-        keywordId: domainPosition.keywordId,
-        timestamp: domainPosition.timestamp,
+        id: domainPosition.getDomainPositionId(),
+        position: domainPosition.getPosition(),
+        keywordId: domainPosition.getKeywordId(),
+        timestamp: domainPosition.getTimestamp(),
+        processId: domainPosition.getProcessId(),
+        status: domainPosition.getStatus(),
       },
     });
+  }
+
+  async findAll(
+    take: number,
+    skip: number,
+    status: RtDomainPositionStaus | undefined,
+  ): Promise<DomainPosition[]> {
+    const models = await this.databaseService.rtDomainPosition.findMany({
+      where: {
+        status,
+      },
+      take,
+      skip,
+    });
+    if (!models.length) return [];
+    return models.map((model) => DomainPositionMapper.toDomain(model));
   }
 }

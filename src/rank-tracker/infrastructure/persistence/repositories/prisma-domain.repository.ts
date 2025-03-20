@@ -75,4 +75,16 @@ export class PrismaDomainRepository implements DomainRepository {
     if (!models.length) return [];
     return models.map((model) => DomainMapper.toDomain(model));
   }
+
+  async findAllWithIds(domainIds: string[]): Promise<Domain[]> {
+    const models = await this.databaseService.rtDomain.findMany({
+      where: {
+        id: {
+          in: domainIds,
+        },
+      },
+    });
+    if (!models.length) return [];
+    return models.map((model) => DomainMapper.toDomain(model));
+  }
 }

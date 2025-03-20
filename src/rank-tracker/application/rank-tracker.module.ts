@@ -36,6 +36,9 @@ import { GetDomainPositionHistoryQueryHandler } from './query-handlers/get-domai
 import { DomainHistoryPositionService } from './services/domain-history-position.service';
 import { DomainPositionHistoryController } from '../presenters/http/domain-position-history.controller';
 import { SeedCommand } from './cli/seed.command';
+import { DomainPositionProcessingCron } from './cron/domain-position-processing.cron';
+import { DomainPositionCreatedEventHandler } from './event-handlers/domain-position-created.event-handler';
+import { DomainPositionStatusUpdatedEventHandler } from './event-handlers/domain-position-status-updated.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -77,6 +80,9 @@ import { SeedCommand } from './cli/seed.command';
     GetDomainPositionHistoryQueryHandler,
     DomainHistoryPositionService,
     SeedCommand,
+    DomainPositionProcessingCron,
+    DomainPositionCreatedEventHandler,
+    DomainPositionStatusUpdatedEventHandler,
   ],
 })
 export class RankTrackerModule {}

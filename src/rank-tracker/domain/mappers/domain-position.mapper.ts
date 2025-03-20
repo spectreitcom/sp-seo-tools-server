@@ -8,6 +8,8 @@ export class DomainPositionMapper {
       rtDomainPosition.keywordId,
       rtDomainPosition.position,
       rtDomainPosition.timestamp,
+      rtDomainPosition.processId,
+      rtDomainPosition.status,
     );
   }
 }

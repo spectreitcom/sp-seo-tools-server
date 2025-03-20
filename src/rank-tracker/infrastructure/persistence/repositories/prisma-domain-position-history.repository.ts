@@ -26,6 +26,7 @@ export class PrismaDomainPositionHistoryRepository
             userId,
           },
         },
+        status: 'DONE',
         timestamp: {
           gte: fromDate,
           lte: toDate,
@@ -62,6 +63,7 @@ export class PrismaDomainPositionHistoryRepository
             userId,
           },
         },
+        status: 'DONE',
         timestamp: {
           gte: fromDate,
           lte: toDate,
@@ -79,6 +81,7 @@ export class PrismaDomainPositionHistoryRepository
             userId,
           },
         },
+        status: 'DONE',
       },
     });
   }

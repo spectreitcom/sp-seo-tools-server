@@ -65,4 +65,20 @@ export class PrismaUserSubscriptionInfoRepository
 
     return UserSubscriptionInfoMapper.toDomain(userSubscriptionInfoModel);
   }
+
+  async findAllActiveByUserIds(
+    userIds: string[],
+  ): Promise<UserSubscriptionInfo[]> {
+    const models = await this.databaseService.rtUserSubscriptionInfo.findMany({
+      where: {
+        userId: {
+          in: userIds,
+        },
+      },
+    });
+
+    if (!models.length) return [];
+
+    return models.map((model) => UserSubscriptionInfoMapper.toDomain(model));
+  }
 }

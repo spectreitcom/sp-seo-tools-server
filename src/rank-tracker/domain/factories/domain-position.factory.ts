@@ -5,9 +5,17 @@ import * as moment from 'moment';
 export class DomainPositionFactory {
   static create(
     keywordId: string,
-    position: number,
+    processId: string,
     timestamp = moment().unix(),
+    position = 0,
   ) {
-    return new DomainPosition(randomUUID(), keywordId, position, timestamp);
+    return new DomainPosition(
+      randomUUID(),
+      keywordId,
+      position,
+      timestamp,
+      processId,
+      'PENDING',
+    );
   }
 }

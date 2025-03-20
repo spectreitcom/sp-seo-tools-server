@@ -6,4 +6,7 @@ export abstract class UserSubscriptionInfoRepository {
     userSubscriptionInfoId: string,
   ): Promise<UserSubscriptionInfo>;
   abstract findByUser(userId: string): Promise<UserSubscriptionInfo>;
+  abstract findAllActiveByUserIds(
+    userIds: string[],
+  ): Promise<UserSubscriptionInfo[]>;
 }

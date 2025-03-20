@@ -63,11 +63,13 @@ model RtKeyword {
 }
 
 model RtDomainPosition {
-  id        String    @id @default(uuid())
+  id        String                @id @default(uuid())
   keywordId String
-  keyword   RtKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
-  position  Int       @default(0)
-  timestamp Int       @unique
+  keyword   RtKeyword             @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  position  Int                   @default(0)
+  timestamp Int                   @unique
+  processId String                @unique
+  status    RtDomainPositionStaus @default(PENDING)
 }
 
 model RtUserSubscriptionInfo {
@@ -94,6 +96,11 @@ model RtTestingMode {
   maxKeywordsQty   Int
   maxSearchedPages Int
   createdAt        Int
+}
+
+enum RtDomainPositionStaus {
+  PENDING
+  DONE
 }
 
 // Rank Tracker Subscription

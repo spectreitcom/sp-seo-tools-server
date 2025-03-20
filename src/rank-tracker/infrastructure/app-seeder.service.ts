@@ -16,6 +16,7 @@ import { DomainPositionRepository } from '../application/ports/domain-position.r
 import { DatabaseService } from '../../database/database.service';
 import { PrismaClient } from '@prisma/client';
 import { DomainPositionFactory } from '../domain/factories/domain-position.factory';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AppSeederService implements SeederService {
@@ -147,8 +148,9 @@ export class AppSeederService implements SeederService {
       const position = randomNumberFromRange(0, 50);
       const domainPosition = DomainPositionFactory.create(
         keywordId,
-        position,
+        randomUUID(),
         timestamp,
+        position,
       );
       await this.domainPositionRepository.save(domainPosition, prisma);
       nextDate = nextDate.clone().add(1, 'day');

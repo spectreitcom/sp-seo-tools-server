@@ -5,4 +5,5 @@ export abstract class TestingModeRepository {
   abstract hasUserAlreadyActivated(userId: string): Promise<boolean>;
   abstract findAllActive(take: number, skip: number): Promise<TestingMode[]>;
   abstract findByUserId(userId: string): Promise<TestingMode>;
+  abstract findAllActiveByUserIds(userIds: string[]): Promise<TestingMode[]>;
 }

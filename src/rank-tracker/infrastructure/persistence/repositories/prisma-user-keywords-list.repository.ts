@@ -54,6 +54,7 @@ export class PrismaUserKeywordsListRepository
           keywordId: {
             in: models.map((model) => model.id),
           },
+          status: 'DONE',
         },
         orderBy: {
           timestamp: 'desc',
@@ -120,6 +121,7 @@ export class PrismaUserKeywordsListRepository
       await this.databaseService.rtDomainPosition.findFirst({
         where: {
           keywordId: keyword.id,
+          status: 'DONE',
         },
         orderBy: {
           timestamp: 'desc',
