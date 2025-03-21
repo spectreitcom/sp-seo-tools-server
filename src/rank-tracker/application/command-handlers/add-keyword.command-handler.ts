@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { AddKeywordCommand } from '../commands/add-keyword.command';
 import { KeywordRepository } from '../ports/keyword.repository';
 import {
@@ -21,6 +21,7 @@ export class AddKeywordCommandHandler
     private readonly keywordRepository: KeywordRepository,
     private readonly userSubscriptionInfoRepository: UserSubscriptionInfoRepository,
     private readonly testingModeRepository: TestingModeRepository,
+    private readonly eventPublisher: EventPublisher,
   ) {}
 
   async execute(command: AddKeywordCommand): Promise<void> {
@@ -53,11 +54,9 @@ export class AddKeywordCommandHandler
         localizationId,
         testingMode ? testingMode.getActive() : false,
       );
-
+      this.eventPublisher.mergeObjectContext(keyword);
       keyword.create();
-
       await this.keywordRepository.save(keyword);
-
       keyword.commit();
     } catch (e) {
       if (e instanceof InactiveSubscriptionError) {

@@ -28,6 +28,7 @@ describe('Keyword', () => {
       LOCALIZATION_ID,
       false,
       moment().unix(),
+      'NO_CHANGE',
     );
 
     keyword.create();
@@ -49,6 +50,7 @@ describe('Keyword', () => {
       LOCALIZATION_ID,
       true,
       moment().unix(),
+      'NO_CHANGE',
     );
 
     keyword.create();
@@ -69,6 +71,7 @@ describe('Keyword', () => {
       LOCALIZATION_ID,
       false,
       moment().unix(),
+      'NO_CHANGE',
     );
     expect(() => keyword.create()).toThrow(InactiveSubscriptionError);
   });
@@ -85,6 +88,7 @@ describe('Keyword', () => {
       LOCALIZATION_ID,
       false,
       moment().unix(),
+      'NO_CHANGE',
     );
     expect(() => keyword.create()).toThrow(IsKeywordsQuantityExceededError);
   });
@@ -103,6 +107,7 @@ describe('Keyword', () => {
           LOCALIZATION_ID,
           false,
           moment().unix(),
+          'NO_CHANGE',
         ),
     ).toThrow(InvalidDeviceError);
   });

@@ -22,7 +22,11 @@ export class DomainPosition extends AggregateRoot {
   updateStatus(status: RtDomainPositionStaus) {
     this.status = status;
     this.apply(
-      new DomainPositionStatusUpdatedEvent(this.domainPositionId, this.status),
+      new DomainPositionStatusUpdatedEvent(
+        this.domainPositionId,
+        this.status,
+        this.keywordId,
+      ),
     );
   }
 

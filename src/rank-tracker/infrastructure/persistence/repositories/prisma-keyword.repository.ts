@@ -26,7 +26,7 @@ export class PrismaKeywordRepository implements KeywordRepository {
     await this.create(keyword, prisma);
   }
 
-  async findById(
+  async findByUserAndId(
     keywordId: string,
     userId: string,
     prisma?: PrismaClient,
@@ -84,13 +84,14 @@ export class PrismaKeywordRepository implements KeywordRepository {
 
   private async update(keyword: Keyword, prisma?: PrismaClient) {
     const prismaClient = prisma ?? this.databaseService;
-    prismaClient.rtKeyword.update({
+    await prismaClient.rtKeyword.update({
       where: { id: keyword.getKeywordId() },
       data: {
         text: keyword.getKeywordText(),
         domainId: keyword.getDomainId(),
         device: keyword.getDevice().value,
         localizationId: keyword.getLocalizationId(),
+        growth: keyword.getGrowth(),
       },
     });
   }
@@ -105,6 +106,7 @@ export class PrismaKeywordRepository implements KeywordRepository {
         device: keyword.getDevice().value,
         localizationId: keyword.getLocalizationId(),
         timestamp: keyword.getTimestamp(),
+        growth: keyword.getGrowth(),
       },
     });
   }
@@ -356,5 +358,40 @@ export class PrismaKeywordRepository implements KeywordRepository {
       );
     }
     return keywords;
+  }
+
+  async findById(keywordId: string): Promise<Keyword> {
+    const model = await this.databaseService.rtKeyword.findUnique({
+      where: { id: keywordId },
+    });
+    if (!model) return null;
+
+    const domain = await this.databaseService.rtDomain.findUnique({
+      where: {
+        id: model.domainId,
+      },
+    });
+
+    const userSubscriptionInfoModel =
+      await this.databaseService.rtUserSubscriptionInfo.findUnique({
+        where: {
+          userId: domain.userId,
+        },
+      });
+
+    const usedKeywordsQty = await this.getUsedKeywordsQty(domain.userId);
+
+    const rtTestingMode = await this.databaseService.rtTestingMode.findUnique({
+      where: {
+        userId: domain.userId,
+      },
+    });
+
+    return KeywordMapper.toDomain(
+      model,
+      userSubscriptionInfoModel,
+      usedKeywordsQty,
+      rtTestingMode,
+    );
   }
 }

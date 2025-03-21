@@ -12,4 +12,11 @@ export abstract class DomainPositionRepository {
     skip: number,
     status: RtDomainPositionStaus | undefined,
   ): Promise<DomainPosition[]>;
+
+  abstract findAllByKeywordK(
+    keywordId: string,
+    take: number,
+    skip: number,
+    status: RtDomainPositionStaus | undefined,
+  ): Promise<DomainPosition[]>;
 }

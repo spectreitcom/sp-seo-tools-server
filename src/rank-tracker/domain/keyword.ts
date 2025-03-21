@@ -7,18 +7,20 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { KeywordAddedEvent } from './events/keyword-added.event';
 import { AvailableKeywordsQuantity } from './value-objects/available-keywords-quantity';
 import { Device } from './value-objects/device';
+import { RtKeywordGrowth } from '@prisma/client';
 
 export class Keyword extends AggregateRoot {
   constructor(
-    private readonly isSubscriptionActive: boolean,
-    private readonly availableKeywordQuantity: AvailableKeywordsQuantity,
-    private readonly keywordId: string,
-    private readonly domainId: string,
-    private readonly keywordText: string,
-    private readonly device: Device,
-    private readonly localizationId: string,
-    private readonly testingModeActive: boolean,
-    private readonly timestamp: number,
+    private isSubscriptionActive: boolean,
+    private availableKeywordQuantity: AvailableKeywordsQuantity,
+    private keywordId: string,
+    private domainId: string,
+    private keywordText: string,
+    private device: Device,
+    private localizationId: string,
+    private testingModeActive: boolean,
+    private timestamp: number,
+    private growth: RtKeywordGrowth,
   ) {
     super();
     if (!this.device.isValid()) {
@@ -36,6 +38,22 @@ export class Keyword extends AggregateRoot {
     }
 
     this.apply(new KeywordAddedEvent(this.keywordId));
+  }
+
+  growthUp() {
+    this.growth = 'UP';
+  }
+
+  growthDown() {
+    this.growth = 'DOWN';
+  }
+
+  growthNoChange() {
+    this.growth = 'NO_CHANGE';
+  }
+
+  getGrowth() {
+    return this.growth;
   }
 
   getKeywordText() {

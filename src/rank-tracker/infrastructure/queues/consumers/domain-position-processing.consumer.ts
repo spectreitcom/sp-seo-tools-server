@@ -136,6 +136,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
     domainPosition.updateStatus('DONE');
     domainPosition.updatePosition(position === -1 ? 0 : position);
     await this.domainPositionRepository.save(domainPosition);
+    domainPosition.commit();
   }
 
   private getUniqueDomainIds(keywords: Keyword[]) {

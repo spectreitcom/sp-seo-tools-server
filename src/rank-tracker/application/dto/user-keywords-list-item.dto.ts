@@ -1,3 +1,5 @@
+import { RtKeywordGrowth } from '@prisma/client';
+
 export class UserKeywordsListItemDto {
   constructor(
     public readonly keywordId: string,
@@ -8,5 +10,6 @@ export class UserKeywordsListItemDto {
     public readonly domain: string,
     public readonly localizationCountryName: string,
     public readonly deviceName: string,
+    public readonly growth: RtKeywordGrowth,
   ) {}
 }

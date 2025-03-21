@@ -91,6 +91,7 @@ export class PrismaUserKeywordsListRepository
           model.domain.text,
           model.localization.name,
           DeviceMapper.toName(model.device),
+          model.growth,
         ),
       );
     }
@@ -137,6 +138,7 @@ export class PrismaUserKeywordsListRepository
       keyword.domain.text,
       keyword.localization.name,
       DeviceMapper.toName(keyword.device),
+      keyword.growth,
     );
   }
 

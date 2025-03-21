@@ -29,6 +29,7 @@ export class KeywordFactory {
       localizationId,
       testingModeActive,
       moment().unix(),
+      'NO_CHANGE',
     );
   }
 }

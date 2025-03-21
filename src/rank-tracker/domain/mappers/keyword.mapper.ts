@@ -48,6 +48,7 @@ export class KeywordMapper {
       localizationId,
       testingModeActive,
       rtKeyword.timestamp,
+      rtKeyword.growth,
     );
   }
 }

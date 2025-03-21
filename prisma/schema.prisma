@@ -60,6 +60,7 @@ model RtKeyword {
   localizationId  String
   localization    RtLocalization     @relation(fields: [localizationId], references: [id])
   timestamp       Int
+  growth          RtKeywordGrowth    @default(NO_CHANGE)
 }
 
 model RtDomainPosition {
@@ -101,6 +102,12 @@ model RtTestingMode {
 enum RtDomainPositionStaus {
   PENDING
   DONE
+}
+
+enum RtKeywordGrowth {
+  UP
+  DOWN
+  NO_CHANGE
 }
 
 // Rank Tracker Subscription

@@ -3,11 +3,14 @@ import { PrismaClient } from '@prisma/client';
 
 export abstract class KeywordRepository {
   abstract save(keyword: Keyword, prisma?: PrismaClient): Promise<void>;
-  abstract findById(
+
+  abstract findByUserAndId(
     keywordId: string,
     userId: string,
     prisma?: PrismaClient,
   ): Promise<Keyword>;
+
+  abstract findById(keywordId: string): Promise<Keyword>;
 
   abstract getUsedKeywordsQty(
     userId: string,
