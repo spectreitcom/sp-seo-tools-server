@@ -89,9 +89,6 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
             domainPosition.getProcessId(),
             resultsNumber,
           );
-
-          console.log('searchResults', searchResults); // todo;
-
           if (Array.isArray(searchResults)) {
             await this.processSearchResults(
               searchResults,
