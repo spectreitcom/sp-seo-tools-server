@@ -82,7 +82,6 @@ export class PositionCheckerConsumer extends WorkerHost {
             keyword.getKeywordText(),
             this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
           );
-
           await this.createDomainPosition(keyword.getKeywordId(), response_id);
         }
       }
