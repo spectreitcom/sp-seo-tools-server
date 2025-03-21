@@ -151,6 +151,7 @@ export class AppSeederService implements SeederService {
         randomUUID(),
         timestamp,
         position,
+        'DONE',
       );
       await this.domainPositionRepository.save(domainPosition, prisma);
       nextDate = nextDate.clone().add(1, 'day');
