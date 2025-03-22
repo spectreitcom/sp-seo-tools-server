@@ -41,6 +41,8 @@ import { DomainPositionProcessingQueueService } from '../application/ports/domai
 import { AppDomainPositionProcessingQueueService } from './queues/app-domain-position-processing-queue.service';
 import { DomainPositionProcessingProducer } from './queues/producers/domain-position-processing.producer';
 import { DomainPositionProcessingConsumer } from './queues/consumers/domain-position-processing.consumer';
+import { PositionCheckerService } from '../application/ports/position-checker.service';
+import { AppPositionCheckerService } from './app-position-checker.service';
 
 @Module({
   imports: [
@@ -115,6 +117,10 @@ import { DomainPositionProcessingConsumer } from './queues/consumers/domain-posi
       provide: DomainPositionProcessingQueueService,
       useClass: AppDomainPositionProcessingQueueService,
     },
+    {
+      provide: PositionCheckerService,
+      useClass: AppPositionCheckerService,
+    },
     PositionCheckerProducer,
     PositionCheckerConsumer,
     TestingModeCheckerProducer,
@@ -137,6 +143,7 @@ import { DomainPositionProcessingConsumer } from './queues/consumers/domain-posi
     DomainPositionRepository,
     SeederService,
     DomainPositionProcessingQueueService,
+    PositionCheckerService,
   ],
 })
 export class InfrastructureModule {}

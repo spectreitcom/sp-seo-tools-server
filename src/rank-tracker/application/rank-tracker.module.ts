@@ -39,6 +39,7 @@ import { SeedCommand } from './cli/seed.command';
 import { DomainPositionProcessingCron } from './cron/domain-position-processing.cron';
 import { DomainPositionCreatedEventHandler } from './event-handlers/domain-position-created.event-handler';
 import { DomainPositionStatusUpdatedEventHandler } from './event-handlers/domain-position-status-updated.event-handler';
+import { KeywordAddedEventHandler } from './event-handlers/keyword-added.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -83,6 +84,7 @@ import { DomainPositionStatusUpdatedEventHandler } from './event-handlers/domain
     DomainPositionProcessingCron,
     DomainPositionCreatedEventHandler,
     DomainPositionStatusUpdatedEventHandler,
+    KeywordAddedEventHandler,
   ],
 })
 export class RankTrackerModule {}
