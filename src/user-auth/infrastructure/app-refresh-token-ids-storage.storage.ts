@@ -15,6 +15,9 @@ export class AppRefreshTokenIdsStorage
       port: this.configService.get<number>('REDIS_PORT'),
       username: this.configService.get<string>('REDIS_USERNAME'),
       password: this.configService.get<string>('REDIS_PASSWORD'),
+      tls: {
+        host: this.configService.get<string>('REDIS_HOST'),
+      },
     });
   }
 
