@@ -9,4 +9,5 @@ RUN yarn install
 
 COPY . .
 
+RUN npx prisma migrate dev
 RUN yarn build
