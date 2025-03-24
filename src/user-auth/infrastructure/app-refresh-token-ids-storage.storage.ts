@@ -13,6 +13,8 @@ export class AppRefreshTokenIdsStorage
     this.client = new Redis({
       host: this.configService.get<string>('REDIS_HOST'),
       port: this.configService.get<number>('REDIS_PORT'),
+      username: this.configService.get<string>('REDIS_USERNAME'),
+      password: this.configService.get<string>('REDIS_PASSWORD'),
     });
   }
 
