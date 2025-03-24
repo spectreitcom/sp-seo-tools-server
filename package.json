@@ -102,6 +102,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "23.10.0"
+    "node": "v23.10.0"
   }
 }
