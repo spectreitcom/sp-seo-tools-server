@@ -11,7 +11,7 @@ import { AppGoogleScraperDevService } from './google-scraper-service/app-google-
     {
       provide: GoogleScraperService,
       useFactory: (httpService: HttpService, configService: ConfigService) =>
-        configService.get<string>('NODE_ENV') === 'production'
+        configService.get<string>('NODE_ENV') === 'staging'
           ? new AppGoogleScraperService(configService, httpService)
           : new AppGoogleScraperDevService(),
       inject: [HttpService, ConfigService],
