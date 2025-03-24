@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Admin Auth
+
+model AdminUser {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+}
+
+// User Auth
+
+model User {
+  id       String           @id @default(uuid())
+  email    String           @unique
+  password String?
+  googleId String?
+  provider UserAuthProvider
+  picture  String?
+}
+
+enum UserAuthProvider {
+  GOOGLE
+  CREDENTIALS
+}
+
+// Rank Tracker
+
+model RtDomain {
+  id        String      @id @default(uuid())
+  text      String
+  userId    String
+  keywords  RtKeyword[]
+  createdAt Int
+
+  @@unique([userId, text])
+}
+
+model RtKeyword {
+  id              String             @id @default(uuid())
+  text            String
+  domainId        String
+  domain          RtDomain           @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  domainPositions RtDomainPosition[]
+  device          String?
+  localizationId  String
+  localization    RtLocalization     @relation(fields: [localizationId], references: [id])
+  timestamp       Int
+  growth          RtKeywordGrowth    @default(NO_CHANGE)
+}
+
+model RtDomainPosition {
+  id        String                @id @default(uuid())
+  keywordId String
+  keyword   RtKeyword             @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  position  Int                   @default(0)
+  timestamp Int                   @unique
+  processId String                @unique
+  status    RtDomainPositionStaus @default(PENDING)
+}
+
+model RtUserSubscriptionInfo {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  active           Boolean
+  maxKeywordsQty   Int
+  maxSearchedPages Int
+}
+
+model RtLocalization {
+  id          String      @id @default(uuid())
+  domainParam String
+  keywords    RtKeyword[]
+  countryCode String      @unique
+  name        String
+}
+
+model RtTestingMode {
+  id               String  @id @default(uuid())
+  expiresAt        Int
+  userId           String  @unique
+  active           Boolean @default(true)
+  maxKeywordsQty   Int
+  maxSearchedPages Int
+  createdAt        Int
+}
+
+enum RtDomainPositionStaus {
+  PENDING
+  DONE
+}
+
+enum RtKeywordGrowth {
+  UP
+  DOWN
+  NO_CHANGE
+}
+
+// Rank Tracker Subscription
+
+model RankTrackerSubscription {
+  id                String                        @id @default(uuid())
+  name              String
+  amount            Float
+  maxKeywordsQty    Int
+  maxSearchedPages  Int
+  hidden            Boolean                       @default(false)
+  userSubscriptions RankTrackerUserSubscription[]
+  priceId           String                        @unique
+}
+
+model RankTrackerUserSubscription {
+  id             String                  @id @default(uuid())
+  userId         String                  @unique
+  active         Boolean                 @default(true)
+  subscriptionId String
+  sessionId      String
+  customerId     String                  @unique
+  subscription   RankTrackerSubscription @relation(fields: [subscriptionId], references: [id])
+}
+
+// Search Engines
+
+model SeLocalization {
+  id          String @id @default(uuid())
+  domainParam String
+  countryCode String @unique
+  name        String
+}

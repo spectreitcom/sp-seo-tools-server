@@ -1,19 +1,18 @@
 version: "3"
 
 services:
-#  db:
-#    image: mysql:8.0.32
-#    volumes:
-#      - matfil_db:/var/lib/mysql
-#    networks:
-#      - matfil_network
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_DATABASE: matfil
-#      MYSQL_USER: matfil
-#      MYSQL_PASSWORD: matfil
-#    ports:
-#      - "3306:3306"
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - sp_seo_tool_db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - sp_seo_tool_network
 
   app:
     build:
@@ -25,22 +24,22 @@ services:
       - sp_seo_tool_network
     ports:
       - "3000:3000"
-#    depends_on:
-#      - db
-#      - redis
+    depends_on:
+      - db
+      - redis
     command: yarn run start:dev
 #    env_file:
 #      - ./.env
 
-#  redis:
-#    image: redis
-#    networks:
-#      - matfil_network
-#    ports:
-#      - "6379:6379"
-#    volumes:
-#      - matfil_redis:/data
-#    command: redis-server --appendonly yes
+  redis:
+    image: redis
+    networks:
+      - sp_seo_tool_network
+    ports:
+      - "6379:6379"
+    volumes:
+      - sp_seo_tool_redis:/data
+    command: redis-server --appendonly yes
 
 
 networks:
