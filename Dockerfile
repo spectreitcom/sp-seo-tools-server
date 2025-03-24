@@ -2,11 +2,11 @@ FROM node:alpine
 
 WORKDIR /usr/src/app
 
-#COPY package.json ./
-#COPY yarn.lock ./
+COPY package.json ./
+COPY yarn.lock ./
 
-#RUN yarn install
+RUN yarn install
 
-#COPY . .
+COPY . .
 
-#RUN yarn build
+RUN yarn build
