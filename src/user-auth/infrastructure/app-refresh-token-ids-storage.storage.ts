@@ -10,14 +10,19 @@ export class AppRefreshTokenIdsStorage
   private readonly client: Redis;
 
   constructor(private readonly configService: ConfigService) {
+    const nodeEnv = this.configService.get('NODE_ENV');
+    const isDevelopment = nodeEnv === 'development';
+
     this.client = new Redis({
       host: this.configService.get<string>('REDIS_HOST'),
       port: this.configService.get<number>('REDIS_PORT'),
       username: this.configService.get<string>('REDIS_USERNAME'),
       password: this.configService.get<string>('REDIS_PASSWORD'),
-      tls: {
-        host: this.configService.get<string>('REDIS_HOST'),
-      },
+      tls: isDevelopment
+        ? undefined
+        : {
+            host: this.configService.get<string>('REDIS_HOST'),
+          },
     });
   }
 
