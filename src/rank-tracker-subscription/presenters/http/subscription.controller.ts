@@ -14,6 +14,8 @@ import { CreateCheckoutSessionDto } from '../../application/dto/create-checkout-
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { SubscriptionService } from '../../application/services/subscription.service';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { SubscriptionListItemDto } from '../../application/dto/swagger/subscription-list-item.dto';
 
 @Controller('rank-tracker-subscription')
 export class SubscriptionController {
@@ -22,12 +24,22 @@ export class SubscriptionController {
     private readonly subscriptionService: SubscriptionService,
   ) {}
 
+  @ApiOperation({
+    summary: "Webhook for Stripe's events",
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "Received Stripe's event",
+  })
   @Post('webhook')
   @HttpCode(HttpStatus.OK)
   webhook(@Req() request: Request) {
     return this.paymentService.webhookHandler(request);
   }
 
+  @ApiOperation({
+    summary: 'Creates a checkout session',
+  })
   @Post('create-checkout-session')
   @UseGuards(AuthGuard)
   createCheckoutSession(
@@ -37,12 +49,23 @@ export class SubscriptionController {
     return this.paymentService.createCheckoutSession(payload, userId);
   }
 
+  @ApiOperation({
+    summary: 'Creates a session portal',
+  })
   @Post('create-session-portal')
   @UseGuards(AuthGuard)
   createSessionPortal(@CurrentUserId() userId: string) {
     return this.paymentService.createSessionPortal(userId);
   }
 
+  @ApiOperation({
+    summary: 'Returns all plans',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: SubscriptionListItemDto,
+    isArray: true,
+  })
   @Get('subscriptions')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
@@ -50,6 +73,13 @@ export class SubscriptionController {
     return this.subscriptionService.getSubscriptions(userId);
   }
 
+  @ApiOperation({
+    summary: "Returns user's current plan",
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: SubscriptionListItemDto,
+  })
   @Get('current-plan')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)

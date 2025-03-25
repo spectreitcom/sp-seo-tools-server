@@ -1,7 +1,16 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { DomainHistoryPositionService } from '../../application/services/domain-history-position.service';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { GetKeywordPositionHistoryQueryResponse } from '../../application/dto/swagger/get-keyword-position-history-query-response';
 
 @Controller('rank-tracker/domain-history-position')
 export class DomainPositionHistoryController {
@@ -9,6 +18,13 @@ export class DomainPositionHistoryController {
     private readonly domainHistoryPositionService: DomainHistoryPositionService,
   ) {}
 
+  @ApiOperation({
+    summary: 'Returns the history of positions for a given keyword',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: GetKeywordPositionHistoryQueryResponse,
+  })
   @Get(':keywordId')
   @UseGuards(AuthGuard)
   async getDomainPositionHistory(
