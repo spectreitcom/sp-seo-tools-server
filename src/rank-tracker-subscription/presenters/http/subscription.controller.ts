@@ -15,7 +15,7 @@ import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { SubscriptionService } from '../../application/services/subscription.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { SubscriptionListItemDto } from '../../application/dto/swagger/subscription-list-item.dto';
+import { SubscriptionListItemDto } from '../../application/swagger/subscription-list-item.dto';
 
 @Controller('rank-tracker-subscription')
 export class SubscriptionController {

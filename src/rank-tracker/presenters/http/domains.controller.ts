@@ -14,8 +14,8 @@ import { DomainService } from '../../application/services/domain.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UserDomainsListItemDto } from '../../application/dto/swagger/user-domains-list-item.dto';
-import { GetUserDomainsListQueryResponse } from '../../application/dto/swagger/get-user-domains-list-query-response';
+import { UserDomainsListItemDto } from '../../application/swagger/user-domains-list-item.dto';
+import { GetUserDomainsListQueryResponse } from '../../application/swagger/get-user-domains-list-query-response';
 
 @Controller('rank-tracker/domains')
 export class DomainsController {

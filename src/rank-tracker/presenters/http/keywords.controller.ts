@@ -15,9 +15,9 @@ import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { AddKeywordDto } from '../../application/dto/add-keyword.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GetUserKeywordsListQueryResponse } from '../../application/dto/swagger/get-user-keywords-list-query-response';
-import { AvailableKeywordsQuantityDto } from '../../application/dto/swagger/available-keywords-quantity.dto';
-import { UserKeywordsListItemDto } from '../../application/dto/swagger/user-keywords-list-item.dto';
+import { GetUserKeywordsListQueryResponse } from '../../application/swagger/get-user-keywords-list-query-response';
+import { AvailableKeywordsQuantityDto } from '../../application/swagger/available-keywords-quantity.dto';
+import { UserKeywordsListItemDto } from '../../application/swagger/user-keywords-list-item.dto';
 
 @Controller('rank-tracker/keywords')
 export class KeywordsController {

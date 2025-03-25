@@ -13,8 +13,8 @@ import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { RefreshTokenDto } from '../../application/dto/refresh-token.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GoogleAuthResponse } from '../../application/dto/swagger/google-auth-response';
-import { GetCurrentUserQueryResponse } from '../../application/dto/swagger/get-current-user-query-response';
+import { GoogleAuthResponse } from '../../application/swagger/google-auth-response';
+import { GetCurrentUserQueryResponse } from '../../application/swagger/get-current-user-query-response';
 
 @Controller('user-auth')
 export class UserAuthController {

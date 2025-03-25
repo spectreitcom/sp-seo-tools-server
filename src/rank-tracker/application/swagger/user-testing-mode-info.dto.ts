@@ -1,6 +1,6 @@
-import { ExpiresAt } from '../../../domain/value-objects/expires-at';
 import { ApiProperty } from '@nestjs/swagger';
 import * as moment from 'moment';
+import { ExpiresAt } from '../../domain/value-objects/expires-at';
 
 export class UserTestingModeInfoDto {
   @ApiProperty({

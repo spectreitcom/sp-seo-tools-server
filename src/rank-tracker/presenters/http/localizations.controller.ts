@@ -2,7 +2,7 @@ import { Controller, Get, HttpStatus, UseGuards } from '@nestjs/common';
 import { LocalizationsService } from '../../application/services/localizations.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GetLocalizationQueryResponse } from '../../application/dto/swagger/get-localization-query-response';
+import { GetLocalizationQueryResponse } from '../../application/swagger/get-localization-query-response';
 
 @Controller('rank-tracker/localizations')
 export class LocalizationsController {

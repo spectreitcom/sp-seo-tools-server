@@ -1,7 +1,7 @@
 import { RtKeywordGrowth } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
-import { MOBILE_DEVICE } from '../../constants';
+import { MOBILE_DEVICE } from '../constants';
 
 export class UserKeywordsListItemDto {
   @ApiProperty({

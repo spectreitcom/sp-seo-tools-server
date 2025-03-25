@@ -10,7 +10,7 @@ import { TestingModeService } from '../../application/services/testing-mode.serv
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UserTestingModeInfoDto } from '../../application/dto/swagger/user-testing-mode-info.dto';
+import { UserTestingModeInfoDto } from '../../application/swagger/user-testing-mode-info.dto';
 
 @Controller('rank-tracker/testing-mode')
 export class TestingModesController {
