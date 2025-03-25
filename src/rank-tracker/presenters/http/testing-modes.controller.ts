@@ -9,17 +9,33 @@ import {
 import { TestingModeService } from '../../application/services/testing-mode.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UserTestingModeInfoDto } from '../../application/swagger/user-testing-mode-info.dto';
 
 @Controller('rank-tracker/testing-mode')
 export class TestingModesController {
   constructor(private readonly testingModeService: TestingModeService) {}
 
+  @ApiOperation({
+    summary: 'Returns information about current user testing mode',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: UserTestingModeInfoDto,
+  })
   @Get('user-info')
   @UseGuards(AuthGuard)
   getUserTestingModeInfo(@CurrentUserId() userId: string) {
     return this.testingModeService.getUserTestingModeInfo(userId);
   }
 
+  @ApiOperation({
+    summary: 'Activate testing mode for current user',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Testing mode was activated',
+  })
   @Post('activate')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
