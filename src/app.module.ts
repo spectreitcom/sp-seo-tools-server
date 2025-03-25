@@ -13,10 +13,17 @@ import { UserAuthModule } from './user-auth/application/user-auth.module';
 import { RankTrackerSubscriptionModule } from './rank-tracker-subscription/application/rank-tracker-subscription.module';
 import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     SentryModule.forRoot(),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60,
+        limit: 60,
+      },
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: envSchema,
