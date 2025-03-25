@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "node_modules/@nestjs/cli/bin/nest.js build",
+    "build": "node_modules/@nestjs/cli/bin/nest.js build && yarn sentry:sourcemaps",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node_modules/@nestjs/cli/bin/nest.js start",
     "start:dev": "nest start --watch",
@@ -23,7 +23,8 @@
     "rtseeder": "node dist/src/rank-tracker/application/cli/cli.js rt-seed",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:migrate": "prisma migrate dev"
+    "db:migrate": "prisma migrate dev",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org spectre-it --project node-nestjs ./dist && sentry-cli sourcemaps upload --org spectre-it --project node-nestjs ./dist"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
@@ -38,6 +39,8 @@
     "@nestjs/schedule": "^4.1.2",
     "@nestjs/swagger": "^8.1.0",
     "@prisma/client": "^6.2.1",
+    "@sentry/cli": "^2.42.4",
+    "@sentry/nestjs": "^9.9.0",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "bullmq": "^5.34.8",
