@@ -11,9 +11,12 @@ import { AdminAuthModule } from './admin-auth/application/admin-auth.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { UserAuthModule } from './user-auth/application/user-auth.module';
 import { RankTrackerSubscriptionModule } from './rank-tracker-subscription/application/rank-tracker-subscription.module';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: envSchema,
@@ -35,6 +38,12 @@ import { RankTrackerSubscriptionModule } from './rank-tracker-subscription/appli
       }),
       inject: [ConfigService],
     }),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
   ],
 })
 export class AppModule {}
