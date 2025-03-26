@@ -7,7 +7,7 @@ export class DomainPosition extends AggregateRoot {
   constructor(
     private domainPositionId: string,
     private keywordId: string,
-    private position: number,
+    private position: number | null,
     private timestamp: number,
     private processId: string,
     private status: RtDomainPositionStaus,
@@ -30,7 +30,7 @@ export class DomainPosition extends AggregateRoot {
     );
   }
 
-  updatePosition(position: number) {
+  updatePosition(position: number | null) {
     this.position = position;
   }
 

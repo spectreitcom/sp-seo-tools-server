@@ -67,7 +67,7 @@ model RtDomainPosition {
   id        String                @id @default(uuid())
   keywordId String
   keyword   RtKeyword             @relation(fields: [keywordId], references: [id], onDelete: Cascade)
-  position  Int                   @default(0)
+  position  Int?
   timestamp Int                   @unique
   processId String                @unique
   status    RtDomainPositionStaus @default(PENDING)
