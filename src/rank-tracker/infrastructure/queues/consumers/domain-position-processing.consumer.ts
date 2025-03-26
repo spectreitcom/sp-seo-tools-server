@@ -134,7 +134,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
     );
     this.eventPublisher.mergeObjectContext(domainPosition);
     domainPosition.updateStatus('DONE');
-    domainPosition.updatePosition(position === -1 ? 0 : position);
+    domainPosition.updatePosition(position === -1 ? null : position);
     await this.domainPositionRepository.save(domainPosition);
     domainPosition.commit();
   }
