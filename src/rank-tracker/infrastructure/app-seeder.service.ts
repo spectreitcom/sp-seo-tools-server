@@ -150,7 +150,7 @@ export class AppSeederService implements SeederService {
         keywordId,
         randomUUID(),
         timestamp,
-        position,
+        position === 0 ? null : position,
         'DONE',
       );
       await this.domainPositionRepository.save(domainPosition, prisma);

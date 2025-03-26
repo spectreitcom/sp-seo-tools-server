@@ -8,7 +8,7 @@ export class DomainPositionFactory {
     keywordId: string,
     processId: string,
     timestamp = moment().unix(),
-    position = 0,
+    position: number | null = null,
     status: RtDomainPositionStaus = 'PENDING',
   ) {
     return new DomainPosition(
