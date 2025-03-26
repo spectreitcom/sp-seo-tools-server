@@ -85,7 +85,7 @@ export class PrismaUserKeywordsListRepository
         new UserKeywordsListItemDto(
           model.id,
           model.text,
-          domainPosition ? domainPosition.position : 0,
+          domainPosition ? domainPosition.position : null,
           model.localization.countryCode,
           model.device,
           model.domain.text,
