@@ -51,4 +51,12 @@ export class PrismaSubscriptionRepository implements SubscriptionRepository {
     if (!model) return null;
     return SubscriptionMapper.toDomain(model);
   }
+
+  async findById(subscriptionId: string): Promise<Subscription> {
+    const model = await this.databaseService.saSubscription.findUnique({
+      where: { id: subscriptionId },
+    });
+    if (!model) return null;
+    return SubscriptionMapper.toDomain(model);
+  }
 }

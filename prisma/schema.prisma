@@ -145,10 +145,21 @@ model SeLocalization {
 // Serp Analyzer Subscription
 
 model SaSubscription {
-  id               String @id @default(uuid())
-  name             String
-  amount           Float
-  searchedPages    Int
-  analysisPerMonth Int
-  priceId          String @unique
+  id                String               @id @default(uuid())
+  name              String
+  amount            Float
+  searchedPages     Int
+  analysisPerMonth  Int
+  priceId           String               @unique
+  userSubscriptions SaUserSubscription[]
+}
+
+model SaUserSubscription {
+  id             String         @id @default(uuid())
+  userId         String         @unique
+  active         Boolean        @default(true)
+  sessionId      String
+  customerId     String         @unique
+  subscriptionId String
+  subscription   SaSubscription @relation(fields: [subscriptionId], references: [id])
 }
