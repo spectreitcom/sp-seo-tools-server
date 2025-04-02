@@ -141,3 +141,14 @@ model SeLocalization {
   countryCode String @unique
   name        String
 }
+
+// Serp Analyzer Subscription
+
+model SaSubscription {
+  id               String @id @default(uuid())
+  name             String
+  amount           Float
+  searchedPages    Int
+  analysisPerMonth Int
+  priceId          String @unique
+}
