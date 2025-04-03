@@ -9,6 +9,7 @@ import { UserAuthModule } from '../../user-auth/application/user-auth.module';
 import { AdminAuthModule } from '../../admin-auth/application/admin-auth.module';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule, AdminAuthModule],
@@ -20,6 +21,7 @@ import { AuthGuard } from './guards/auth.guard';
     TestingModeService,
     AdminAuthGuard,
     AuthGuard,
+    LocalizationCreatedEventHandler,
   ],
 })
 export class SerpAnalyzerModule {}
