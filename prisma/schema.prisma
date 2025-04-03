@@ -183,3 +183,9 @@ model SaTestingMode {
   analysisPerMonth Int
   createdAt        Int
 }
+
+model SaLocalization {
+  id          String @id @default(uuid())
+  countryCode String @unique
+  name        String
+}
