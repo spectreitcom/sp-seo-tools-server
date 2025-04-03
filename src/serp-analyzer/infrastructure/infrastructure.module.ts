@@ -6,9 +6,20 @@ import { TestingModeRepository } from '../application/ports/testing-mode.reposit
 import { PrismaTestingModeRepository } from './persistence/prisma-testing-mode.repository';
 import { LocalizationRepository } from '../application/ports/localization.repository';
 import { PrismaLocalizationRepository } from './persistence/prisma-localization.repository';
+import { TestingModeCheckerQueueService } from '../application/ports/testing-mode-checker-queue.service';
+import { AppTestingModeCheckerQueueService } from './queues/app-testing-mode-checker-queue.service';
+import { BullModule } from '@nestjs/bullmq';
+import { TESTING_MODE_CHECKER_QUEUE } from './queues/constants';
+import { TestingModeCheckerProducer } from './queues/producers/testing-mode-checker.producer';
+import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-checker.consumer';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    BullModule.registerQueue({
+      name: TESTING_MODE_CHECKER_QUEUE,
+    }),
+    DatabaseModule,
+  ],
   providers: [
     {
       provide: UserSubscriptionInfoRepository,
@@ -22,11 +33,18 @@ import { PrismaLocalizationRepository } from './persistence/prisma-localization.
       provide: LocalizationRepository,
       useClass: PrismaLocalizationRepository,
     },
+    {
+      provide: TestingModeCheckerQueueService,
+      useClass: AppTestingModeCheckerQueueService,
+    },
+    TestingModeCheckerProducer,
+    TestingModeCheckerConsumer,
   ],
   exports: [
     UserSubscriptionInfoRepository,
     TestingModeRepository,
     LocalizationRepository,
+    TestingModeCheckerQueueService,
   ],
 })
 export class InfrastructureModule {}

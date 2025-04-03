@@ -69,4 +69,47 @@ export class PrismaTestingModeRepository implements TestingModeRepository {
       !!userSubscriptionInfo,
     );
   }
+
+  async findAllActive(take: number, skip: number): Promise<TestingMode[]> {
+    const testingModeModels = await this.databaseService.saTestingMode.findMany(
+      {
+        where: {
+          active: true,
+        },
+        take,
+        skip,
+      },
+    );
+    if (!testingModeModels) return [];
+
+    const userIds: string[] = [];
+
+    for (const testingModeModel of testingModeModels) {
+      if (!userIds.includes(testingModeModel.userId)) {
+        userIds.push(testingModeModel.userId);
+      }
+    }
+
+    const subscriptionInfos =
+      await this.databaseService.saUserSubscriptionInfo.findMany({
+        where: {
+          userId: {
+            in: userIds,
+          },
+        },
+      });
+
+    const testingModes: TestingMode[] = [];
+
+    for (const testingModeModel of testingModeModels) {
+      const subscriptionInfo = subscriptionInfos.find(
+        (si) => si.userId == testingModeModel.userId,
+      );
+      testingModes.push(
+        TestingModeMapper.toDomain(testingModeModel, true, !!subscriptionInfo),
+      );
+    }
+
+    return testingModes;
+  }
 }

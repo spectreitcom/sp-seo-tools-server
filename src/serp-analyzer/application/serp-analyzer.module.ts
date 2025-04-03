@@ -10,6 +10,7 @@ import { AdminAuthModule } from '../../admin-auth/application/admin-auth.module'
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
+import { TestingModeCheckerCron } from './cron/testing-mode-checker.cron';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule, AdminAuthModule],
@@ -22,6 +23,7 @@ import { LocalizationCreatedEventHandler } from './event-handlers/localization-c
     AdminAuthGuard,
     AuthGuard,
     LocalizationCreatedEventHandler,
+    TestingModeCheckerCron,
   ],
 })
 export class SerpAnalyzerModule {}
