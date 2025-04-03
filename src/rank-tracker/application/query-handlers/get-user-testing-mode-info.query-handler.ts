@@ -26,7 +26,7 @@ export class GetUserTestingModeInfoQueryHandler
     if (testingMode) {
       return new UserTestingModeInfoDto(
         testingMode.getActive(),
-        !testingMode.getActive() && !userSubscriptionInfo,
+        false,
         testingMode.getExpiresAt(),
       );
     }
