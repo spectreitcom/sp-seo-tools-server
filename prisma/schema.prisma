@@ -141,3 +141,45 @@ model SeLocalization {
   countryCode String @unique
   name        String
 }
+
+// Serp Analyzer Subscription
+
+model SaSubscription {
+  id                String               @id @default(uuid())
+  name              String
+  amount            Float
+  searchedPages     Int
+  analysisPerMonth  Int
+  priceId           String               @unique
+  userSubscriptions SaUserSubscription[]
+}
+
+model SaUserSubscription {
+  id             String         @id @default(uuid())
+  userId         String         @unique
+  active         Boolean        @default(true)
+  sessionId      String
+  customerId     String         @unique
+  subscriptionId String
+  subscription   SaSubscription @relation(fields: [subscriptionId], references: [id])
+}
+
+// Serp Analyzer
+
+model SaUserSubscriptionInfo {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  active           Boolean
+  searchedPages    Int
+  analysisPerMonth Int
+}
+
+model SaTestingMode {
+  id               String  @id @default(uuid())
+  expiresAt        Int
+  userId           String  @unique
+  active           Boolean @default(true)
+  searchedPages    Int
+  analysisPerMonth Int
+  createdAt        Int
+}

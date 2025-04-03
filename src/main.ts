@@ -26,6 +26,24 @@ async function bootstrap() {
     .setTitle('SEO Tool')
     .setDescription('The SEO Tool API')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        description: 'JWT for regular users',
+        bearerFormat: 'JWT',
+        scheme: 'bearer',
+      },
+      'user-auth',
+    )
+    .addBearerAuth(
+      {
+        type: 'http',
+        description: 'JWT for admin users',
+        bearerFormat: 'JWT',
+        scheme: 'bearer',
+      },
+      'admin-auth',
+    )
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

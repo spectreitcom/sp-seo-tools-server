@@ -2,8 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateSessionPortalCommand } from '../commands/create-session-portal.command';
 import { StripeService } from '../ports/stripe.service';
 import { UserSubscriptionRepository } from '../ports/user-subscription.repository';
-import { BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { BadRequestException } from '@nestjs/common';
 
 export type CreateSessionPortalCommandResponse = {
   url: string;
@@ -39,7 +39,7 @@ export class CreateSessionPortalCommandHandler
       .getStripe()
       .checkout.sessions.retrieve(userSubscription.getSessionId());
 
-    const returnUrl = this.configService.get<string>('RANK_TRACKER_DASHBOARD');
+    const returnUrl = this.configService.get<string>('SERP_ANALYZER_DASHBOARD');
 
     const portalSession = await this.stripeService
       .getStripe()

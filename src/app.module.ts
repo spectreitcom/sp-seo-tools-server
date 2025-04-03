@@ -14,6 +14,8 @@ import { RankTrackerSubscriptionModule } from './rank-tracker-subscription/appli
 import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { SerpAnalyzerSubscriptionModule } from './serp-analyzer-subscription/application/serp-analyzer-subscription.module';
+import { SerpAnalyzerModule } from './serp-analyzer/application/serp-analyzer.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
     AdminAuthModule,
     UserAuthModule,
     RankTrackerSubscriptionModule,
+    SerpAnalyzerSubscriptionModule,
+    SerpAnalyzerModule,
     BullModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         connection: {
