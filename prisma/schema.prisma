@@ -163,3 +163,23 @@ model SaUserSubscription {
   subscriptionId String
   subscription   SaSubscription @relation(fields: [subscriptionId], references: [id])
 }
+
+// Serp Analyzer
+
+model SaUserSubscriptionInfo {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  active           Boolean
+  searchedPages    Int
+  analysisPerMonth Int
+}
+
+model SaTestingMode {
+  id               String  @id @default(uuid())
+  expiresAt        Int
+  userId           String  @unique
+  active           Boolean @default(true)
+  searchedPages    Int
+  analysisPerMonth Int
+  createdAt        Int
+}

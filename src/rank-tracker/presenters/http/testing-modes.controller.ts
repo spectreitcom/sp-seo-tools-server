@@ -9,13 +9,14 @@ import {
 import { TestingModeService } from '../../application/services/testing-mode.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UserTestingModeInfoDto } from '../../application/swagger/user-testing-mode-info.dto';
 
 @Controller('rank-tracker/testing-mode')
 export class TestingModesController {
   constructor(private readonly testingModeService: TestingModeService) {}
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Returns information about current user testing mode',
   })
@@ -29,6 +30,7 @@ export class TestingModesController {
     return this.testingModeService.getUserTestingModeInfo(userId);
   }
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Activate testing mode for current user',
   })
