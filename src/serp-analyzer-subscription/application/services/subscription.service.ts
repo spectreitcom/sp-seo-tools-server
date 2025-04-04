@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateSubscriptionDto } from '../dto/create-subscription.dto';
 import { CreateSubscriptionCommand } from '../commands/create-subscription.command';
+import { GetSubscriptionsQuery } from '../queries/get-subscriptions.query';
+import { SubscriptionReadModel } from '../../infrastructure/read-models/subscription.read-model';
 
 @Injectable()
 export class SubscriptionService {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   async createSubscription(payload: CreateSubscriptionDto) {
     await this.commandBus.execute<CreateSubscriptionCommand, void>(
@@ -17,5 +22,12 @@ export class SubscriptionService {
         payload.priceId,
       ),
     );
+  }
+
+  async getSubscriptions() {
+    return this.queryBus.execute<
+      GetSubscriptionsQuery,
+      SubscriptionReadModel[]
+    >(new GetSubscriptionsQuery());
   }
 }
