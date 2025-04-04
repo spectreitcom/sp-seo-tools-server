@@ -21,7 +21,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         where: { id: localization.localizationId },
         data: {
           countryCode: localization.countryCode,
-          domainParam: localization.domainParam,
           name: localization.name,
         },
       });
@@ -31,7 +30,6 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
     await prismaClient.rtLocalization.create({
       data: {
         id: localization.localizationId,
-        domainParam: localization.domainParam,
         countryCode: localization.countryCode,
         name: localization.name,
       },

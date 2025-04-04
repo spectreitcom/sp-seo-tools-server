@@ -17,7 +17,7 @@ export class AddLocalizationCommandHandler
   ) {}
 
   async execute(command: AddLocalizationCommand): Promise<void> {
-    const { domainParam, countryCode, name } = command;
+    const { countryCode, name } = command;
 
     const localizationExistsForSearchEngineExists =
       await this.localizationRepository.localizationExists(countryCode);
@@ -27,11 +27,7 @@ export class AddLocalizationCommandHandler
     }
 
     try {
-      const localization = LocalizationFactory.create(
-        domainParam,
-        countryCode,
-        name,
-      );
+      const localization = LocalizationFactory.create(countryCode, name);
       localization.create();
       this.eventPublisher.mergeObjectContext(localization);
       await this.localizationRepository.save(localization);
