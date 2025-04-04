@@ -83,7 +83,6 @@ model RtUserSubscriptionInfo {
 
 model RtLocalization {
   id          String      @id @default(uuid())
-  domainParam String
   keywords    RtKeyword[]
   countryCode String      @unique
   name        String
@@ -137,7 +136,6 @@ model RankTrackerUserSubscription {
 
 model SeLocalization {
   id          String @id @default(uuid())
-  domainParam String
   countryCode String @unique
   name        String
 }

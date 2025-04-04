@@ -8,9 +8,9 @@ export class SearchEngineService {
   constructor(private readonly commandBus: CommandBus) {}
 
   async addLocalization(payload: AddLocalizationDto) {
-    const { domainParam, countryCode, name } = payload;
+    const { countryCode, name } = payload;
     return await this.commandBus.execute<AddLocalizationCommand, void>(
-      new AddLocalizationCommand(domainParam, countryCode, name),
+      new AddLocalizationCommand(countryCode, name),
     );
   }
 }

@@ -16,7 +16,6 @@ export class LocalizationCreatedEventHandler
     this.eventBus.publish(
       new LocalizationCreatedIntegrationEvent(
         event.localizationId,
-        event.domainParam,
         event.countryCode,
         event.name,
       ),

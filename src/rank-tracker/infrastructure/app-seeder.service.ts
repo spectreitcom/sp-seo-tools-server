@@ -57,7 +57,7 @@ export class AppSeederService implements SeederService {
 
   private async seedLocalizations(prisma: PrismaClient) {
     const localizationsToCreate: Localization[] = [
-      LocalizationFactory.create('google.pl', 'pl', 'Poland'),
+      LocalizationFactory.create('pl', 'Poland'),
     ];
 
     const localizationsCreated: Localization[] = [];

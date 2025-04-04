@@ -5,7 +5,6 @@ export class LocalizationMapper {
   static toDomain(rtLocalization: RtLocalization) {
     return new Localization(
       rtLocalization.id,
-      rtLocalization.domainParam,
       rtLocalization.countryCode,
       rtLocalization.name,
     );
