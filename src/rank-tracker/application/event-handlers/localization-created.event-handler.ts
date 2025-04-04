@@ -19,13 +19,9 @@ export class LocalizationCreatedEventHandler
   async handle(event: LocalizationCreatedIntegrationEvent) {
     this.logger.debug(JSON.stringify(event));
 
-    const { domainParam, countryCode, name } = event;
+    const { countryCode, name } = event;
 
-    const localization = LocalizationFactory.create(
-      domainParam,
-      countryCode,
-      name,
-    );
+    const localization = LocalizationFactory.create(countryCode, name);
 
     await this.localizationRepository.save(localization);
   }
