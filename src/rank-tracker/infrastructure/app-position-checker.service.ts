@@ -46,9 +46,10 @@ export class AppPositionCheckerService implements PositionCheckerService {
       try {
         const { response_id } = await this.googleScraperFacade.sendQuery(
           localization.countryCode,
-          testingMode.getMaxSearchedPages() * 10 + 1,
+          testingMode.getMaxSearchedPages() * 10,
           keyword.getKeywordText(),
           this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
+          testingMode.getUserId(),
         );
         await this.createDomainPosition(keyword.getKeywordId(), response_id);
       } catch (error) {
@@ -62,6 +63,7 @@ export class AppPositionCheckerService implements PositionCheckerService {
         userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
         keyword.getKeywordText(),
         this.mapDeviceToGoogleScraperDevice(keyword.getDevice()),
+        userSubscriptionInfo.getUserId(),
       );
       await this.createDomainPosition(keyword.getKeywordId(), response_id);
     }

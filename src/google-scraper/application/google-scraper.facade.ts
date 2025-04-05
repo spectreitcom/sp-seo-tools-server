@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleScraperService } from './ports/google-scraper.service';
-import { Device } from './types';
+import { Device, Metadata } from './types';
+import { QueryRepository } from './ports/query.repository';
+import { EventPublisher } from '@nestjs/cqrs';
+import { QueryFactory } from '../domain/factories/query.factory';
 
 @Injectable()
 export class GoogleScraperFacade {
-  constructor(private readonly googleScraperService: GoogleScraperService) {}
+  constructor(
+    private readonly googleScraperService: GoogleScraperService,
+    private readonly queryRepository: QueryRepository,
+    private readonly eventPublisher: EventPublisher,
+  ) {}
 
-  async getResults(responseId: string, resultsNumber: number) {
-    return this.googleScraperService.getResults(responseId, resultsNumber);
+  async getResults(responseId: string) {
+    return this.googleScraperService.getResults(responseId);
   }
 
   async sendQuery(
     localizationCode: string,
     resultsNumber: number,
-    query: string,
+    queryText: string,
     device: Device,
+    userId: string,
+    metadata?: Metadata,
   ) {
-    return this.googleScraperService.sendQuery(
+    const response = await this.googleScraperService.sendQuery(
       localizationCode,
       resultsNumber,
-      query,
+      queryText,
       device,
     );
+
+    const query = QueryFactory.create(
+      response.response_id,
+      metadata,
+      localizationCode,
+      resultsNumber,
+      queryText,
+      device,
+      userId,
+    );
+    this.eventPublisher.mergeObjectContext(query);
+    await this.queryRepository.save(query);
+    query.commit();
+
+    return response;
   }
 }
