@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { RefreshTokenIdsStorageStorage } from '../application/ports/refresh-token-ids-storage.storage';
-import Redis from 'ioredis';
+import Redis, { RedisOptions } from 'ioredis';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -11,19 +11,26 @@ export class AppRefreshTokenIdsStorage
 
   constructor(private readonly configService: ConfigService) {
     const nodeEnv = this.configService.get('NODE_ENV');
-    const isDevelopment = nodeEnv === 'development';
 
-    this.client = new Redis({
+    const redisOptions: RedisOptions = {
       host: this.configService.get<string>('REDIS_HOST'),
       port: this.configService.get<number>('REDIS_PORT'),
       username: this.configService.get<string>('REDIS_USERNAME'),
       password: this.configService.get<string>('REDIS_PASSWORD'),
-      tls: isDevelopment
-        ? undefined
-        : {
-            host: this.configService.get<string>('REDIS_HOST'),
-          },
-    });
+    };
+
+    const redisOptionsForProduction: RedisOptions = {
+      ...redisOptions,
+      tls: {
+        host: this.configService.get<string>('REDIS_HOST'),
+      },
+    };
+
+    const isDevelopment = nodeEnv === 'development';
+
+    this.client = new Redis(
+      isDevelopment ? redisOptions : redisOptionsForProduction,
+    );
   }
 
   async insert(userId: string, tokenId: string): Promise<void> {

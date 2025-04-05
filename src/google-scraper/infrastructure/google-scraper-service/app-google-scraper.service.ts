@@ -9,6 +9,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { QueryRepository } from '../../application/ports/query.repository';
 
 @Injectable()
 export class AppGoogleScraperService implements GoogleScraperService {
@@ -20,6 +21,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
   constructor(
     configService: ConfigService,
     private readonly http: HttpService,
+    private readonly queryRepository: QueryRepository,
   ) {
     this.baseUrl = configService.get<string>('BRIGHT_DATA_BASE_URL');
     this.token = configService.get<string>('BRIGHT_DATA_TOKEN');
@@ -27,22 +29,23 @@ export class AppGoogleScraperService implements GoogleScraperService {
     this.zone = configService.get<string>('BRIGHT_DATA_ZONE');
   }
 
-  async getResults(
-    responseId: string,
-    resultsNumber: number,
-  ): Promise<SearchResult[] | null> {
+  async getResults(responseId: string): Promise<SearchResult[] | null> {
     try {
-      const response = await this.getData(responseId);
+      const query = await this.queryRepository.findByProcess(responseId);
 
-      if (response.status === 202 || response.status === 101) return null;
+      if (!query) return null;
+
+      if (query.getStatus() === 'PENDING') return null;
 
       const results: SearchResult[] = [];
 
-      for (let i = 0; i < resultsNumber; i++) {
-        if (response.data.organic && response.data.organic[i]) {
+      const searchResults = query.getResults();
+
+      for (let i = 0; i < query.getResultsNumber(); i++) {
+        if (searchResults.organic && searchResults.organic[i]) {
           results.push({
-            url: response.data.organic[i].link,
-            position: response.data.organic[i].rank,
+            url: searchResults.organic[i].link,
+            position: searchResults.organic[i].rank,
           });
         }
       }
@@ -67,7 +70,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
             country: localizationCode,
             query: {
               q: query,
-              num: resultsNumber,
+              num: resultsNumber + 1,
               hl: localizationCode,
               gl: localizationCode,
             },
@@ -120,5 +123,9 @@ export class AppGoogleScraperService implements GoogleScraperService {
         },
       }),
     );
+  }
+
+  isDataAvailableCondition(statusCode: number): boolean {
+    return !(statusCode === 202 || statusCode === 101);
   }
 }
