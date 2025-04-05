@@ -73,8 +73,6 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
 
         if (!domain) continue;
 
-        let resultsNumber: number | null = null;
-
         const useSubscriptionInfo = userSubscriptionInfos.find(
           (usi) => usi.getUserId() === domain.userId,
         );
@@ -84,10 +82,8 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
         );
 
         if (useSubscriptionInfo && useSubscriptionInfo.getActive()) {
-          resultsNumber = useSubscriptionInfo.getMaxSearchedPages() * 10;
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
-            resultsNumber,
           );
           if (Array.isArray(searchResults)) {
             await this.processSearchResults(
@@ -99,10 +95,8 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
         }
 
         if (testingMode && testingMode.getActive()) {
-          resultsNumber = testingMode.getMaxSearchedPages() * 10;
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
-            resultsNumber,
           );
           if (Array.isArray(searchResults)) {
             await this.processSearchResults(

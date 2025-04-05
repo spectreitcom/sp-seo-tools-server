@@ -1,10 +1,13 @@
-import { Device, SearchResult, SendQueryResponse } from '../types';
+import {
+  Device,
+  GetDataResponse,
+  SearchResult,
+  SendQueryResponse,
+} from '../types';
+import { AxiosResponse } from 'axios';
 
 export abstract class GoogleScraperService {
-  abstract getResults(
-    responseId: string,
-    resultsNumber: number,
-  ): Promise<SearchResult[] | null>;
+  abstract getResults(responseId: string): Promise<SearchResult[] | null>;
 
   abstract sendQuery(
     localizationCode: string,
@@ -12,4 +15,8 @@ export abstract class GoogleScraperService {
     query: string,
     device: Device,
   ): Promise<SendQueryResponse>;
+
+  abstract getData(responseId: string): Promise<AxiosResponse<GetDataResponse>>;
+
+  abstract isDataAvailableCondition(statusCode: number): boolean;
 }

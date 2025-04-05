@@ -187,3 +187,24 @@ model SaLocalization {
   countryCode String @unique
   name        String
 }
+
+// Google Scraper
+
+model GsQuery {
+  id               String        @id @default(uuid())
+  processId        String        @unique
+  status           GsQueryStatus @default(PENDING)
+  results          Json?
+  metadata         Json?
+  localizationCode String
+  resultsNumber    Int
+  query            String
+  device           String
+  userId           String
+  createdAt        Int
+}
+
+enum GsQueryStatus {
+  PENDING
+  DONE
+}

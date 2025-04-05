@@ -22,3 +22,5 @@ export type GetDataResponse = {
 };
 
 export type Device = 'desktop' | 'mobile' | 'tablet';
+
+export type Metadata = Record<string, string | number | boolean> | null;
