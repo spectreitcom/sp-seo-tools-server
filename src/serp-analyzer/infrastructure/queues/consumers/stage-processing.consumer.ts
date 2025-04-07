@@ -4,7 +4,9 @@ import { Job } from 'bullmq';
 import { EventBus } from '@nestjs/cqrs';
 import { StageProcessingFinishedEvent } from '../../events/stage-processing-finished.event';
 
-@Processor(STAGE_PROCESSING_QUEUE)
+@Processor(STAGE_PROCESSING_QUEUE, {
+  concurrency: 5,
+})
 export class StageProcessingConsumer extends WorkerHost {
   constructor(private readonly eventBus: EventBus) {
     super();
