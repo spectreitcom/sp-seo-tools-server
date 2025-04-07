@@ -17,6 +17,8 @@ import { CreateAnalysisCommandHandler } from './command-handlers/create-analysis
 import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
 import { ScrapingFinishedEventHandler } from './event-handlers/scraping-finished.event-handler';
 import { StageProcessingFinishedEventHandler } from './event-handlers/stage-processing-finished.event-handler';
+import { AnalysisService } from './services/analysis.service';
+import { AnalysisController } from '../presenters/http/analysis.controller';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { StageProcessingFinishedEventHandler } from './event-handlers/stage-proc
     AdminAuthModule,
     GoogleScraperModule,
   ],
-  controllers: [TestingModeController],
+  controllers: [TestingModeController, AnalysisController],
   providers: [
     SubscriptionActivatedEventHandler,
     SubscriptionDeactivatedEventHandler,
@@ -40,6 +42,7 @@ import { StageProcessingFinishedEventHandler } from './event-handlers/stage-proc
     CreateAnalysisCommandHandler,
     ScrapingFinishedEventHandler,
     StageProcessingFinishedEventHandler,
+    AnalysisService,
   ],
 })
 export class SerpAnalyzerModule {}
