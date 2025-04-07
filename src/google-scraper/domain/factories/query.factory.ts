@@ -1,7 +1,7 @@
 import { Query } from '../query';
 import { randomUUID } from 'crypto';
 import { GsQueryStatus } from '@prisma/client';
-import { Device, Metadata } from '../../application/types';
+import { Metadata } from '../../application/types';
 
 export class QueryFactory {
   static create(
@@ -10,7 +10,7 @@ export class QueryFactory {
     localizationCode: string,
     resultsNumber: number,
     query: string,
-    device: Device,
+    device: string,
     userId: string,
   ) {
     return new Query(

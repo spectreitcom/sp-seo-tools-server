@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleScraperService } from '../../application/ports/google-scraper.service';
 import {
-  Device,
   GetDataResponse,
   SearchResult,
   SendQueryResponse,
@@ -60,7 +59,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
     localizationCode: string,
     resultsNumber: number,
     query: string,
-    device: Device,
+    device: string,
   ) {
     try {
       const response = await firstValueFrom(
@@ -97,7 +96,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
     }
   }
 
-  private getMobile(device: Device): string | number | undefined {
+  private getMobile(device: string): string | number | undefined {
     switch (device) {
       case 'mobile':
         return 'ios';

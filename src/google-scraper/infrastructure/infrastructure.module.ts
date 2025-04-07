@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GoogleScraperService } from '../application/ports/google-scraper.service';
 import { AppGoogleScraperService } from './google-scraper-service/app-google-scraper.service';
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
-import { AppGoogleScraperDevService } from './google-scraper-service/app-google-scraper-dev.service';
+import { HttpModule } from '@nestjs/axios';
 import { QueryRepository } from '../application/ports/query.repository';
 import { PrismaQueryRepository } from './persistence/prisma-query.repository';
 import { DatabaseModule } from '../../database/database.module';
@@ -25,19 +23,7 @@ import { CheckingQueryConsumer } from './queues/consumers/checking-query.consume
   providers: [
     {
       provide: GoogleScraperService,
-      useFactory: (
-        httpService: HttpService,
-        configService: ConfigService,
-        queryRepository: QueryRepository,
-      ) =>
-        configService.get<string>('NODE_ENV') === 'staging'
-          ? new AppGoogleScraperService(
-              configService,
-              httpService,
-              queryRepository,
-            )
-          : new AppGoogleScraperDevService(queryRepository),
-      inject: [HttpService, ConfigService, QueryRepository],
+      useClass: AppGoogleScraperService,
     },
     {
       provide: QueryRepository,

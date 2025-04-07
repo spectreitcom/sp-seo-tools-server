@@ -1,4 +1,4 @@
-import { Device, GetDataResponse, Metadata } from '../application/types';
+import { GetDataResponse, Metadata } from '../application/types';
 import { GsQueryStatus } from '@prisma/client';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { ScrapingFinishedEvent } from './events/scraping-finished.event';
@@ -13,7 +13,7 @@ export class Query extends AggregateRoot {
     private localizationCode: string,
     private resultsNumber: number,
     private query: string,
-    private device: Device,
+    private device: string,
     private userId: string,
   ) {
     super();

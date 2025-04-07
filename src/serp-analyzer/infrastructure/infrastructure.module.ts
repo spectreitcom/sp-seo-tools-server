@@ -12,6 +12,8 @@ import { BullModule } from '@nestjs/bullmq';
 import { TESTING_MODE_CHECKER_QUEUE } from './queues/constants';
 import { TestingModeCheckerProducer } from './queues/producers/testing-mode-checker.producer';
 import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-checker.consumer';
+import { AnalysisRepository } from '../application/ports/analysis.repository';
+import { PrismaAnalysisRepository } from './persistence/prisma-analysis.repository';
 
 @Module({
   imports: [
@@ -39,12 +41,17 @@ import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-chec
     },
     TestingModeCheckerProducer,
     TestingModeCheckerConsumer,
+    {
+      provide: AnalysisRepository,
+      useClass: PrismaAnalysisRepository,
+    },
   ],
   exports: [
     UserSubscriptionInfoRepository,
     TestingModeRepository,
     LocalizationRepository,
     TestingModeCheckerQueueService,
+    AnalysisRepository,
   ],
 })
 export class InfrastructureModule {}

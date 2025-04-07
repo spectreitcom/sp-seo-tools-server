@@ -11,9 +11,19 @@ import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
 import { TestingModeCheckerCron } from './cron/testing-mode-checker.cron';
+import { AnalysisCreatedEventHandler } from './event-handlers/analysis-created.event-handler';
+import { AnalysisFinishedEventHandler } from './event-handlers/analysis-finished.event-handler';
+import { CreateAnalysisCommandHandler } from './command-handlers/create-analysis.command-handler';
+import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
+import { ScrapingFinishedIntegrationEventHandler } from './event-handlers/scraping-finished.integration-event-handler';
 
 @Module({
-  imports: [InfrastructureModule, UserAuthModule, AdminAuthModule],
+  imports: [
+    InfrastructureModule,
+    UserAuthModule,
+    AdminAuthModule,
+    GoogleScraperModule,
+  ],
   controllers: [TestingModeController],
   providers: [
     SubscriptionActivatedEventHandler,
@@ -24,6 +34,10 @@ import { TestingModeCheckerCron } from './cron/testing-mode-checker.cron';
     AuthGuard,
     LocalizationCreatedEventHandler,
     TestingModeCheckerCron,
+    AnalysisCreatedEventHandler,
+    AnalysisFinishedEventHandler,
+    CreateAnalysisCommandHandler,
+    ScrapingFinishedIntegrationEventHandler,
   ],
 })
 export class SerpAnalyzerModule {}

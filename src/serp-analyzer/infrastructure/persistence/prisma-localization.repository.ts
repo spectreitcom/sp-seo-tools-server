@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { LocalizationRepository } from '../../application/ports/localization.repository';
 import { Localization } from '../../domain/localization';
 import { DatabaseService } from '../../../database/database.service';
+import { LocalizationMapper } from '../../domain/mappers/localization.mapper';
 
 @Injectable()
 export class PrismaLocalizationRepository implements LocalizationRepository {
@@ -35,5 +36,15 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
         countryCode: localization.getCountryCode(),
       },
     });
+  }
+
+  async findById(localizationId: string): Promise<Localization> {
+    const model = await this.databaseService.saLocalization.findUnique({
+      where: {
+        id: localizationId,
+      },
+    });
+    if (!model) return null;
+    return LocalizationMapper.toDomain(model);
   }
 }
