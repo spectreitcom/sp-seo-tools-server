@@ -198,6 +198,7 @@ model SaAnalysis {
   processId      String
   device         String
   pages          SaPage[]
+  userId         String
 }
 
 model SaPage {
