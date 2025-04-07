@@ -6,7 +6,7 @@ export class StageFactory {
   static create(
     stage: string,
     pageId: string,
-    status: SaStageStatus = SaStageStatus.PENDING,
+    status: SaStageStatus = SaStageStatus.CREATED,
   ) {
     return new Stage(randomUUID(), stage, pageId, status);
   }

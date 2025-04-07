@@ -9,19 +9,34 @@ import { PrismaLocalizationRepository } from './persistence/prisma-localization.
 import { TestingModeCheckerQueueService } from '../application/ports/testing-mode-checker-queue.service';
 import { AppTestingModeCheckerQueueService } from './queues/app-testing-mode-checker-queue.service';
 import { BullModule } from '@nestjs/bullmq';
-import { TESTING_MODE_CHECKER_QUEUE } from './queues/constants';
+import {
+  STAGE_PROCESSING_QUEUE,
+  TESTING_MODE_CHECKER_QUEUE,
+} from './queues/constants';
 import { TestingModeCheckerProducer } from './queues/producers/testing-mode-checker.producer';
 import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-checker.consumer';
 import { AnalysisRepository } from '../application/ports/analysis.repository';
 import { PrismaAnalysisRepository } from './persistence/prisma-analysis.repository';
 import { StageRepository } from '../application/ports/stage.repository';
 import { PrismaStageRepository } from './persistence/prisma-stage.repository';
+import { PageRepository } from '../application/ports/page.repository';
+import { PrismaPageRepository } from './persistence/prisma-page.repository';
+import { StageProcessingQueueService } from '../application/ports/stage-processing-queue.service';
+import { AppStageProcessingQueueService } from './queues/app-stage-processing-queue.service';
+import { StageProcessingProducer } from './queues/producers/stage-processing.producer';
+import { StageProcessingConsumer } from './queues/consumers/stage-processing.consumer';
 
 @Module({
   imports: [
-    BullModule.registerQueue({
-      name: TESTING_MODE_CHECKER_QUEUE,
-    }),
+    BullModule.registerQueue(
+      {
+        name: TESTING_MODE_CHECKER_QUEUE,
+      },
+      {
+        name: STAGE_PROCESSING_QUEUE,
+      },
+    ),
+
     DatabaseModule,
   ],
   providers: [
@@ -51,6 +66,16 @@ import { PrismaStageRepository } from './persistence/prisma-stage.repository';
       provide: StageRepository,
       useClass: PrismaStageRepository,
     },
+    {
+      provide: PageRepository,
+      useClass: PrismaPageRepository,
+    },
+    {
+      provide: StageProcessingQueueService,
+      useClass: AppStageProcessingQueueService,
+    },
+    StageProcessingProducer,
+    StageProcessingConsumer,
   ],
   exports: [
     UserSubscriptionInfoRepository,
@@ -59,6 +84,8 @@ import { PrismaStageRepository } from './persistence/prisma-stage.repository';
     TestingModeCheckerQueueService,
     AnalysisRepository,
     StageRepository,
+    PageRepository,
+    StageProcessingQueueService,
   ],
 })
 export class InfrastructureModule {}

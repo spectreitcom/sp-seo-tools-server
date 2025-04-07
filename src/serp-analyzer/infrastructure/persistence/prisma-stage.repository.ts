@@ -46,4 +46,15 @@ export class PrismaStageRepository implements StageRepository {
     if (!model) return null;
     return StageMapper.toDomain(model);
   }
+
+  async findAllCreated(pageIds: string[]): Promise<Stage[]> {
+    const models = await this.databaseService.saStage.findMany({
+      where: {
+        pageId: {
+          in: pageIds,
+        },
+      },
+    });
+    return models.map((model) => StageMapper.toDomain(model));
+  }
 }

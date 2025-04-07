@@ -215,7 +215,7 @@ model SaStage {
   stage  String
   pageId String
   page   SaPage        @relation(fields: [pageId], references: [id])
-  status SaStageStatus @default(PENDING)
+  status SaStageStatus @default(CREATED)
 }
 
 model SaPageFactor {

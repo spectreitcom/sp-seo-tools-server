@@ -12,6 +12,10 @@ export class Stage {
     this.status = SaStageStatus.COMPLETED;
   }
 
+  makeInProgress() {
+    this.status = SaStageStatus.PENDING;
+  }
+
   getStageId() {
     return this.stageId;
   }

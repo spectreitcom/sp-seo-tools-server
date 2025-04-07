@@ -9,6 +9,7 @@ describe('PageFactory', () => {
         'https://localhost:8080',
         3,
         randomUUID(),
+        [],
       );
       expect(page).toBeInstanceOf(Page);
     });
