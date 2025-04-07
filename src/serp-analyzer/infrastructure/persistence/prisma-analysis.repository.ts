@@ -134,6 +134,6 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
     )
       return true;
 
-    return true;
+    return false;
   }
 }

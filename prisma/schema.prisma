@@ -195,7 +195,7 @@ model SaAnalysis {
   createdAt      Int
   localizationId String
   localization   SaLocalization @relation(fields: [localizationId], references: [id])
-  processId      String
+  processId      String?
   device         String
   pages          SaPage[]
   userId         String

@@ -129,6 +129,53 @@ export class PrismaPageRepository implements PageRepository {
           position: pageToCreate.getPosition(),
         })),
       });
+
+      for (const pageToCreate of pagesToCreate) {
+        await prisma.saStage.createMany({
+          data: pageToCreate.getStages().map((stage) => ({
+            pageId: pageToCreate.getPageId(),
+            stage,
+          })),
+        });
+      }
+
+      for (const pageToUpdate of pagesToUpdate) {
+        const stageModels = await prisma.saStage.findMany({
+          where: { pageId: pageToUpdate.getPageId() },
+        });
+        const existingStages = stageModels.map(
+          (stageModel) => stageModel.stage,
+        );
+
+        const stagesToCreate: string[] = [];
+        const stagesToRemove: SaStage[] = [];
+
+        for (const stageModel of stageModels) {
+          if (!pageToUpdate.getStages().includes(stageModel.stage)) {
+            stagesToRemove.push(stageModel);
+          }
+        }
+        for (const stage of pageToUpdate.getStages()) {
+          if (!existingStages.includes(stage)) {
+            stagesToCreate.push(stage);
+          }
+        }
+
+        await prisma.saStage.createMany({
+          data: stagesToCreate.map((stage) => ({
+            pageId: pageToUpdate.getPageId(),
+            stage,
+          })),
+        });
+
+        await prisma.saStage.deleteMany({
+          where: {
+            id: {
+              in: stagesToRemove.map((item) => item.id),
+            },
+          },
+        });
+      }
     });
   }
 

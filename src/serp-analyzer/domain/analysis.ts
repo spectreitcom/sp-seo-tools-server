@@ -28,6 +28,7 @@ export class Analysis extends AggregateRoot {
       !this.exceededMonthlyLimit
     ) {
       this.apply(new AnalysisCreatedEvent(this.analysisId));
+      return;
     }
     throw new CreateAnalysisError();
   }

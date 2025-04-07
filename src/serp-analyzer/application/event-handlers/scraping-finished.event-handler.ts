@@ -60,7 +60,6 @@ export class ScrapingFinishedEventHandler
       pages.push(page);
     }
     await this.pageRepository.saveMany(pages);
-
     await this.stageProcessingQueueService.beginProcessing(
       pages.map((page) => page.getPageId()),
     );

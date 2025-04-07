@@ -56,7 +56,7 @@ export class AnalysisCreatedEventHandler
         localization.getCountryCode(),
         userSubscriptionInfo.getSearchedPages() * 10,
         analysis.getKeyword(),
-        analysis.getDevice(), // todo,
+        analysis.getDevice(),
         analysis.getUserId(),
         metadata,
       );
@@ -72,7 +72,7 @@ export class AnalysisCreatedEventHandler
         localization.getCountryCode(),
         testingMode.getSearchedPages() * 10,
         analysis.getKeyword(),
-        analysis.getDevice(), // todo,
+        analysis.getDevice(),
         analysis.getUserId(),
         metadata,
       );
