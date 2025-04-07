@@ -14,6 +14,8 @@ import { TestingModeCheckerProducer } from './queues/producers/testing-mode-chec
 import { TestingModeCheckerConsumer } from './queues/consumers/testing-mode-checker.consumer';
 import { AnalysisRepository } from '../application/ports/analysis.repository';
 import { PrismaAnalysisRepository } from './persistence/prisma-analysis.repository';
+import { StageRepository } from '../application/ports/stage.repository';
+import { PrismaStageRepository } from './persistence/prisma-stage.repository';
 
 @Module({
   imports: [
@@ -45,6 +47,10 @@ import { PrismaAnalysisRepository } from './persistence/prisma-analysis.reposito
       provide: AnalysisRepository,
       useClass: PrismaAnalysisRepository,
     },
+    {
+      provide: StageRepository,
+      useClass: PrismaStageRepository,
+    },
   ],
   exports: [
     UserSubscriptionInfoRepository,
@@ -52,6 +58,7 @@ import { PrismaAnalysisRepository } from './persistence/prisma-analysis.reposito
     LocalizationRepository,
     TestingModeCheckerQueueService,
     AnalysisRepository,
+    StageRepository,
   ],
 })
 export class InfrastructureModule {}

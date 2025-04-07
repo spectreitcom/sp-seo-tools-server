@@ -16,6 +16,7 @@ import { AnalysisFinishedEventHandler } from './event-handlers/analysis-finished
 import { CreateAnalysisCommandHandler } from './command-handlers/create-analysis.command-handler';
 import { GoogleScraperModule } from '../../google-scraper/application/google-scraper.module';
 import { ScrapingFinishedIntegrationEventHandler } from './event-handlers/scraping-finished.integration-event-handler';
+import { StageProcessingFinishedEventHandler } from './event-handlers/stage-processing-finished.event-handler';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ScrapingFinishedIntegrationEventHandler } from './event-handlers/scrapi
     AnalysisFinishedEventHandler,
     CreateAnalysisCommandHandler,
     ScrapingFinishedIntegrationEventHandler,
+    StageProcessingFinishedEventHandler,
   ],
 })
 export class SerpAnalyzerModule {}
