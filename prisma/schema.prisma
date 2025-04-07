@@ -227,6 +227,7 @@ model SaPageFactor {
 }
 
 enum SaStageStatus {
+  CREATED
   PENDING
   COMPLETED
 }
