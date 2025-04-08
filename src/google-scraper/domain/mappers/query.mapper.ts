@@ -1,6 +1,6 @@
 import { GsQuery } from '@prisma/client';
 import { Query } from '../query';
-import { Device, GetDataResponse, Metadata } from '../../application/types';
+import { GetDataResponse, Metadata } from '../../application/types';
 
 export class QueryMapper {
   static toDomain(model: GsQuery) {
@@ -13,7 +13,7 @@ export class QueryMapper {
       model.localizationCode,
       model.resultsNumber,
       model.query,
-      model.device as Device,
+      model.device,
       model.userId,
     );
   }

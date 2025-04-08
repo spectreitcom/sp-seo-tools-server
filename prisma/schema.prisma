@@ -183,9 +183,55 @@ model SaTestingMode {
 }
 
 model SaLocalization {
-  id          String @id @default(uuid())
-  countryCode String @unique
+  id          String       @id @default(uuid())
+  countryCode String       @unique
   name        String
+  analysis    SaAnalysis[]
+}
+
+model SaAnalysis {
+  id             String         @id @default(uuid())
+  keyword        String
+  createdAt      Int
+  localizationId String
+  localization   SaLocalization @relation(fields: [localizationId], references: [id])
+  processId      String?
+  device         String
+  pages          SaPage[]
+  userId         String
+}
+
+model SaPage {
+  id          String         @id @default(uuid())
+  url         String
+  position    Int
+  analysisId  String
+  analysis    SaAnalysis     @relation(fields: [analysisId], references: [id])
+  stages      SaStage[]
+  pageFactors SaPageFactor[]
+  html        String
+}
+
+model SaStage {
+  id     String        @id @default(uuid())
+  stage  String
+  pageId String
+  page   SaPage        @relation(fields: [pageId], references: [id])
+  status SaStageStatus @default(CREATED)
+}
+
+model SaPageFactor {
+  id     String @id @default(uuid())
+  pageId String
+  page   SaPage @relation(fields: [pageId], references: [id])
+  factor String
+  value  Float
+}
+
+enum SaStageStatus {
+  CREATED
+  PENDING
+  COMPLETED
 }
 
 // Google Scraper
