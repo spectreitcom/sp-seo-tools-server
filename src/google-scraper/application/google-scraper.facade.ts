@@ -4,6 +4,7 @@ import { Metadata } from './types';
 import { QueryRepository } from './ports/query.repository';
 import { EventPublisher } from '@nestjs/cqrs';
 import { QueryFactory } from '../domain/factories/query.factory';
+import { DeviceValidatorService } from './ports/device-validator.service';
 
 @Injectable()
 export class GoogleScraperFacade {
@@ -11,6 +12,7 @@ export class GoogleScraperFacade {
     private readonly googleScraperService: GoogleScraperService,
     private readonly queryRepository: QueryRepository,
     private readonly eventPublisher: EventPublisher,
+    private readonly deviceValidatorService: DeviceValidatorService,
   ) {}
 
   async getResults(responseId: string) {
@@ -25,6 +27,8 @@ export class GoogleScraperFacade {
     userId: string,
     metadata?: Metadata,
   ) {
+    this.deviceValidatorService.validate(device);
+
     const response = await this.googleScraperService.sendQuery(
       localizationCode,
       resultsNumber,

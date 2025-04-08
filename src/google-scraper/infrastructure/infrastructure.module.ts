@@ -11,6 +11,8 @@ import { CheckingQueryProducer } from './queues/procucers/checking-query.produce
 import { BullModule } from '@nestjs/bullmq';
 import { CHECKING_QUERY_QUEUE } from './queues/constants';
 import { CheckingQueryConsumer } from './queues/consumers/checking-query.consumer';
+import { DeviceValidatorService } from '../application/ports/device-validator.service';
+import { AppDeviceValidatorService } from './device-validator-service/app-device-validator.service';
 
 @Module({
   imports: [
@@ -35,7 +37,16 @@ import { CheckingQueryConsumer } from './queues/consumers/checking-query.consume
     },
     CheckingQueryProducer,
     CheckingQueryConsumer,
+    {
+      provide: DeviceValidatorService,
+      useClass: AppDeviceValidatorService,
+    },
   ],
-  exports: [GoogleScraperService, QueryRepository, CheckingQueryQueueService],
+  exports: [
+    GoogleScraperService,
+    QueryRepository,
+    CheckingQueryQueueService,
+    DeviceValidatorService,
+  ],
 })
 export default class InfrastructureModule {}
