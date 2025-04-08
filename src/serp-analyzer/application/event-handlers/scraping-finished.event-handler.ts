@@ -6,7 +6,7 @@ import { AnalysisRepository } from '../ports/analysis.repository';
 import { Page } from '../../domain/page';
 import { GoogleScraperFacade } from '../../../google-scraper/application/google-scraper.facade';
 import { PageFactory } from '../../domain/factories/page-factory';
-import { stagesArray } from '../stages';
+import { stagesArray } from '../../infrastructure/stages';
 import { PageRepository } from '../ports/page.repository';
 import { StageProcessingQueueService } from '../ports/stage-processing-queue.service';
 import { HtmlService } from '../ports/html.service';

@@ -198,4 +198,26 @@ export class PrismaPageRepository implements PageRepository {
       stages.map((stage) => stage.stage),
     );
   }
+
+  async findByStageId(stageId: string): Promise<Page> {
+    const stageModel = await this.databaseService.saStage.findUnique({
+      where: { id: stageId },
+      include: {
+        page: true,
+      },
+    });
+
+    if (!stageModel) return null;
+
+    const stageModels = await this.databaseService.saStage.findMany({
+      where: {
+        pageId: stageModel.pageId,
+      },
+    });
+
+    return PageMapper.toDomain(
+      stageModel.page,
+      stageModels.map((stage) => stage.stage),
+    );
+  }
 }
