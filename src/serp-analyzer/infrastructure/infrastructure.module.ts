@@ -25,6 +25,9 @@ import { StageProcessingQueueService } from '../application/ports/stage-processi
 import { AppStageProcessingQueueService } from './queues/app-stage-processing-queue.service';
 import { StageProcessingProducer } from './queues/producers/stage-processing.producer';
 import { StageProcessingConsumer } from './queues/consumers/stage-processing.consumer';
+import { HtmlService } from '../application/ports/html.service';
+import { AppHtmlService } from './app-html.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -36,8 +39,8 @@ import { StageProcessingConsumer } from './queues/consumers/stage-processing.con
         name: STAGE_PROCESSING_QUEUE,
       },
     ),
-
     DatabaseModule,
+    HttpModule,
   ],
   providers: [
     {
@@ -76,6 +79,10 @@ import { StageProcessingConsumer } from './queues/consumers/stage-processing.con
     },
     StageProcessingProducer,
     StageProcessingConsumer,
+    {
+      provide: HtmlService,
+      useClass: AppHtmlService,
+    },
   ],
   exports: [
     UserSubscriptionInfoRepository,
@@ -86,6 +93,7 @@ import { StageProcessingConsumer } from './queues/consumers/stage-processing.con
     StageRepository,
     PageRepository,
     StageProcessingQueueService,
+    HtmlService,
   ],
 })
 export class InfrastructureModule {}

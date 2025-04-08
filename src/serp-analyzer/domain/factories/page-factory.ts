@@ -7,7 +7,8 @@ export class PageFactory {
     position: number,
     analysisId: string,
     stages: string[],
+    html: string,
   ) {
-    return new Page(randomUUID(), url, position, analysisId, stages);
+    return new Page(randomUUID(), url, position, analysisId, stages, html);
   }
 }

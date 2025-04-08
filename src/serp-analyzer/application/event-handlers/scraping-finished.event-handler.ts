@@ -9,6 +9,7 @@ import { PageFactory } from '../../domain/factories/page-factory';
 import { stagesArray } from '../stages';
 import { PageRepository } from '../ports/page.repository';
 import { StageProcessingQueueService } from '../ports/stage-processing-queue.service';
+import { HtmlService } from '../ports/html.service';
 
 @EventsHandler(ScrapingFinishedIntegrationEvent)
 export class ScrapingFinishedEventHandler
@@ -21,6 +22,7 @@ export class ScrapingFinishedEventHandler
     private readonly googleScraperFacade: GoogleScraperFacade,
     private readonly pageRepository: PageRepository,
     private readonly stageProcessingQueueService: StageProcessingQueueService,
+    private readonly htmlService: HtmlService,
   ) {}
 
   async handle(event: ScrapingFinishedIntegrationEvent) {
@@ -51,11 +53,13 @@ export class ScrapingFinishedEventHandler
     const pages: Page[] = [];
 
     for (const searchResult of searchResults) {
+      const { html } = await this.htmlService.fromUrl(searchResult.url);
       const page = PageFactory.create(
         searchResult.url,
         searchResult.position,
         analysis.getAnalysisId(),
         stagesArray,
+        html,
       );
       pages.push(page);
     }

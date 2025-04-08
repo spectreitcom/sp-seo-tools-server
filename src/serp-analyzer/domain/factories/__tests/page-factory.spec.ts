@@ -10,6 +10,7 @@ describe('PageFactory', () => {
         3,
         randomUUID(),
         [],
+        '<body></body>',
       );
       expect(page).toBeInstanceOf(Page);
     });

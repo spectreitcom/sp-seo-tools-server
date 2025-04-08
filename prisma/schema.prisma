@@ -209,6 +209,7 @@ model SaPage {
   analysis    SaAnalysis     @relation(fields: [analysisId], references: [id])
   stages      SaStage[]
   pageFactors SaPageFactor[]
+  html        String
 }
 
 model SaStage {

@@ -22,6 +22,7 @@ export class PrismaPageRepository implements PageRepository {
             url: page.getUrl(),
             analysisId: page.getAnalysisId(),
             position: page.getPosition(),
+            html: page.getHtml(),
           },
         });
 
@@ -75,6 +76,7 @@ export class PrismaPageRepository implements PageRepository {
           url: page.getUrl(),
           analysisId: page.getAnalysisId(),
           position: page.getPosition(),
+          html: page.getHtml(),
         },
       });
 
@@ -117,6 +119,7 @@ export class PrismaPageRepository implements PageRepository {
             url: pageToUpdate.getUrl(),
             analysisId: pageToUpdate.getAnalysisId(),
             position: pageToUpdate.getPosition(),
+            html: pageToUpdate.getHtml(),
           },
         });
       }
@@ -127,6 +130,7 @@ export class PrismaPageRepository implements PageRepository {
           url: pageToCreate.getUrl(),
           analysisId: pageToCreate.getAnalysisId(),
           position: pageToCreate.getPosition(),
+          html: pageToCreate.getHtml(),
         })),
       });
 

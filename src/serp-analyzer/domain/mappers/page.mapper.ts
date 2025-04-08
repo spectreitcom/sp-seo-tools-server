@@ -9,6 +9,7 @@ export class PageMapper {
       model.position,
       model.analysisId,
       stages,
+      model.html,
     );
   }
 }

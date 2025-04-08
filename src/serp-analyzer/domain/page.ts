@@ -5,6 +5,7 @@ export class Page {
     private position: number,
     private analysisId: string,
     private stages: string[],
+    private html: string,
   ) {}
 
   getPageId() {
@@ -25,5 +26,9 @@ export class Page {
 
   getStages() {
     return this.stages;
+  }
+
+  getHtml() {
+    return this.html;
   }
 }
