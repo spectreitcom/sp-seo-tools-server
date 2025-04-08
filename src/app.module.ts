@@ -16,6 +16,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { SerpAnalyzerSubscriptionModule } from './serp-analyzer-subscription/application/serp-analyzer-subscription.module';
 import { SerpAnalyzerModule } from './serp-analyzer/application/serp-analyzer.module';
+import { HtmlParserModule } from './html-parser/application/html-parser.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { SerpAnalyzerModule } from './serp-analyzer/application/serp-analyzer.mo
     RankTrackerSubscriptionModule,
     SerpAnalyzerSubscriptionModule,
     SerpAnalyzerModule,
+    HtmlParserModule,
     BullModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         connection: {

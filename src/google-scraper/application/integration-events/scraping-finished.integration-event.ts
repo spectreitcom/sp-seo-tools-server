@@ -1,5 +1,5 @@
 import { IEvent } from '@nestjs/cqrs';
-import { Device, Metadata, SearchResult } from '../types';
+import { Metadata, SearchResult } from '../types';
 
 export class ScrapingFinishedIntegrationEvent implements IEvent {
   constructor(
@@ -9,6 +9,6 @@ export class ScrapingFinishedIntegrationEvent implements IEvent {
     public readonly localizationCode: string,
     public readonly resultsNumber: number,
     public readonly query: string,
-    public readonly device: Device,
+    public readonly device: string,
   ) {}
 }
