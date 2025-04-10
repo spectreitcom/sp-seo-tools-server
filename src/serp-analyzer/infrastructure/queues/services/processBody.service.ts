@@ -10,10 +10,14 @@ import {
   BODY_WORDS_COUNT,
 } from '../../factors';
 import { HtmlParserFacade } from '../../../../html-parser/application/html-parser.facade';
+import { PageFactorRepository } from '../../../application/ports/page-factor.repository';
 
 @Injectable()
 export class ProcessBodyService {
-  constructor(private readonly htmlParserFacade: HtmlParserFacade) {}
+  constructor(
+    private readonly htmlParserFacade: HtmlParserFacade,
+    private readonly pageFactorRepository: PageFactorRepository,
+  ) {}
 
   async process(html: string, phrase: string, pageId: string) {
     const pageFactors: PageFactor[] = [];
@@ -74,6 +78,6 @@ export class ProcessBodyService {
       ),
     );
 
-    return pageFactors;
+    await this.pageFactorRepository.saveMany(pageFactors);
   }
 }

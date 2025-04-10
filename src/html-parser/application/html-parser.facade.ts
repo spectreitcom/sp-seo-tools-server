@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ElementsCountService } from './ports/elements-count.service';
+import { CharactersCountService } from './ports/characters-count.service';
 
 @Injectable()
 export class HtmlParserFacade {
-  constructor(private readonly elementsCountService: ElementsCountService) {}
+  constructor(
+    private readonly elementsCountService: ElementsCountService,
+    private readonly charactersCountService: CharactersCountService,
+  ) {}
 
   // H1
 
@@ -12,7 +16,7 @@ export class HtmlParserFacade {
   }
 
   h1CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h1CharactersCount(html);
   }
 
   h1ExactKeywordsCount(html: string, phrase: string): number {
@@ -42,7 +46,7 @@ export class HtmlParserFacade {
   }
 
   h2CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h2CharactersCount(html);
   }
 
   h2ExactKeywordsCount(html: string, phrase: string): number {
@@ -72,7 +76,7 @@ export class HtmlParserFacade {
   }
 
   h3CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h3CharactersCount(html);
   }
 
   h3ExactKeywordsCount(html: string, phrase: string): number {
@@ -102,7 +106,7 @@ export class HtmlParserFacade {
   }
 
   h4CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h4CharactersCount(html);
   }
 
   h4ExactKeywordsCount(html: string, phrase: string): number {
@@ -132,7 +136,7 @@ export class HtmlParserFacade {
   }
 
   h5CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h5CharactersCount(html);
   }
 
   h5ExactKeywordsCount(html: string, phrase: string): number {
@@ -162,7 +166,7 @@ export class HtmlParserFacade {
   }
 
   h6CharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.h6CharactersCount(html);
   }
 
   h6ExactKeywordsCount(html: string, phrase: string): number {
@@ -192,7 +196,7 @@ export class HtmlParserFacade {
   }
 
   pCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.pCharactersCount(html);
   }
 
   pExactKeywordsCount(html: string, phrase: string): number {
@@ -222,7 +226,7 @@ export class HtmlParserFacade {
   }
 
   strongCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.strongCharactersCount(html);
   }
 
   strongExactKeywordsCount(html: string, phrase: string): number {
@@ -252,7 +256,7 @@ export class HtmlParserFacade {
   }
 
   imgAltCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.imgAltCharactersCount(html);
   }
 
   imgAltElementsCount(html: string): number {
@@ -282,7 +286,7 @@ export class HtmlParserFacade {
   }
 
   titleCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.titleCharactersCount(html);
   }
 
   titleExactKeywordsCount(html: string, phrase: string): number {
@@ -308,7 +312,7 @@ export class HtmlParserFacade {
   }
 
   metaDescriptionCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.metaDescriptionCharactersCount(html);
   }
 
   metaDescriptionExactKeywordsCount(html: string, phrase: string): number {
@@ -348,7 +352,7 @@ export class HtmlParserFacade {
   }
 
   bodyCharactersCount(html: string): number {
-    return 0;
+    return this.charactersCountService.bodyCharactersCount(html);
   }
 
   bodyExactKeywordsCount(html: string, phrase: string): number {
