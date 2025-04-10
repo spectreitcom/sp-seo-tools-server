@@ -23,7 +23,7 @@ export class ProcessH3Service {
   async process(html: string, phrase: string, pageId: string) {
     const pageFactors: PageFactor[] = [];
 
-    const h3WordsCount = this.htmlParserFacade.h2WordsCount(html);
+    const h3WordsCount = this.htmlParserFacade.h3WordsCount(html);
     pageFactors.push(
       PageFactorFactory.create(pageId, H3_WORDS_COUNT, h3WordsCount),
     );

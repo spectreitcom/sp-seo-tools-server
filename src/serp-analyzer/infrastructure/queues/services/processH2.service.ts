@@ -75,7 +75,7 @@ export class ProcessH2Service {
     );
 
     const h2PartialKeywordsDensity =
-      this.htmlParserFacade.h1PartialKeywordsDensity(html, phrase);
+      this.htmlParserFacade.h2PartialKeywordsDensity(html, phrase);
     pageFactors.push(
       PageFactorFactory.create(
         pageId,

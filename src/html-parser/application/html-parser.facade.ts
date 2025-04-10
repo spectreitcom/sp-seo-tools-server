@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { ElementsCountService } from './ports/elements-count.service';
 
 @Injectable()
 export class HtmlParserFacade {
+  constructor(private readonly elementsCountService: ElementsCountService) {}
+
   // H1
 
   h1WordsCount(html: string): number {
@@ -29,7 +32,7 @@ export class HtmlParserFacade {
   }
 
   h1ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h1ElementsCount(html);
   }
 
   // H2
@@ -59,7 +62,7 @@ export class HtmlParserFacade {
   }
 
   h2ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h2ElementsCount(html);
   }
 
   // H3
@@ -89,7 +92,7 @@ export class HtmlParserFacade {
   }
 
   h3ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h3ElementsCount(html);
   }
 
   // H4
@@ -119,7 +122,7 @@ export class HtmlParserFacade {
   }
 
   h4ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h4ElementsCount(html);
   }
 
   // H5
@@ -149,7 +152,7 @@ export class HtmlParserFacade {
   }
 
   h5ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h5ElementsCount(html);
   }
 
   // H6
@@ -179,7 +182,7 @@ export class HtmlParserFacade {
   }
 
   h6ElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.h6ElementsCount(html);
   }
 
   // P
@@ -209,7 +212,7 @@ export class HtmlParserFacade {
   }
 
   pElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.pElementsCount(html);
   }
 
   // Strong/b
@@ -239,7 +242,7 @@ export class HtmlParserFacade {
   }
 
   strongElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.strongElementsCount(html);
   }
 
   // Image alt
@@ -327,15 +330,15 @@ export class HtmlParserFacade {
   // Links
 
   linkElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.linkElementsCount(html);
   }
 
   linkNofollowElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.linkNofollowElementsCount(html);
   }
 
   linkDofollowElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.linkDofollowElementsCount(html);
   }
 
   // Body
@@ -367,14 +370,16 @@ export class HtmlParserFacade {
   // Image
 
   imageElementsCount(html: string): number {
-    return 0;
+    return this.elementsCountService.imageElementsCount(html);
   }
 
   imageElementsWithAltCount(html: string): number {
-    return 0;
+    return this.elementsCountService.imageElementsWithAltCount(html);
   }
 
   imageElementsWithoutOrWithEmptyAltCount(html: string): number {
-    return 0;
+    return this.elementsCountService.imageElementsWithoutOrWithEmptyAltCount(
+      html,
+    );
   }
 }
