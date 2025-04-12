@@ -1,18 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { ElementsCountService } from './ports/elements-count.service';
 import { CharactersCountService } from './ports/characters-count.service';
+import { WordsCountService } from './ports/words-count.service';
 
 @Injectable()
 export class HtmlParserFacade {
   constructor(
     private readonly elementsCountService: ElementsCountService,
     private readonly charactersCountService: CharactersCountService,
+    private readonly wordsCountService: WordsCountService,
   ) {}
 
   // H1
 
   h1WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h1WordsCount(html);
   }
 
   h1CharactersCount(html: string): number {
@@ -42,7 +44,7 @@ export class HtmlParserFacade {
   // H2
 
   h2WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h2WordsCount(html);
   }
 
   h2CharactersCount(html: string): number {
@@ -72,7 +74,7 @@ export class HtmlParserFacade {
   // H3
 
   h3WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h3WordsCount(html);
   }
 
   h3CharactersCount(html: string): number {
@@ -102,7 +104,7 @@ export class HtmlParserFacade {
   // H4
 
   h4WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h4WordsCount(html);
   }
 
   h4CharactersCount(html: string): number {
@@ -132,7 +134,7 @@ export class HtmlParserFacade {
   // H5
 
   h5WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h5WordsCount(html);
   }
 
   h5CharactersCount(html: string): number {
@@ -162,7 +164,7 @@ export class HtmlParserFacade {
   // H6
 
   h6WordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.h6WordsCount(html);
   }
 
   h6CharactersCount(html: string): number {
@@ -192,7 +194,7 @@ export class HtmlParserFacade {
   // P
 
   pWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.pWordsCount(html);
   }
 
   pCharactersCount(html: string): number {
@@ -222,7 +224,7 @@ export class HtmlParserFacade {
   // Strong/b
 
   strongWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.strongWordsCount(html);
   }
 
   strongCharactersCount(html: string): number {
@@ -252,7 +254,7 @@ export class HtmlParserFacade {
   // Image alt
 
   imgAltWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.imgAltWordsCount(html);
   }
 
   imgAltCharactersCount(html: string): number {
@@ -282,7 +284,7 @@ export class HtmlParserFacade {
   // Title
 
   titleWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.titleWordsCount(html);
   }
 
   titleCharactersCount(html: string): number {
@@ -308,7 +310,7 @@ export class HtmlParserFacade {
   // Meta description
 
   metaDescriptionWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.metaDescriptionWordsCount(html);
   }
 
   metaDescriptionCharactersCount(html: string): number {
@@ -348,7 +350,7 @@ export class HtmlParserFacade {
   // Body
 
   bodyWordsCount(html: string): number {
-    return 0;
+    return this.wordsCountService.bodyWordsCount(html);
   }
 
   bodyCharactersCount(html: string): number {
