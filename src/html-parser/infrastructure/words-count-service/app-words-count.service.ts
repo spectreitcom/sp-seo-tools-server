@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { WordsCountService } from '../../application/ports/words-count.service';
 import * as cheerio from 'cheerio';
-import { extractTextFromString } from '../utils/extract-text-from-string';
+import { extractTextFromHtml } from '../utils/extract-text-from-html';
+import { extractClearWords } from '../utils/extract-clear-words';
 
 @Injectable()
 export class AppWordsCountService implements WordsCountService {
@@ -71,7 +72,7 @@ export class AppWordsCountService implements WordsCountService {
   bodyWordsCount(html: string): number {
     const $ = cheerio.load(html);
     const bodyElement = $('body');
-    const text = extractTextFromString(bodyElement.html(), {
+    const text = extractTextFromHtml(bodyElement.html(), {
       selectors: [
         {
           selector: 'img',
@@ -88,19 +89,13 @@ export class AppWordsCountService implements WordsCountService {
     if (!elements) return 0;
     const texts: string[] = [];
     elements.map((_, element) => {
-      const text = extractTextFromString($(element).html());
+      const text = extractTextFromHtml($(element).html());
       texts.push(text);
     });
     return this.getWordsCount(texts.join(' '));
   }
 
   private getWordsCount(text: string) {
-    return text
-      .replace(/\W/g, ' ')
-      .split(' ')
-      .filter((item) => item !== ' ')
-      .filter((item) => item !== '')
-      .filter((item) => item !== '&nbsp;')
-      .filter((item) => item !== '&nbsp').length;
+    return extractClearWords(text).length;
   }
 }

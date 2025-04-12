@@ -4,7 +4,7 @@ import { convert, HtmlToTextOptions } from 'html-to-text';
  * @param html - should be a html structure
  * @param options
  */
-export function extractTextFromString(
+export function extractTextFromHtml(
   html: string,
   options: HtmlToTextOptions = {},
 ) {

@@ -5,6 +5,8 @@ import { CharactersCountService } from '../application/ports/characters-count.se
 import { AppCharactersCountService } from './characters-count-service/app-characters-count.service';
 import { WordsCountService } from '../application/ports/words-count.service';
 import { AppWordsCountService } from './words-count-service/app-words-count.service';
+import { ExactKeywordsCountService } from '../application/ports/exact-keywords-count.service';
+import { AppExactKeywordsCountService } from './exact-keywords-count-service/app-exact-keywords-count.service';
 
 @Module({
   imports: [],
@@ -21,7 +23,16 @@ import { AppWordsCountService } from './words-count-service/app-words-count.serv
       provide: WordsCountService,
       useClass: AppWordsCountService,
     },
+    {
+      provide: ExactKeywordsCountService,
+      useClass: AppExactKeywordsCountService,
+    },
   ],
-  exports: [ElementsCountService, CharactersCountService, WordsCountService],
+  exports: [
+    ElementsCountService,
+    CharactersCountService,
+    WordsCountService,
+    ExactKeywordsCountService,
+  ],
 })
 export class InfrastructureModule {}

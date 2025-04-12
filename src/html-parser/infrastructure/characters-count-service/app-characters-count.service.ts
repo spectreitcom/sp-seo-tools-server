@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CharactersCountService } from '../../application/ports/characters-count.service';
 import * as cheerio from 'cheerio';
-import { extractTextFromString } from '../utils/extract-text-from-string';
+import { extractTextFromHtml } from '../utils/extract-text-from-html';
 
 @Injectable()
 export class AppCharactersCountService implements CharactersCountService {
@@ -13,7 +13,7 @@ export class AppCharactersCountService implements CharactersCountService {
     const texts: string[] = [];
 
     elements.map((_, element) => {
-      const text = extractTextFromString($(element).html());
+      const text = extractTextFromHtml($(element).html());
       texts.push(text);
     });
 
@@ -85,7 +85,7 @@ export class AppCharactersCountService implements CharactersCountService {
   bodyCharactersCount(html: string): number {
     const $ = cheerio.load(html);
     const bodyHtml = $('body').html();
-    const text = extractTextFromString(bodyHtml, {
+    const text = extractTextFromHtml(bodyHtml, {
       selectors: [{ selector: 'img', format: 'skip' }],
     });
     return text.replace(/\W/g, '').length;

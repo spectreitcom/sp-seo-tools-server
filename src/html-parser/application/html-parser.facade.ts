@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ElementsCountService } from './ports/elements-count.service';
 import { CharactersCountService } from './ports/characters-count.service';
 import { WordsCountService } from './ports/words-count.service';
+import { ExactKeywordsCountService } from './ports/exact-keywords-count.service';
 
 @Injectable()
 export class HtmlParserFacade {
@@ -9,6 +10,7 @@ export class HtmlParserFacade {
     private readonly elementsCountService: ElementsCountService,
     private readonly charactersCountService: CharactersCountService,
     private readonly wordsCountService: WordsCountService,
+    private readonly exactKeywordsCountService: ExactKeywordsCountService,
   ) {}
 
   // H1
@@ -22,7 +24,7 @@ export class HtmlParserFacade {
   }
 
   h1ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h1ExactKeywordsCount(html, phrase);
   }
 
   h1ExactKeywordsDensity(html: string, phrase: string): number {
@@ -52,7 +54,7 @@ export class HtmlParserFacade {
   }
 
   h2ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h2ExactKeywordsCount(html, phrase);
   }
 
   h2ExactKeywordsDensity(html: string, phrase: string): number {
@@ -82,7 +84,7 @@ export class HtmlParserFacade {
   }
 
   h3ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h3ExactKeywordsCount(html, phrase);
   }
 
   h3ExactKeywordsDensity(html: string, phrase: string): number {
@@ -112,7 +114,7 @@ export class HtmlParserFacade {
   }
 
   h4ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h4ExactKeywordsCount(html, phrase);
   }
 
   h4ExactKeywordsDensity(html: string, phrase: string): number {
@@ -142,7 +144,7 @@ export class HtmlParserFacade {
   }
 
   h5ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h5ExactKeywordsCount(html, phrase);
   }
 
   h5ExactKeywordsDensity(html: string, phrase: string): number {
@@ -172,7 +174,7 @@ export class HtmlParserFacade {
   }
 
   h6ExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.h6ExactKeywordsCount(html, phrase);
   }
 
   h6ExactKeywordsDensity(html: string, phrase: string): number {
@@ -202,7 +204,7 @@ export class HtmlParserFacade {
   }
 
   pExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.pExactKeywordsCount(html, phrase);
   }
 
   pExactKeywordsDensity(html: string, phrase: string): number {
@@ -232,7 +234,10 @@ export class HtmlParserFacade {
   }
 
   strongExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.strongExactKeywordsCount(
+      html,
+      phrase,
+    );
   }
 
   strongExactKeywordsDensity(html: string, phrase: string): number {
@@ -266,7 +271,10 @@ export class HtmlParserFacade {
   }
 
   imgAltExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.imgAltExactKeywordsCount(
+      html,
+      phrase,
+    );
   }
 
   imgAltExactKeywordsDensity(html: string, phrase: string): number {
@@ -292,7 +300,7 @@ export class HtmlParserFacade {
   }
 
   titleExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.titleExactKeywordsCount(html, phrase);
   }
 
   titleExactKeywordsDensity(html: string, phrase: string): number {
@@ -318,7 +326,10 @@ export class HtmlParserFacade {
   }
 
   metaDescriptionExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.metaDescriptionExactKeywordsCount(
+      html,
+      phrase,
+    );
   }
 
   metaDescriptionExactKeywordsDensity(html: string, phrase: string): number {
@@ -358,7 +369,7 @@ export class HtmlParserFacade {
   }
 
   bodyExactKeywordsCount(html: string, phrase: string): number {
-    return 0;
+    return this.exactKeywordsCountService.bodyExactKeywordsCount(html, phrase);
   }
 
   bodyExactKeywordsDensity(html: string, phrase: string): number {
