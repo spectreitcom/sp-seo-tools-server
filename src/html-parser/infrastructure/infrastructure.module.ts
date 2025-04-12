@@ -7,6 +7,8 @@ import { WordsCountService } from '../application/ports/words-count.service';
 import { AppWordsCountService } from './words-count-service/app-words-count.service';
 import { ExactKeywordsCountService } from '../application/ports/exact-keywords-count.service';
 import { AppExactKeywordsCountService } from './exact-keywords-count-service/app-exact-keywords-count.service';
+import { ExactKeywordsDensityService } from '../application/ports/exact-keywords-density.service';
+import { AppExactKeywordsDensityService } from './exact-keywords-density-service/app-exact-keywords-density.service';
 
 @Module({
   imports: [],
@@ -27,12 +29,17 @@ import { AppExactKeywordsCountService } from './exact-keywords-count-service/app
       provide: ExactKeywordsCountService,
       useClass: AppExactKeywordsCountService,
     },
+    {
+      provide: ExactKeywordsDensityService,
+      useClass: AppExactKeywordsDensityService,
+    },
   ],
   exports: [
     ElementsCountService,
     CharactersCountService,
     WordsCountService,
     ExactKeywordsCountService,
+    ExactKeywordsDensityService,
   ],
 })
 export class InfrastructureModule {}
