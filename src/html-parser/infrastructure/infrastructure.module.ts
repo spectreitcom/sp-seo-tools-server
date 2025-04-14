@@ -9,6 +9,8 @@ import { ExactKeywordsCountService } from '../application/ports/exact-keywords-c
 import { AppExactKeywordsCountService } from './exact-keywords-count-service/app-exact-keywords-count.service';
 import { ExactKeywordsDensityService } from '../application/ports/exact-keywords-density.service';
 import { AppExactKeywordsDensityService } from './exact-keywords-density-service/app-exact-keywords-density.service';
+import { PartialKeywordsCountService } from '../application/ports/partial-keywords-count.service';
+import { AppPartialKeywordsCountService } from './partial-keywords-count-service/app-partial-keywords-count.service';
 
 @Module({
   imports: [],
@@ -33,6 +35,10 @@ import { AppExactKeywordsDensityService } from './exact-keywords-density-service
       provide: ExactKeywordsDensityService,
       useClass: AppExactKeywordsDensityService,
     },
+    {
+      provide: PartialKeywordsCountService,
+      useClass: AppPartialKeywordsCountService,
+    },
   ],
   exports: [
     ElementsCountService,
@@ -40,6 +46,7 @@ import { AppExactKeywordsDensityService } from './exact-keywords-density-service
     WordsCountService,
     ExactKeywordsCountService,
     ExactKeywordsDensityService,
+    PartialKeywordsCountService,
   ],
 })
 export class InfrastructureModule {}
