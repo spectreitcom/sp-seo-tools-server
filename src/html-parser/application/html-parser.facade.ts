@@ -5,6 +5,7 @@ import { WordsCountService } from './ports/words-count.service';
 import { ExactKeywordsCountService } from './ports/exact-keywords-count.service';
 import { ExactKeywordsDensityService } from './ports/exact-keywords-density.service';
 import { PartialKeywordsCountService } from './ports/partial-keywords-count.service';
+import { PartialKeywordsDensityService } from './ports/partial-keywords-density.service';
 
 @Injectable()
 export class HtmlParserFacade {
@@ -15,6 +16,7 @@ export class HtmlParserFacade {
     private readonly exactKeywordsCountService: ExactKeywordsCountService,
     private readonly exactKeywordsDensityService: ExactKeywordsDensityService,
     private readonly partialKeywordsCountService: PartialKeywordsCountService,
+    private readonly partialKeywordsDensityService: PartialKeywordsDensityService,
   ) {}
 
   // H1
@@ -46,7 +48,10 @@ export class HtmlParserFacade {
   }
 
   h1PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h1PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h1ElementsCount(html: string): number {
@@ -82,7 +87,10 @@ export class HtmlParserFacade {
   }
 
   h2PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h2PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h2ElementsCount(html: string): number {
@@ -118,7 +126,10 @@ export class HtmlParserFacade {
   }
 
   h3PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h3PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h3ElementsCount(html: string): number {
@@ -154,7 +165,10 @@ export class HtmlParserFacade {
   }
 
   h4PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h4PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h4ElementsCount(html: string): number {
@@ -190,7 +204,10 @@ export class HtmlParserFacade {
   }
 
   h5PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h5PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h5ElementsCount(html: string): number {
@@ -226,7 +243,10 @@ export class HtmlParserFacade {
   }
 
   h6PartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.h6PartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   h6ElementsCount(html: string): number {
@@ -256,7 +276,10 @@ export class HtmlParserFacade {
   }
 
   pPartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.pPartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   pElementsCount(html: string): number {
@@ -295,7 +318,10 @@ export class HtmlParserFacade {
   }
 
   strongPartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.strongPartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   strongElementsCount(html: string): number {
@@ -338,7 +364,10 @@ export class HtmlParserFacade {
   }
 
   imgAltPartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.imgAltPartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   // Title
@@ -370,7 +399,10 @@ export class HtmlParserFacade {
   }
 
   titlePartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.titlePartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   // Meta description
@@ -405,7 +437,10 @@ export class HtmlParserFacade {
   }
 
   metaDescriptionPartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.metaDescriptionPartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   // Links
@@ -451,7 +486,10 @@ export class HtmlParserFacade {
   }
 
   bodyPartialKeywordsDensity(html: string, phrase: string): number {
-    return 0;
+    return this.partialKeywordsDensityService.bodyPartialKeywordsDensity(
+      html,
+      phrase,
+    );
   }
 
   // Image
