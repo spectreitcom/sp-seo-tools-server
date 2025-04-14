@@ -44,6 +44,7 @@ export class AppPartialKeywordsCountService
   }
 
   imgAltPartialKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const partials = this.getPartialsFromPhrase(phrase);
     if (!partials.length) return 0;
     const $ = cheerio.load(html);
@@ -67,6 +68,7 @@ export class AppPartialKeywordsCountService
   }
 
   metaDescriptionPartialKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const partials = this.getPartialsFromPhrase(phrase);
     if (!partials.length) return 0;
     const $ = cheerio.load(html);
@@ -113,6 +115,7 @@ export class AppPartialKeywordsCountService
     tag: string,
     options: HtmlToTextOptions = {},
   ) {
+    if (!html || html === '' || html === ' ') return 0;
     const partials = this.getPartialsFromPhrase(phrase);
     if (!partials.length) return 0;
     const $ = cheerio.load(html);

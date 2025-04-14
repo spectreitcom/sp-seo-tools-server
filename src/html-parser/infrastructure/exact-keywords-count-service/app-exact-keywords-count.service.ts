@@ -41,6 +41,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
   }
 
   imgAltExactKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $('img[alt]:not([alt=""])');
     if (!elements) return 0;
@@ -53,6 +54,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
   }
 
   titleExactKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const title = $('title');
     if (!title) return 0;
@@ -63,6 +65,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
   }
 
   metaDescriptionExactKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const metaDescription = $('meta[name="description"]');
     if (!metaDescription) return 0;
@@ -73,6 +76,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
   }
 
   bodyExactKeywordsCount(html: string, phrase: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $('body');
     if (!elements) return 0;
@@ -96,6 +100,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
   }
 
   private getExactKeywordCountByTag(html: string, phrase: string, tag: string) {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $(tag);
     if (!elements) return 0;

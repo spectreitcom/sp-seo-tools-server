@@ -21,6 +21,23 @@ describe('AppPartialKeywordsCountService', () => {
       );
       expect(result).toEqual(8);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h1PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h1PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h1PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('h2PartialKeywordsCount', () => {
@@ -32,6 +49,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(8);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h2PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h2PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h2PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 
@@ -45,6 +79,23 @@ describe('AppPartialKeywordsCountService', () => {
       );
       expect(result).toEqual(8);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h3PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h3PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h3PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('h4PartialKeywordsCount', () => {
@@ -56,6 +107,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(8);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h4PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h4PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h4PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 
@@ -69,6 +137,23 @@ describe('AppPartialKeywordsCountService', () => {
       );
       expect(result).toEqual(8);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h5PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h5PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h5PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('h6PartialKeywordsCount', () => {
@@ -80,6 +165,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(8);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.h6PartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.h6PartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.h6PartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 
@@ -93,6 +195,23 @@ describe('AppPartialKeywordsCountService', () => {
       );
       expect(result).toEqual(8);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.pPartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.pPartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.pPartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('strongPartialKeywordsCount', () => {
@@ -104,6 +223,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(8);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.strongPartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.strongPartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.strongPartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 
@@ -117,6 +253,23 @@ describe('AppPartialKeywordsCountService', () => {
       );
       expect(result).toEqual(8);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.imgAltPartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.imgAltPartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.imgAltPartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('titlePartialKeywordsCount', () => {
@@ -128,6 +281,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(3);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.titlePartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.titlePartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.titlePartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 
@@ -142,6 +312,26 @@ describe('AppPartialKeywordsCountService', () => {
         );
       expect(result).toEqual(3);
     });
+    it('should return 0 when there is no html', () => {
+      const result1 =
+        appPartialKeywordsCountService.metaDescriptionPartialKeywordsCount(
+          '',
+          phrase,
+        );
+      const result2 =
+        appPartialKeywordsCountService.metaDescriptionPartialKeywordsCount(
+          null,
+          phrase,
+        );
+      const result3 =
+        appPartialKeywordsCountService.metaDescriptionPartialKeywordsCount(
+          undefined,
+          phrase,
+        );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
+    });
   });
 
   describe('bodyPartialKeywordsCount', () => {
@@ -153,6 +343,23 @@ describe('AppPartialKeywordsCountService', () => {
         phrase,
       );
       expect(result).toEqual(24);
+    });
+    it('should return 0 when there is no html', () => {
+      const result1 = appPartialKeywordsCountService.bodyPartialKeywordsCount(
+        '',
+        phrase,
+      );
+      const result2 = appPartialKeywordsCountService.bodyPartialKeywordsCount(
+        null,
+        phrase,
+      );
+      const result3 = appPartialKeywordsCountService.bodyPartialKeywordsCount(
+        undefined,
+        phrase,
+      );
+      expect(result1).toEqual(0);
+      expect(result2).toEqual(0);
+      expect(result3).toEqual(0);
     });
   });
 });

@@ -41,6 +41,7 @@ export class AppWordsCountService implements WordsCountService {
   }
 
   imgAltWordsCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const imageElements = $('img[alt]:not([alt=""])');
     if (!imageElements) return 0;
@@ -53,6 +54,7 @@ export class AppWordsCountService implements WordsCountService {
   }
 
   titleWordsCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const titleElement = $('title');
     if (!titleElement) return 0;
@@ -61,6 +63,7 @@ export class AppWordsCountService implements WordsCountService {
   }
 
   metaDescriptionWordsCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const metaDescriptionElement = $('meta[name="description"]');
     if (!metaDescriptionElement) return 0;
@@ -70,6 +73,7 @@ export class AppWordsCountService implements WordsCountService {
   }
 
   bodyWordsCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const bodyElement = $('body');
     const text = extractTextFromHtml(bodyElement.html(), {
@@ -84,6 +88,7 @@ export class AppWordsCountService implements WordsCountService {
   }
 
   private getWordsCountByTag(html: string, tag: string) {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $(tag);
     if (!elements) return 0;

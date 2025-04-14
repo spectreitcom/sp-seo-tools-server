@@ -6,6 +6,7 @@ import { extractTextFromHtml } from '../utils/extract-text-from-html';
 @Injectable()
 export class AppCharactersCountService implements CharactersCountService {
   private countCharacters(html: string, tag: string) {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $(tag);
     if (!elements.length) return 0;
@@ -55,6 +56,7 @@ export class AppCharactersCountService implements CharactersCountService {
   }
 
   imgAltCharactersCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const imgElements = $('img[alt]:not([alt=""])');
 
@@ -69,6 +71,7 @@ export class AppCharactersCountService implements CharactersCountService {
   }
 
   titleCharactersCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const titleElement = $('title');
     if (!titleElement) return 0;
@@ -76,6 +79,7 @@ export class AppCharactersCountService implements CharactersCountService {
   }
 
   metaDescriptionCharactersCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const metaDescElement = $('meta[name="description"]');
     if (!metaDescElement) return 0;
@@ -83,6 +87,7 @@ export class AppCharactersCountService implements CharactersCountService {
   }
 
   bodyCharactersCount(html: string): number {
+    if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const bodyHtml = $('body').html();
     const text = extractTextFromHtml(bodyHtml, {
