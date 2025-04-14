@@ -54,21 +54,26 @@ export class ProcessHtmlStructureService {
     const html = page.getHtml();
     const phrase = analysis.getKeyword();
 
-    await this.processH1Service.process(html, phrase, page.getPageId());
-    await this.processH2Service.process(html, phrase, page.getPageId());
-    await this.processH3Service.process(html, phrase, page.getPageId());
-    await this.processH4Service.process(html, phrase, page.getPageId());
-    await this.processH5Service.process(html, phrase, page.getPageId());
-    await this.processH6Service.process(html, phrase, page.getPageId());
-    await this.processPService.process(html, phrase, page.getPageId());
-    await this.processStrongService.process(html, phrase, page.getPageId());
-    await this.processImgAltService.process(html, phrase, page.getPageId());
-    await this.processTitleService.process(html, phrase, page.getPageId());
-    await this.processMetaDescService.process(html, phrase, page.getPageId());
-    await this.processLinkService.process(html, page.getPageId());
-    await this.processBodyService.process(html, phrase, page.getPageId());
-    await this.processImageService.process(html, page.getPageId());
-
-    this.eventBus.publish(new StageProcessingFinishedEvent(stage.getStageId()));
+    try {
+      await this.processH1Service.process(html, phrase, page.getPageId());
+      await this.processH2Service.process(html, phrase, page.getPageId());
+      await this.processH3Service.process(html, phrase, page.getPageId());
+      await this.processH4Service.process(html, phrase, page.getPageId());
+      await this.processH5Service.process(html, phrase, page.getPageId());
+      await this.processH6Service.process(html, phrase, page.getPageId());
+      await this.processPService.process(html, phrase, page.getPageId());
+      await this.processStrongService.process(html, phrase, page.getPageId());
+      await this.processImgAltService.process(html, phrase, page.getPageId());
+      await this.processTitleService.process(html, phrase, page.getPageId());
+      await this.processMetaDescService.process(html, phrase, page.getPageId());
+      await this.processLinkService.process(html, page.getPageId());
+      await this.processBodyService.process(html, phrase, page.getPageId());
+      await this.processImageService.process(html, page.getPageId());
+      this.eventBus.publish(
+        new StageProcessingFinishedEvent(stage.getStageId()),
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
