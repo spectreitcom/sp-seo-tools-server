@@ -61,7 +61,8 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     const text = title.text().toLowerCase();
     const _phrase = phrase.toLowerCase();
     const regExp = new RegExp(`${_phrase}`, 'gim');
-    return text.match(regExp).length;
+    const results = text.match(regExp);
+    return results && Array.isArray(results) ? results.length : 0;
   }
 
   metaDescriptionExactKeywordsCount(html: string, phrase: string): number {
@@ -72,7 +73,8 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     const text = metaDescription.attr('content');
     const _phrase = phrase.toLowerCase();
     const regExp = new RegExp(`${_phrase}`, 'gim');
-    return text.match(regExp).length;
+    const results = text.match(regExp);
+    return results && Array.isArray(results) ? results.length : 0;
   }
 
   bodyExactKeywordsCount(html: string, phrase: string): number {
@@ -116,6 +118,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     const _text = extractClearWords(text.toLowerCase()).join(' ');
     const _phrase = phrase.toLowerCase();
     const regExp = new RegExp(`${_phrase}`, 'gim');
-    return _text.match(regExp).length;
+    const results = _text.match(regExp);
+    return results && Array.isArray(results) ? results.length : 0;
   }
 }
