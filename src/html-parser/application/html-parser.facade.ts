@@ -338,10 +338,6 @@ export class HtmlParserFacade {
     return this.charactersCountService.imgAltCharactersCount(html);
   }
 
-  imgAltElementsCount(html: string): number {
-    return 0; // todo????
-  }
-
   imgAltExactKeywordsCount(html: string, phrase: string): number {
     return this.exactKeywordsCountService.imgAltExactKeywordsCount(
       html,

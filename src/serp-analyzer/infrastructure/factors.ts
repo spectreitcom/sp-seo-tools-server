@@ -172,7 +172,6 @@ export const STRONG_FACTORS = [
  */
 export const IMG_ALT_WORDS_COUNT = 'img_alt_words_count';
 export const IMG_ALT_CHARACTERS_COUNT = 'img_alt_characters_count';
-export const IMG_ALT_ELEMENTS_COUNT = 'img_alt_elements_count';
 export const IMG_ALT_EXACT_KEYWORDS_COUNT = 'img_alt_exact_keywords_count';
 export const IMG_ALT_EXACT_KEYWORDS_DENSITY = 'img_alt_exact_keywords_density';
 export const IMG_ALT_PARTIAL_KEYWORDS_COUNT = 'img_alt_partial_keywords_count';
@@ -182,7 +181,6 @@ export const IMG_ALT_PARTIAL_KEYWORDS_DENSITY =
 export const IMG_ALT_FACTORS = [
   IMG_ALT_WORDS_COUNT,
   IMG_ALT_CHARACTERS_COUNT,
-  IMG_ALT_ELEMENTS_COUNT,
   IMG_ALT_EXACT_KEYWORDS_COUNT,
   IMG_ALT_EXACT_KEYWORDS_DENSITY,
   IMG_ALT_PARTIAL_KEYWORDS_COUNT,
