@@ -3,7 +3,6 @@ import { PageFactor } from '../../../domain/page-factor';
 import { PageFactorFactory } from '../../../domain/factories/page-factor.factory';
 import {
   IMG_ALT_CHARACTERS_COUNT,
-  IMG_ALT_ELEMENTS_COUNT,
   IMG_ALT_EXACT_KEYWORDS_COUNT,
   IMG_ALT_EXACT_KEYWORDS_DENSITY,
   IMG_ALT_PARTIAL_KEYWORDS_COUNT,
@@ -35,15 +34,6 @@ export class ProcessImgAltService {
         pageId,
         IMG_ALT_CHARACTERS_COUNT,
         imgAltCharactersCount,
-      ),
-    );
-
-    const imgAltElementsCount = this.htmlParserFacade.imgAltElementsCount(html);
-    pageFactors.push(
-      PageFactorFactory.create(
-        pageId,
-        IMG_ALT_ELEMENTS_COUNT,
-        imgAltElementsCount,
       ),
     );
 
