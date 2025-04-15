@@ -92,23 +92,7 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
         },
       });
 
-    const nowMoment = moment();
-
-    const fromDateMoment = nowMoment.clone().set({
-      M: nowMoment.get('month'),
-      D: 1,
-      h: 0,
-      minute: 0,
-      second: 0,
-    });
-
-    const toDateMoment = nowMoment.clone().set({
-      h: 23,
-      minute: 59,
-      second: 59,
-      M: nowMoment.get('month'),
-      D: nowMoment.daysInMonth(),
-    });
+    const [fromDateMoment, toDateMoment] = this.getDateRangeForCurrentMonth();
 
     const total = await this.databaseService.saAnalysis.count({
       where: {
@@ -135,5 +119,40 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
       return true;
 
     return false;
+  }
+
+  async getUsedQuotaInCurrentMonth(userId: string): Promise<number> {
+    const [fromDateMoment, toDateMoment] = this.getDateRangeForCurrentMonth();
+    return this.databaseService.saAnalysis.count({
+      where: {
+        userId: userId,
+        createdAt: {
+          gte: fromDateMoment.unix(),
+          lte: toDateMoment.unix(),
+        },
+      },
+    });
+  }
+
+  private getDateRangeForCurrentMonth() {
+    const nowMoment = moment();
+
+    const fromDateMoment = nowMoment.clone().set({
+      M: nowMoment.get('month'),
+      D: 1,
+      h: 0,
+      minute: 0,
+      second: 0,
+    });
+
+    const toDateMoment = nowMoment.clone().set({
+      h: 23,
+      minute: 59,
+      second: 59,
+      M: nowMoment.get('month'),
+      D: nowMoment.daysInMonth(),
+    });
+
+    return [fromDateMoment, toDateMoment];
   }
 }

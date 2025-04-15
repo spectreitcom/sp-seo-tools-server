@@ -4,6 +4,8 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateAnalysisCommand } from '../commands/create-analysis.command';
 import { GetUserAnalysisListQuery } from '../queries/get-user-analysis-list.query';
 import { GetUserAnalysisListQueryResponse } from '../query-handlers/get-user-analysis-list.query-handler';
+import { GetUserMonthlyUsageQuery } from '../queries/get-user-monthly-usage.query';
+import { GetUserMonthlyUsageQueryResponse } from '../query-handlers/get-user-monthly-usage.query-handler';
 
 @Injectable()
 export class AnalysisService {
@@ -44,5 +46,12 @@ export class AnalysisService {
         device,
       ),
     );
+  }
+
+  async getUserMonthlyUsage(userId: string) {
+    return this.queryBus.execute<
+      GetUserMonthlyUsageQuery,
+      GetUserMonthlyUsageQueryResponse
+    >(new GetUserMonthlyUsageQuery(userId));
   }
 }

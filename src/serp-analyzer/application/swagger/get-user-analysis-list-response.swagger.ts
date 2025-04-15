@@ -1,15 +1,15 @@
 import { GetUserAnalysisListQueryResponse as GetAnalysisListQueryResponseBase } from '../query-handlers/get-user-analysis-list.query-handler';
-import { UserAnalysisReadModel } from '../query-handlers/user-analysis-read-model';
+import { UserAnalysisReadModelSwagger } from './user-analysis-read-model.swagger';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetUserAnalysisListResponse
+export class GetUserAnalysisListResponseSwagger
   implements GetAnalysisListQueryResponseBase
 {
   @ApiProperty({
-    type: UserAnalysisReadModel,
+    type: UserAnalysisReadModelSwagger,
     isArray: true,
   })
-  readonly data: UserAnalysisReadModel[];
+  readonly data: UserAnalysisReadModelSwagger[];
 
   @ApiProperty({
     example: 100,
