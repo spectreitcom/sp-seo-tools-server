@@ -10,6 +10,8 @@ import { stagesArray } from '../../infrastructure/stages';
 import { PageRepository } from '../ports/page.repository';
 import { StageProcessingQueueService } from '../ports/stage-processing-queue.service';
 import { HtmlService } from '../ports/html.service';
+import { AnalysisProgressRepository } from '../ports/analysis-progress.repository';
+import { AnalysisProgressFactory } from '../../domain/factories/analysis-progress.factory';
 
 @EventsHandler(ScrapingFinishedIntegrationEvent)
 export class ScrapingFinishedEventHandler
@@ -23,6 +25,7 @@ export class ScrapingFinishedEventHandler
     private readonly pageRepository: PageRepository,
     private readonly stageProcessingQueueService: StageProcessingQueueService,
     private readonly htmlService: HtmlService,
+    private readonly analysisProgressRepository: AnalysisProgressRepository,
   ) {}
 
   async handle(event: ScrapingFinishedIntegrationEvent) {
@@ -64,6 +67,14 @@ export class ScrapingFinishedEventHandler
       pages.push(page);
     }
     await this.pageRepository.saveMany(pages);
+
+    const totalProgress = stagesArray.length * pages.length;
+    const analysisProgress = AnalysisProgressFactory.create(
+      analysis.getAnalysisId(),
+      totalProgress,
+    );
+    await this.analysisProgressRepository.save(analysisProgress);
+
     await this.stageProcessingQueueService.beginProcessing(
       pages.map((page) => page.getPageId()),
     );
