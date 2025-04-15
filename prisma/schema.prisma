@@ -190,15 +190,24 @@ model SaLocalization {
 }
 
 model SaAnalysis {
-  id             String         @id @default(uuid())
-  keyword        String
-  createdAt      Int
-  localizationId String
-  localization   SaLocalization @relation(fields: [localizationId], references: [id])
-  processId      String?
-  device         String
-  pages          SaPage[]
-  userId         String
+  id                 String               @id @default(uuid())
+  keyword            String
+  createdAt          Int
+  localizationId     String
+  localization       SaLocalization       @relation(fields: [localizationId], references: [id])
+  processId          String?
+  device             String
+  pages              SaPage[]
+  userId             String
+  analysisProgresses SaAnalysisProgress[]
+}
+
+model SaAnalysisProgress {
+  id         String     @id @default(uuid())
+  analysisId String     @unique
+  analysis   SaAnalysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  current    Int        @default(0)
+  total      Int
 }
 
 model SaPage {

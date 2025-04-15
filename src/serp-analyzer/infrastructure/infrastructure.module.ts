@@ -10,6 +10,7 @@ import { TestingModeCheckerQueueService } from '../application/ports/testing-mod
 import { AppTestingModeCheckerQueueService } from './queues/app-testing-mode-checker-queue.service';
 import { BullModule } from '@nestjs/bullmq';
 import {
+  ANALYSIS_PROGRESS_QUEUE,
   STAGE_PROCESSING_QUEUE,
   TESTING_MODE_CHECKER_QUEUE,
 } from './queues/constants';
@@ -47,6 +48,14 @@ import { ProcessImageService } from './queues/services/processImage.service';
 import { ProcessH6Service } from './queues/services/processH6.service';
 import { PageFactorRepository } from '../application/ports/page-factor.repository';
 import { PrismaPageFactorRepository } from './persistence/prisma-page-factor.repository';
+import { UserAnalysisRepository } from '../application/ports/user-analysis.repository';
+import { PrismaUserAnalysisRepository } from './persistence/prisma-user-analysis.repository';
+import { AnalysisProgressRepository } from '../application/ports/analysis-progress.repository';
+import { PrismaAnalysisProgressRepository } from './persistence/prisma-analysis-progress.repository';
+import { AnalysisProgressProducer } from './queues/producers/analysis-progress.producer';
+import { AnalysisProgressConsumer } from './queues/consumers/analysis-progress.consumer';
+import { AnalysisProgressQueueService } from '../application/ports/analysis-progress-queue.service';
+import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-queue.service';
 
 @Module({
   imports: [
@@ -56,6 +65,9 @@ import { PrismaPageFactorRepository } from './persistence/prisma-page-factor.rep
       },
       {
         name: STAGE_PROCESSING_QUEUE,
+      },
+      {
+        name: ANALYSIS_PROGRESS_QUEUE,
       },
     ),
     DatabaseModule,
@@ -123,6 +135,20 @@ import { PrismaPageFactorRepository } from './persistence/prisma-page-factor.rep
       provide: PageFactorRepository,
       useClass: PrismaPageFactorRepository,
     },
+    {
+      provide: UserAnalysisRepository,
+      useClass: PrismaUserAnalysisRepository,
+    },
+    {
+      provide: AnalysisProgressRepository,
+      useClass: PrismaAnalysisProgressRepository,
+    },
+    AnalysisProgressProducer,
+    AnalysisProgressConsumer,
+    {
+      provide: AnalysisProgressQueueService,
+      useClass: AppAnalysisProgressQueueService,
+    },
   ],
   exports: [
     UserSubscriptionInfoRepository,
@@ -135,6 +161,9 @@ import { PrismaPageFactorRepository } from './persistence/prisma-page-factor.rep
     StageProcessingQueueService,
     HtmlService,
     PageFactorRepository,
+    UserAnalysisRepository,
+    AnalysisProgressRepository,
+    AnalysisProgressQueueService,
   ],
 })
 export class InfrastructureModule {}
