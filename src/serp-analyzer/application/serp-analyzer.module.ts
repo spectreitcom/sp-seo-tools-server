@@ -21,6 +21,8 @@ import { AnalysisService } from './services/analysis.service';
 import { AnalysisController } from '../presenters/http/analysis.controller';
 import { GetUserAnalysisListQueryHandler } from './query-handlers/get-user-analysis-list.query-handler';
 import { GetUserMonthlyUsageQueryHandler } from './query-handlers/get-user-monthly-usage.query-handler';
+import { AnalysisProgressService } from './services/analysis-progress.service';
+import { AnalysisProgressController } from '../presenters/http/analysis-progress.controller';
 
 @Module({
   imports: [
@@ -29,7 +31,11 @@ import { GetUserMonthlyUsageQueryHandler } from './query-handlers/get-user-month
     AdminAuthModule,
     GoogleScraperModule,
   ],
-  controllers: [TestingModeController, AnalysisController],
+  controllers: [
+    TestingModeController,
+    AnalysisController,
+    AnalysisProgressController,
+  ],
   providers: [
     SubscriptionActivatedEventHandler,
     SubscriptionDeactivatedEventHandler,
@@ -47,6 +53,7 @@ import { GetUserMonthlyUsageQueryHandler } from './query-handlers/get-user-month
     AnalysisService,
     GetUserAnalysisListQueryHandler,
     GetUserMonthlyUsageQueryHandler,
+    AnalysisProgressService,
   ],
 })
 export class SerpAnalyzerModule {}
