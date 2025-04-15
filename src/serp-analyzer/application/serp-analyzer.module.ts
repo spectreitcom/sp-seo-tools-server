@@ -20,6 +20,7 @@ import { StageProcessingFinishedEventHandler } from './event-handlers/stage-proc
 import { AnalysisService } from './services/analysis.service';
 import { AnalysisController } from '../presenters/http/analysis.controller';
 import { GetUserAnalysisListQueryHandler } from './query-handlers/get-user-analysis-list.query-handler';
+import { GetUserMonthlyUsageQueryHandler } from './query-handlers/get-user-monthly-usage.query-handler';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { GetUserAnalysisListQueryHandler } from './query-handlers/get-user-analy
     StageProcessingFinishedEventHandler,
     AnalysisService,
     GetUserAnalysisListQueryHandler,
+    GetUserMonthlyUsageQueryHandler,
   ],
 })
 export class SerpAnalyzerModule {}
