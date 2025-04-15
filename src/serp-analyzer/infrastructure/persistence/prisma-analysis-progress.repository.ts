@@ -51,4 +51,20 @@ export class PrismaAnalysisProgressRepository
     if (!model) return null;
     return AnalysisProgressMapper.toDomain(model);
   }
+
+  async findByAnalysisAndUser(
+    analysisId: string,
+    userId: string,
+  ): Promise<AnalysisProgress> {
+    const model = await this.databaseService.saAnalysisProgress.findUnique({
+      where: {
+        analysisId,
+        analysis: {
+          userId,
+        },
+      },
+    });
+    if (!model) return null;
+    return AnalysisProgressMapper.toDomain(model);
+  }
 }
