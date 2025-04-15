@@ -14,7 +14,8 @@ import { CreateAnalysisDto } from '../../application/dto/create-analysis.dto';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetUserAnalysisListQueryParamsDto } from '../../application/dto/get-user-analysis-list-query-params.dto';
-import { GetUserAnalysisListResponse } from '../../application/swagger/get-user-analysis-list-response';
+import { GetUserAnalysisListResponseSwagger } from '../../application/swagger/get-user-analysis-list-response.swagger';
+import { GetUserMonthlyUsageQueryResponseSwagger } from '../../application/swagger/get-user-monthly-usage-query-response.swagger';
 
 @Controller('serp-analyzer/analysis')
 export class AnalysisController {
@@ -43,7 +44,7 @@ export class AnalysisController {
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GetUserAnalysisListResponse,
+    type: GetUserAnalysisListResponseSwagger,
   })
   @Get()
   @UseGuards(AuthGuard)
@@ -60,5 +61,20 @@ export class AnalysisController {
       queryParams.device,
       queryParams.searchText,
     );
+  }
+
+  @ApiBearerAuth('user-auth')
+  @ApiOperation({
+    summary: "Returns the user's monthly usage quota",
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: GetUserMonthlyUsageQueryResponseSwagger,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('usage')
+  @UseGuards(AuthGuard)
+  getUserMonthlyUsage(@CurrentUserId() userId: string) {
+    return this.analysisService.getUserMonthlyUsage(userId);
   }
 }

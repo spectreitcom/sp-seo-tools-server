@@ -2,7 +2,7 @@ import { UserAnalysisReadModel as UserAnalysisReadModelBase } from '../../infras
 import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 
-export class UserAnalysisReadModel implements UserAnalysisReadModelBase {
+export class UserAnalysisReadModelSwagger implements UserAnalysisReadModelBase {
   @ApiProperty({
     example: randomUUID(),
   })
