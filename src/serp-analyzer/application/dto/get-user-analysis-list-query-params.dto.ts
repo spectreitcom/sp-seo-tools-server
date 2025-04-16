@@ -10,7 +10,7 @@ export class GetUserAnalysisListQueryParamsDto {
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  readonly page = 1;
+  readonly page: number = 1;
 
   @ApiProperty({
     required: false,
@@ -19,7 +19,7 @@ export class GetUserAnalysisListQueryParamsDto {
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  readonly take = 30;
+  readonly take: number = 30;
 
   @ApiProperty({
     required: false,
