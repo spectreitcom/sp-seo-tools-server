@@ -11,7 +11,7 @@ import { CreateCheckoutSessionDto } from '../../application/dto/create-checkout-
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { PaymentService } from '../../application/services/payment.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateCheckoutSessionResponseSwagger } from '../../application/swagger/create-checkout-session-response.swagger';
 import { CreateSessionPortalResponseSwagger } from '../../application/swagger/create-session-portal-response.swagger';
 import { Request } from 'express';
@@ -20,6 +20,7 @@ import { Request } from 'express';
 export class PaymentsController {
   constructor(private readonly paymentService: PaymentService) {}
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Creates a checkout session',
   })
@@ -36,6 +37,7 @@ export class PaymentsController {
     return this.paymentService.createCheckoutSession(payload, userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Creates a session portal',
   })

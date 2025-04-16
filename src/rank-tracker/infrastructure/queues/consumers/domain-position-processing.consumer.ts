@@ -134,22 +134,10 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
   }
 
   private getUniqueDomainIds(keywords: Keyword[]) {
-    const uniqueDomainIds: string[] = [];
-    for (const keyword of keywords) {
-      if (!uniqueDomainIds.includes(keyword.getDomainId())) {
-        uniqueDomainIds.push(keyword.getDomainId());
-      }
-    }
-    return uniqueDomainIds;
+    return [...new Set(keywords.map((keyword) => keyword.getDomainId()))];
   }
 
   private getUniqueUserIds(domains: Domain[]) {
-    const uniqueUserIds: string[] = [];
-    for (const domain of domains) {
-      if (!uniqueUserIds.includes(domain.userId)) {
-        uniqueUserIds.push(domain.userId);
-      }
-    }
-    return uniqueUserIds;
+    return [...new Set(domains.map((domain) => domain.userId))];
   }
 }

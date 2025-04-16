@@ -16,7 +16,7 @@ import { UserTestingModeInfoDto } from '../../application/swagger/user-testing-m
 export class TestingModesController {
   constructor(private readonly testingModeService: TestingModeService) {}
 
-  @ApiBearerAuth()
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Returns information about current user testing mode',
   })
@@ -30,7 +30,7 @@ export class TestingModesController {
     return this.testingModeService.getUserTestingModeInfo(userId);
   }
 
-  @ApiBearerAuth()
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Activate testing mode for current user',
   })

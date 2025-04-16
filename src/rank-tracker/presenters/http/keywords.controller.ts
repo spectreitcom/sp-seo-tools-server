@@ -14,15 +14,17 @@ import { KeywordService } from '../../application/services/keyword.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { AddKeywordDto } from '../../application/dto/add-keyword.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GetUserKeywordsListQueryResponse } from '../../application/swagger/get-user-keywords-list-query-response';
-import { AvailableKeywordsQuantityDto } from '../../application/swagger/available-keywords-quantity.dto';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { GetUserKeywordsListQueryResponseSwagger } from '../../application/swagger/get-user-keywords-list-query-response.swagger';
+import { AvailableKeywordsQuantityDtoSwagger } from '../../application/swagger/available-keywords-quantity.dto.swagger';
 import { UserKeywordsListItemDto } from '../../application/swagger/user-keywords-list-item.dto';
+import { UserKeywordsListQueryParamsDto } from '../../application/dto/user-keywords-list-query-params.dto';
 
 @Controller('rank-tracker/keywords')
 export class KeywordsController {
   constructor(private readonly keywordService: KeywordService) {}
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Creates a new keyword',
   })
@@ -36,41 +38,38 @@ export class KeywordsController {
     return this.keywordService.addKeyword(userId, payload);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Returns user's keywords list",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GetUserKeywordsListQueryResponse,
+    type: GetUserKeywordsListQueryResponseSwagger,
   })
   @Get()
   @UseGuards(AuthGuard)
   getUserKeywordsList(
-    @Query('page') page: number,
-    @Query('searchText') searchText: string,
-    @Query('localizationId') localizationId: string,
-    @Query('device') device: string,
-    @Query('domainId') domainId: string,
-    @Query('take') take: number,
+    @Query() queryParams: UserKeywordsListQueryParamsDto,
     @CurrentUserId() userId: string,
   ) {
     return this.keywordService.getUserKeywordsList(
       userId,
-      page && page > 0 ? page : 1,
-      searchText ? searchText : undefined,
-      localizationId ? localizationId : undefined,
-      device ? device : undefined,
-      domainId ? domainId : undefined,
-      take ? take : 30,
+      queryParams.page,
+      queryParams.searchText,
+      queryParams.localizationId,
+      queryParams.device,
+      queryParams.domainId,
+      queryParams.take,
     );
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Returns available keywords quantity for user's account",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: AvailableKeywordsQuantityDto,
+    type: AvailableKeywordsQuantityDtoSwagger,
   })
   @Get('available-quantity')
   @UseGuards(AuthGuard)
@@ -78,6 +77,7 @@ export class KeywordsController {
     return this.keywordService.getAvailableKeywordsQuantity(userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Returns keyword data',
   })
@@ -94,6 +94,7 @@ export class KeywordsController {
     return this.keywordService.getUserKeyword(keywordId, userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Returns keyword and associated history',
   })

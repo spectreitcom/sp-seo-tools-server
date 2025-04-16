@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GoogleAuthResponse {
+export class GoogleAuthResponseSwagger {
   @ApiProperty()
   readonly accessToken: string;
   @ApiProperty()

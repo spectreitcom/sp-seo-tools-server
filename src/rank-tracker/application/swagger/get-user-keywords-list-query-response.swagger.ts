@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserKeywordsListItemDto } from './user-keywords-list-item.dto';
+import { GetUserKeywordsListQueryResponse } from '../query-handlers/get-user-keywords-list.query-handler';
 
-export class GetUserKeywordsListQueryResponse {
+export class GetUserKeywordsListQueryResponseSwagger
+  implements GetUserKeywordsListQueryResponse
+{
   @ApiProperty({
     isArray: true,
     type: UserKeywordsListItemDto,
