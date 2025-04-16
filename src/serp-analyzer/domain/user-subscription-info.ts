@@ -1,10 +1,10 @@
 export class UserSubscriptionInfo {
   constructor(
-    private userSubscriptionInfoId: string,
-    private userId: string,
+    private readonly userSubscriptionInfoId: string,
+    private readonly userId: string,
     private active: boolean,
-    private searchedPages: number,
-    private analysisPerMonth: number,
+    private readonly searchedPages: number,
+    private readonly analysisPerMonth: number,
   ) {}
 
   activate() {

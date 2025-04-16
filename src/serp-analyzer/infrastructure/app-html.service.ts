@@ -17,7 +17,7 @@ export class AppHtmlService implements HtmlService {
     } catch (e: any) {
       return {
         html: '',
-        status: e.response?.status || 500,
+        status: e.response?.status ?? 500,
       };
     }
   }

@@ -3,12 +3,12 @@ import { SubscriptionCreatedEvent } from './events/subscription-created.event';
 
 export class Subscription extends AggregateRoot {
   constructor(
-    private subscriptionId: string,
-    private name: string,
-    private amount: number,
-    private maxKeywordsQty: number,
-    private priceId: string,
-    private maxSearchedPages: number,
+    private readonly subscriptionId: string,
+    private readonly name: string,
+    private readonly amount: number,
+    private readonly maxKeywordsQty: number,
+    private readonly priceId: string,
+    private readonly maxSearchedPages: number,
   ) {
     super();
   }

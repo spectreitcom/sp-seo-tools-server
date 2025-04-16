@@ -25,7 +25,7 @@ export class CheckingQueryConsumer extends WorkerHost {
 
     if (!queries) return;
 
-    while (!!queries.length) {
+    while (queries.length) {
       for (const query of queries) {
         await sleep(5 * 1000);
         await this.processQuery(query);

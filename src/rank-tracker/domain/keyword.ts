@@ -11,15 +11,15 @@ import { RtKeywordGrowth } from '@prisma/client';
 
 export class Keyword extends AggregateRoot {
   constructor(
-    private isSubscriptionActive: boolean,
-    private availableKeywordQuantity: AvailableKeywordsQuantity,
-    private keywordId: string,
-    private domainId: string,
-    private keywordText: string,
-    private device: Device,
-    private localizationId: string,
-    private testingModeActive: boolean,
-    private timestamp: number,
+    private readonly isSubscriptionActive: boolean,
+    private readonly availableKeywordQuantity: AvailableKeywordsQuantity,
+    private readonly keywordId: string,
+    private readonly domainId: string,
+    private readonly keywordText: string,
+    private readonly device: Device,
+    private readonly localizationId: string,
+    private readonly testingModeActive: boolean,
+    private readonly timestamp: number,
     private growth: RtKeywordGrowth,
   ) {
     super();

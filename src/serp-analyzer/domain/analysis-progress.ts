@@ -1,9 +1,9 @@
 export class AnalysisProgress {
   constructor(
     private readonly analysisProgressId: string,
-    private analysisId: string,
+    private readonly analysisId: string,
     private current: number,
-    private total: number,
+    private readonly total: number,
   ) {}
 
   increment() {

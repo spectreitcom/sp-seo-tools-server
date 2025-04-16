@@ -46,8 +46,8 @@ export class GetDomainPositionHistoryQueryHandler
     }
 
     const isDateRangeOutOfRange =
-      toDateMoment.isAfter(maxDateMoment, 'day') ||
-      fromDateMoment.isBefore(minDateMoment, 'day') ||
+      toDateMoment.isAfter(maxDateMoment, 'day') ??
+      fromDateMoment.isBefore(minDateMoment, 'day') ??
       toDateMoment.isBefore(fromDateMoment, 'day');
 
     if (isDateRangeOutOfRange) {

@@ -1,5 +1,3 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class GetAllAvailableForUserDevicesQuery implements IQuery {
-  constructor() {}
-}
+export class GetAllAvailableForUserDevicesQuery implements IQuery {}

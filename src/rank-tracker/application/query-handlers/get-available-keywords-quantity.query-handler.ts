@@ -29,7 +29,7 @@ export class GetAvailableKeywordsQuantityQueryHandler
     const usedKeywordsQty =
       await this.keywordRepository.getUsedKeywordsQty(userId);
 
-    if (testingMode && testingMode.getActive()) {
+    if (testingMode?.getActive()) {
       return new AvailableKeywordsQuantityDto(
         testingMode.getMaxKeywordsQty(),
         usedKeywordsQty,
@@ -40,7 +40,7 @@ export class GetAvailableKeywordsQuantityQueryHandler
     const userSubscriptionInfo =
       await this.userSubscriptionInfoRepository.findByUser(userId);
 
-    if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
+    if (userSubscriptionInfo?.getActive()) {
       return new AvailableKeywordsQuantityDto(
         userSubscriptionInfo.getMaxKeywordsQty(),
         usedKeywordsQty,

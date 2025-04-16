@@ -6,14 +6,14 @@ import { ExpiresAt } from './value-objects/expires-at';
 
 export class TestingMode extends AggregateRoot {
   constructor(
-    private testingModeId: string,
-    private userId: string,
-    private wasActivatedEarlier: boolean,
-    private userHasEverBoughtSubscription: boolean,
+    private readonly testingModeId: string,
+    private readonly userId: string,
+    private readonly wasActivatedEarlier: boolean,
+    private readonly userHasEverBoughtSubscription: boolean,
     private active: boolean,
-    private expiresAt: ExpiresAt,
-    private maxKeywordsQty: number,
-    private maxSearchedPages: number,
+    private readonly expiresAt: ExpiresAt,
+    private readonly maxKeywordsQty: number,
+    private readonly maxSearchedPages: number,
   ) {
     super();
   }

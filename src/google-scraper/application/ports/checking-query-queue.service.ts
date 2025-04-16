@@ -1,3 +1,3 @@
 export abstract class CheckingQueryQueueService {
-  abstract checkQueries(): void;
+  abstract checkQueries(): Promise<void>;
 }

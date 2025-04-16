@@ -12,9 +12,9 @@ import { AuthenticateByGoogleDto } from '../../application/dto/authenticate-by-g
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { RefreshTokenDto } from '../../application/dto/refresh-token.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { GoogleAuthResponse } from '../../application/swagger/google-auth-response';
-import { GetCurrentUserQueryResponse } from '../../application/swagger/get-current-user-query-response';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { GoogleAuthResponseSwagger } from '../../application/swagger/google-auth-response.swagger';
+import { GetCurrentUserQueryResponseSwagger } from '../../application/swagger/get-current-user-query-response.swagger';
 
 @Controller('user-auth')
 export class UserAuthController {
@@ -25,7 +25,7 @@ export class UserAuthController {
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GoogleAuthResponse,
+    type: GoogleAuthResponseSwagger,
   })
   @Post('google')
   @HttpCode(HttpStatus.OK)
@@ -33,12 +33,13 @@ export class UserAuthController {
     return this.userAuthService.authenticateByGoogle(payload);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Returns current user's data",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GetCurrentUserQueryResponse,
+    type: GetCurrentUserQueryResponseSwagger,
   })
   @Get('me')
   @UseGuards(AuthGuard)
@@ -51,7 +52,7 @@ export class UserAuthController {
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GoogleAuthResponse,
+    type: GoogleAuthResponseSwagger,
   })
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
