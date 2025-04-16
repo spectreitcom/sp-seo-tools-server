@@ -1,10 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AddDomainCommand } from '../commands/add-domain.command';
 import { DomainRepository } from '../ports/domain.repository';
-import {
-  BadRequestException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { DomainFactory } from '../../domain/factories/domain.factory';
 
 @CommandHandler(AddDomainCommand)
