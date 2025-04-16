@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 
-export class GetLocalizationQueryResponse {
+export class GetLocalizationQueryResponseSwagger {
   @ApiProperty({
     example: randomUUID(),
   })

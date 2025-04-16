@@ -13,14 +13,16 @@ import { AddDomainDto } from '../../application/dto/add-domain.dto';
 import { DomainService } from '../../application/services/domain.service';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UserDomainsListItemDto } from '../../application/swagger/user-domains-list-item.dto';
-import { GetUserDomainsListQueryResponse } from '../../application/swagger/get-user-domains-list-query-response';
+import { GetUserDomainsListQueryResponseSwagger } from '../../application/swagger/get-user-domains-list-query-response.swagger';
+import { UserDomainsListQueryParamsDto } from '../../application/dto/user-domains-list-query-params.dto';
 
 @Controller('rank-tracker/domains')
 export class DomainsController {
   constructor(private readonly domainService: DomainService) {}
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Creates a domain for the user's account",
   })
@@ -34,29 +36,29 @@ export class DomainsController {
     return this.domainService.addDomain(payload, userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Get a domain for the user's account",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: GetUserDomainsListQueryResponse,
+    type: GetUserDomainsListQueryResponseSwagger,
   })
   @Get()
   @UseGuards(AuthGuard)
   getUserDomainsList(
-    @Query('page') page: number,
-    @Query('searchText') searchText: string,
-    @Query('take') take: string,
+    @Query() queryParams: UserDomainsListQueryParamsDto,
     @CurrentUserId() userId: string,
   ) {
     return this.domainService.getUserDomainsList(
       userId,
-      page && page > 0 ? page : 1,
-      searchText,
-      +take ? +take : 30,
+      queryParams.page,
+      queryParams.searchText,
+      queryParams.take,
     );
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Get a domain for the user's account",
   })
@@ -73,6 +75,7 @@ export class DomainsController {
     return this.domainService.getUserDomain(domainId, userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary:
       "Removes domain from the user's account and all associated keywords and history",

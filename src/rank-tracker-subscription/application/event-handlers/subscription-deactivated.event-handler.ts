@@ -9,7 +9,7 @@ export class SubscriptionDeactivatedEventHandler
 {
   private readonly logger = new Logger(SubscriptionDeactivatedEvent.name);
 
-  constructor(private eventBus: EventBus) {}
+  constructor(private readonly eventBus: EventBus) {}
 
   handle(event: SubscriptionDeactivatedEvent) {
     this.logger.debug(JSON.stringify(event));

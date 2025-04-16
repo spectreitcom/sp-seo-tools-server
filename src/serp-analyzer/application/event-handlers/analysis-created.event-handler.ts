@@ -51,7 +51,7 @@ export class AnalysisCreatedEventHandler
         analysis.getUserId(),
       );
 
-    if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
+    if (userSubscriptionInfo?.getActive()) {
       const { response_id } = await this.googleScraperFacade.sendQuery(
         localization.getCountryCode(),
         userSubscriptionInfo.getSearchedPages() * 10,
@@ -67,7 +67,7 @@ export class AnalysisCreatedEventHandler
       analysis.commit();
     }
 
-    if (testingMode && testingMode.getActive()) {
+    if (testingMode?.getActive()) {
       const { response_id } = await this.googleScraperFacade.sendQuery(
         localization.getCountryCode(),
         testingMode.getSearchedPages() * 10,

@@ -1,5 +1,3 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class GetLocalizationsQuery implements IQuery {
-  constructor() {}
-}
+export class GetLocalizationsQuery implements IQuery {}

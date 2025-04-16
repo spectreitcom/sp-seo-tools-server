@@ -2,12 +2,13 @@ import { Body, Controller, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { SubscriptionService } from '../../application/services/subscription.service';
 import { CreateSubscriptionDto } from '../../application/dto/create-subscription.dto';
 import { AdminAuthGuard } from '../../application/guards/admin-auth.guard';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('admin/serp-analyzer-subscription')
 export class AdminSubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
+  @ApiBearerAuth('admin-auth')
   @ApiOperation({
     summary: 'Creates a new subscription plan',
   })

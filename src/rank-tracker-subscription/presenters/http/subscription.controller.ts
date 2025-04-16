@@ -14,7 +14,7 @@ import { CreateCheckoutSessionDto } from '../../application/dto/create-checkout-
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { SubscriptionService } from '../../application/services/subscription.service';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { SubscriptionListItemDto } from '../../application/swagger/subscription-list-item.dto';
 
 @Controller('rank-tracker-subscription')
@@ -37,6 +37,7 @@ export class SubscriptionController {
     return this.paymentService.webhookHandler(request);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Creates a checkout session',
   })
@@ -49,6 +50,7 @@ export class SubscriptionController {
     return this.paymentService.createCheckoutSession(payload, userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Creates a session portal',
   })
@@ -58,6 +60,7 @@ export class SubscriptionController {
     return this.paymentService.createSessionPortal(userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: 'Returns all plans',
   })
@@ -73,6 +76,7 @@ export class SubscriptionController {
     return this.subscriptionService.getSubscriptions(userId);
   }
 
+  @ApiBearerAuth('user-auth')
   @ApiOperation({
     summary: "Returns user's current plan",
   })

@@ -20,7 +20,7 @@ export class PositionCheckerConsumer extends WorkerHost {
 
     let keywords = await this.keywordRepository.findAll(TAKE, skip);
 
-    while (!!keywords.length) {
+    while (keywords.length) {
       for (const keyword of keywords) {
         await sleep(5000);
         await this.positionCheckerService.checkPosition(keyword);

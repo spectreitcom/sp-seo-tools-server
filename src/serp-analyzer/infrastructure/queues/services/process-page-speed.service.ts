@@ -15,6 +15,5 @@ export class ProcessPageSpeedService {
     stage.makeInProgress();
     await this.stageRepository.save(stage);
     this.eventBus.publish(new StageProcessingFinishedEvent(stage.getStageId()));
-    return;
   }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetCurrentUserQueryResponse {
+export class GetCurrentUserQueryResponseSwagger {
   @ApiProperty({
     example: 'example@gmail.com',
   })

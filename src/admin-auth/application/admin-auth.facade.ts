@@ -18,7 +18,8 @@ export class AdminAuthFacade {
       if (!token) return false;
       await this.tokenService.verify(token);
       return true;
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       return false;
     }
   }

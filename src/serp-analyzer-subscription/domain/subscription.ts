@@ -1,11 +1,11 @@
 export class Subscription {
   constructor(
-    private subscriptionId: string,
-    private name: string,
-    private amount: number,
-    private searchedPages: number,
-    private analysisPerMonth: number,
-    private priceId: string,
+    private readonly subscriptionId: string,
+    private readonly name: string,
+    private readonly amount: number,
+    private readonly searchedPages: number,
+    private readonly analysisPerMonth: number,
+    private readonly priceId: string,
   ) {}
 
   getSubscriptionId() {

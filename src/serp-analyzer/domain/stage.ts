@@ -3,8 +3,8 @@ import { SaStageStatus } from '@prisma/client';
 export class Stage {
   constructor(
     private readonly stageId: string,
-    private stage: string,
-    private pageId: string,
+    private readonly stage: string,
+    private readonly pageId: string,
     private status: SaStageStatus,
   ) {}
 

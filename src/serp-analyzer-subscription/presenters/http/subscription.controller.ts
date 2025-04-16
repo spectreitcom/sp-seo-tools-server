@@ -7,7 +7,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { SubscriptionReadModel } from '../../application/swagger/subscription.read-model';
+import { SubscriptionReadModelSwagger } from '../../application/swagger/subscription.read-model.swagger';
 
 @ApiTags('SerpAnalyzerSubscriptionController')
 @Controller('serp-analyzer-subscription')
@@ -21,7 +21,7 @@ export class SubscriptionController {
   @ApiResponse({
     status: HttpStatus.OK,
     isArray: true,
-    type: SubscriptionReadModel,
+    type: SubscriptionReadModelSwagger,
   })
   @Get()
   @UseGuards(AuthGuard)

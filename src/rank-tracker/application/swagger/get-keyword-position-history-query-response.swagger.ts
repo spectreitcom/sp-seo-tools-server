@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { DomainPositionHistoryDto } from './domain-position-history.dto';
+import { GetKeywordPositionHistoryQueryResponse } from '../query-handlers/get-domain-position-history.query-handler';
 
-export class GetKeywordPositionHistoryQueryResponse {
+export class GetKeywordPositionHistoryQueryResponseSwagger
+  implements GetKeywordPositionHistoryQueryResponse
+{
   @ApiProperty({
     type: DomainPositionHistoryDto,
     isArray: true,

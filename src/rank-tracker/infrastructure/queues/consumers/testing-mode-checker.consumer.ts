@@ -23,7 +23,7 @@ export class TestingModeCheckerConsumer extends WorkerHost {
       skip,
     );
 
-    while (!!testingModes.length) {
+    while (testingModes.length) {
       for (const testingMode of testingModes) {
         await this.tryDeactivateTestingMode(testingMode);
       }

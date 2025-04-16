@@ -1,10 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AddDomainCommand } from '../commands/add-domain.command';
 import { DomainRepository } from '../ports/domain.repository';
-import {
-  BadRequestException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { DomainFactory } from '../../domain/factories/domain.factory';
 
 @CommandHandler(AddDomainCommand)
@@ -22,11 +19,7 @@ export class AddDomainCommandHandler
       throw new BadRequestException(`Domain ${text} already exists`);
     }
 
-    try {
-      const page = DomainFactory.create(text, userId);
-      await this.domainRepository.save(page);
-    } catch (_) {
-      throw new InternalServerErrorException();
-    }
+    const domain = DomainFactory.create(text, userId);
+    await this.domainRepository.save(domain);
   }
 }

@@ -2,7 +2,7 @@ import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { AdminAuthService } from '../../application/services/admin-auth.service';
 import { SignInDto } from '../../application/dto/sign-in.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AuthenticateCommandResponse } from '../../application/swagger/authenticate-command-response';
+import { AuthenticateCommandResponseSwagger } from '../../application/swagger/authenticate-command-response.swagger';
 
 @Controller('admin-auth')
 export class AdminAuthController {
@@ -13,7 +13,7 @@ export class AdminAuthController {
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    type: AuthenticateCommandResponse,
+    type: AuthenticateCommandResponseSwagger,
   })
   @Post('sign-in')
   signIn(@Body() payload: SignInDto) {

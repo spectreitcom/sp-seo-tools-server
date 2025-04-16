@@ -38,7 +38,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
       'PENDING',
     );
 
-    while (!!domainPositions.length) {
+    while (domainPositions.length) {
       const keywords = await this.keywordRepository.findAllWithIds(
         domainPositions.map((domainPosition) => domainPosition.getKeywordId()),
       );
@@ -81,7 +81,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
           (tm) => tm.getUserId() === domain.userId,
         );
 
-        if (useSubscriptionInfo && useSubscriptionInfo.getActive()) {
+        if (useSubscriptionInfo?.getActive()) {
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
           );
@@ -94,7 +94,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
           }
         }
 
-        if (testingMode && testingMode.getActive()) {
+        if (testingMode?.getActive()) {
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
           );
@@ -134,22 +134,10 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
   }
 
   private getUniqueDomainIds(keywords: Keyword[]) {
-    const uniqueDomainIds: string[] = [];
-    for (const keyword of keywords) {
-      if (!uniqueDomainIds.includes(keyword.getDomainId())) {
-        uniqueDomainIds.push(keyword.getDomainId());
-      }
-    }
-    return uniqueDomainIds;
+    return [...new Set(keywords.map((keyword) => keyword.getDomainId()))];
   }
 
   private getUniqueUserIds(domains: Domain[]) {
-    const uniqueUserIds: string[] = [];
-    for (const domain of domains) {
-      if (!uniqueUserIds.includes(domain.userId)) {
-        uniqueUserIds.push(domain.userId);
-      }
-    }
-    return uniqueUserIds;
+    return [...new Set(domains.map((domain) => domain.userId))];
   }
 }
