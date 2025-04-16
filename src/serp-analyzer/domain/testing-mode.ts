@@ -3,14 +3,14 @@ import { ExpiresAt } from './value-objects/expires-at';
 
 export class TestingMode {
   constructor(
-    private testingModeId: string,
-    private userId: string,
+    private readonly testingModeId: string,
+    private readonly userId: string,
     private active: boolean,
-    private searchedPages: number,
-    private analysisPerMonth: number,
-    private wasActivatedEarlier: boolean,
-    private userHasEverBoughtSubscription: boolean,
-    private expiresAt: ExpiresAt,
+    private readonly searchedPages: number,
+    private readonly analysisPerMonth: number,
+    private readonly wasActivatedEarlier: boolean,
+    private readonly userHasEverBoughtSubscription: boolean,
+    private readonly expiresAt: ExpiresAt,
   ) {}
 
   activate() {

@@ -5,11 +5,11 @@ import { DomainPositionStatusUpdatedEvent } from './events/domain-position-statu
 
 export class DomainPosition extends AggregateRoot {
   constructor(
-    private domainPositionId: string,
-    private keywordId: string,
+    private readonly domainPositionId: string,
+    private readonly keywordId: string,
     private position: number | null,
-    private timestamp: number,
-    private processId: string,
+    private readonly timestamp: number,
+    private readonly processId: string,
     private status: RtDomainPositionStaus,
   ) {
     super();

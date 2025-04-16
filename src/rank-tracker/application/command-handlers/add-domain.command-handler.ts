@@ -22,11 +22,7 @@ export class AddDomainCommandHandler
       throw new BadRequestException(`Domain ${text} already exists`);
     }
 
-    try {
-      const page = DomainFactory.create(text, userId);
-      await this.domainRepository.save(page);
-    } catch (_) {
-      throw new InternalServerErrorException();
-    }
+    const domain = DomainFactory.create(text, userId);
+    await this.domainRepository.save(domain);
   }
 }

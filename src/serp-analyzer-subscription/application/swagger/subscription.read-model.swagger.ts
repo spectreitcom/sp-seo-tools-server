@@ -2,7 +2,7 @@ import { SubscriptionReadModel as SubscriptionReadModelBase } from '../../infras
 import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 
-export class SubscriptionReadModel implements SubscriptionReadModelBase {
+export class SubscriptionReadModelSwagger implements SubscriptionReadModelBase {
   @ApiProperty({
     example: randomUUID(),
   })

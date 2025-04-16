@@ -1,8 +1,8 @@
 export class Localization {
   constructor(
-    private localizationId: string,
-    private countryCode: string,
-    private name: string,
+    private readonly localizationId: string,
+    private readonly countryCode: string,
+    private readonly name: string,
   ) {}
 
   getLocalizationId() {

@@ -4,10 +4,10 @@ import { SubscriptionDeactivatedEvent } from './events/subscription-deactivated.
 
 export class UserSubscription extends AggregateRoot {
   constructor(
-    private userSubscriptionId: string,
-    private subscriptionId: string,
+    private readonly userSubscriptionId: string,
+    private readonly subscriptionId: string,
     private active: boolean,
-    private userId: string,
+    private readonly userId: string,
     private sessionId: string,
     private customerId: string,
   ) {

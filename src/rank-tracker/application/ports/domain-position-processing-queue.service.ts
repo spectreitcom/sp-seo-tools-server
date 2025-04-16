@@ -1,3 +1,3 @@
 export abstract class DomainPositionProcessingQueueService {
-  abstract processPositions(): void;
+  abstract processPositions(): Promise<void>;
 }

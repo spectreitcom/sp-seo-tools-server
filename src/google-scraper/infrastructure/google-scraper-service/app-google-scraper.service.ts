@@ -29,30 +29,22 @@ export class AppGoogleScraperService implements GoogleScraperService {
   }
 
   async getResults(responseId: string): Promise<SearchResult[] | null> {
-    try {
-      const query = await this.queryRepository.findByProcess(responseId);
+    const query = await this.queryRepository.findByProcess(responseId);
+    if (!query) return null;
+    if (query.getStatus() === 'PENDING') return null;
+    const results: SearchResult[] = [];
+    const searchResults = query.getResults();
 
-      if (!query) return null;
-
-      if (query.getStatus() === 'PENDING') return null;
-
-      const results: SearchResult[] = [];
-
-      const searchResults = query.getResults();
-
-      for (let i = 0; i < query.getResultsNumber(); i++) {
-        if (searchResults.organic && searchResults.organic[i]) {
-          results.push({
-            url: searchResults.organic[i].link,
-            position: searchResults.organic[i].rank,
-          });
-        }
+    for (let i = 0; i < query.getResultsNumber(); i++) {
+      if (searchResults.organic && searchResults.organic[i]) {
+        results.push({
+          url: searchResults.organic[i].link,
+          position: searchResults.organic[i].rank,
+        });
       }
-
-      return results;
-    } catch (e) {
-      throw e;
     }
+
+    return results;
   }
 
   async sendQuery(
@@ -61,39 +53,35 @@ export class AppGoogleScraperService implements GoogleScraperService {
     query: string,
     device: string,
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.http.post<SendQueryResponse>(
-          `${this.baseUrl}/serp/req`,
-          {
-            country: localizationCode,
-            query: {
-              q: query,
-              num: resultsNumber + 1,
-              hl: localizationCode,
-              gl: localizationCode,
-            },
-            brd_json: 'json',
-            brd_browser: 'chrome',
-            brd_mobile: this.getMobile(device),
+    const response = await firstValueFrom(
+      this.http.post<SendQueryResponse>(
+        `${this.baseUrl}/serp/req`,
+        {
+          country: localizationCode,
+          query: {
+            q: query,
+            num: resultsNumber + 1,
+            hl: localizationCode,
+            gl: localizationCode,
           },
-          {
-            params: {
-              customer: this.customer,
-              zone: this.zone,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${this.token}`,
-            },
+          brd_json: 'json',
+          brd_browser: 'chrome',
+          brd_mobile: this.getMobile(device),
+        },
+        {
+          params: {
+            customer: this.customer,
+            zone: this.zone,
           },
-        ),
-      );
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.token}`,
+          },
+        },
+      ),
+    );
 
-      return response.data;
-    } catch (e) {
-      throw e;
-    }
+    return response.data;
   }
 
   private getMobile(device: string): string | number | undefined {

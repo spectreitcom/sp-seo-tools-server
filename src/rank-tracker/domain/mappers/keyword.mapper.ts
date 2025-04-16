@@ -16,11 +16,11 @@ export class KeywordMapper {
   ) {
     let maxKeywordsQty = 0;
 
-    if (rtTestingMode && rtTestingMode.active) {
+    if (rtTestingMode?.active) {
       maxKeywordsQty = rtTestingMode.maxKeywordsQty;
     }
 
-    if (rtUserSubscriptionInfo && rtUserSubscriptionInfo.active) {
+    if (rtUserSubscriptionInfo?.active) {
       maxKeywordsQty = rtUserSubscriptionInfo.maxKeywordsQty;
     }
 

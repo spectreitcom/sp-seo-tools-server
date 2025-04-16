@@ -38,7 +38,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
       'PENDING',
     );
 
-    while (!!domainPositions.length) {
+    while (domainPositions.length) {
       const keywords = await this.keywordRepository.findAllWithIds(
         domainPositions.map((domainPosition) => domainPosition.getKeywordId()),
       );
@@ -81,7 +81,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
           (tm) => tm.getUserId() === domain.userId,
         );
 
-        if (useSubscriptionInfo && useSubscriptionInfo.getActive()) {
+        if (useSubscriptionInfo?.getActive()) {
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
           );
@@ -94,7 +94,7 @@ export class DomainPositionProcessingConsumer extends WorkerHost {
           }
         }
 
-        if (testingMode && testingMode.getActive()) {
+        if (testingMode?.getActive()) {
           const searchResults = await this.googleScraperFacade.getResults(
             domainPosition.getProcessId(),
           );

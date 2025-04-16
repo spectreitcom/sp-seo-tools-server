@@ -37,7 +37,7 @@ export class AddKeywordCommandHandler
 
     let maxKeywordsQty = 0;
 
-    if (testingMode && testingMode.getActive()) {
+    if (testingMode?.getActive()) {
       maxKeywordsQty = testingMode.getMaxKeywordsQty();
     } else if (userSubscriptionInfo) {
       maxKeywordsQty = userSubscriptionInfo.getMaxKeywordsQty();

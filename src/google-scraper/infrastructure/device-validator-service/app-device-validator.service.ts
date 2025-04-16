@@ -8,6 +8,5 @@ export class AppDeviceValidatorService implements DeviceValidatorService {
   validate(device: string): void {
     const devices = [MOBILE_DEVICE, DESKTOP_DEVICE, TABLET_DEVICE];
     if (!devices.includes(device)) throw new InvalidDevice();
-    return;
   }
 }

@@ -5,15 +5,15 @@ import { CreateAnalysisError } from './exceptions';
 
 export class Analysis extends AggregateRoot {
   constructor(
-    private analysisId: string,
-    private keyword: string,
-    private localizationId: string,
+    private readonly analysisId: string,
+    private readonly keyword: string,
+    private readonly localizationId: string,
     private processId: string | null,
-    private device: string,
-    private userId: string,
-    private hasActiveTestingMode: boolean,
-    private hasActiveSubscription: boolean,
-    private exceededMonthlyLimit: boolean,
+    private readonly device: string,
+    private readonly userId: string,
+    private readonly hasActiveTestingMode: boolean,
+    private readonly hasActiveSubscription: boolean,
+    private readonly exceededMonthlyLimit: boolean,
   ) {
     super();
   }

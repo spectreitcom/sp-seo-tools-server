@@ -12,8 +12,8 @@ import { CurrentUserId } from '../../application/decorators/current-user-id.deco
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { PaymentService } from '../../application/services/payment.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateCheckoutSessionResponse } from '../../application/swagger/create-checkout-session-response';
-import { CreateSessionPortalResponse } from '../../application/swagger/create-session-portal-response';
+import { CreateCheckoutSessionResponseSwagger } from '../../application/swagger/create-checkout-session-response.swagger';
+import { CreateSessionPortalResponseSwagger } from '../../application/swagger/create-session-portal-response.swagger';
 import { Request } from 'express';
 
 @Controller('serp-analyzer-payments')
@@ -25,7 +25,7 @@ export class PaymentsController {
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: CreateCheckoutSessionResponse,
+    type: CreateCheckoutSessionResponseSwagger,
   })
   @Post('create-checkout-session')
   @UseGuards(AuthGuard)
@@ -41,7 +41,7 @@ export class PaymentsController {
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: CreateSessionPortalResponse,
+    type: CreateSessionPortalResponseSwagger,
     description: 'Created a session portal',
   })
   @Post('create-session-portal')

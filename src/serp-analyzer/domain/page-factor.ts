@@ -1,9 +1,9 @@
 export class PageFactor {
   constructor(
     private readonly pageFactorId: string,
-    private pageId: string,
-    private factor: string,
-    private value: number,
+    private readonly pageId: string,
+    private readonly factor: string,
+    private readonly value: number,
   ) {}
 
   getPageFactorId() {

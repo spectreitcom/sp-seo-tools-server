@@ -1,11 +1,11 @@
 export class Page {
   constructor(
     private readonly pageId: string,
-    private url: string,
-    private position: number,
-    private analysisId: string,
-    private stages: string[],
-    private html: string,
+    private readonly url: string,
+    private readonly position: number,
+    private readonly analysisId: string,
+    private readonly stages: string[],
+    private readonly html: string,
   ) {}
 
   getPageId() {

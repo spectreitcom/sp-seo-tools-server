@@ -5,16 +5,16 @@ import { ScrapingFinishedEvent } from './events/scraping-finished.event';
 
 export class Query extends AggregateRoot {
   constructor(
-    private queryId: string,
-    private processId: string,
+    private readonly queryId: string,
+    private readonly processId: string,
     private status: GsQueryStatus,
-    private metadata: Metadata,
+    private readonly metadata: Metadata,
     private results: GetDataResponse | null,
-    private localizationCode: string,
-    private resultsNumber: number,
-    private query: string,
-    private device: string,
-    private userId: string,
+    private readonly localizationCode: string,
+    private readonly resultsNumber: number,
+    private readonly query: string,
+    private readonly device: string,
+    private readonly userId: string,
   ) {
     super();
   }

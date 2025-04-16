@@ -40,10 +40,6 @@ export class AppElementsCountService implements ElementsCountService {
   }
 
   strongElementsCount(html: string): number {
-    // const $ = cheerio.load(html);
-    // const strongElements = $('strong');
-    // const bElements = $('b');
-    // return strongElements.length + bElements.length;
     const result1 = this.getElementsCountByTag(html, 'strong');
     const result2 = this.getElementsCountByTag(html, 'b');
     return result1 + result2;

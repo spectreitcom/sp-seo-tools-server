@@ -42,7 +42,7 @@ export class AppPositionCheckerService implements PositionCheckerService {
       domain.userId,
     );
 
-    if (testingMode && testingMode.getActive()) {
+    if (testingMode?.getActive()) {
       try {
         const { response_id } = await this.googleScraperFacade.sendQuery(
           localization.countryCode,
@@ -57,7 +57,7 @@ export class AppPositionCheckerService implements PositionCheckerService {
       }
     }
 
-    if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
+    if (userSubscriptionInfo?.getActive()) {
       const { response_id } = await this.googleScraperFacade.sendQuery(
         localization.countryCode,
         userSubscriptionInfo.getMaxSearchedPages() * 10 + 1,
