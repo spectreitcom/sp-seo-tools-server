@@ -37,13 +37,15 @@ export class UserKeywordsListQueryParamsDto {
   @ApiProperty({
     required: false,
   })
-  @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsUUID()
+  @IsOptional()
   readonly localizationId: string | undefined;
 
   @ApiProperty({
     required: false,
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsOptional()
   @IsIn([DESKTOP_DEVICE, TABLET_DEVICE, MOBILE_DEVICE])
   readonly device: string | undefined;
@@ -51,6 +53,7 @@ export class UserKeywordsListQueryParamsDto {
   @ApiProperty({
     required: false,
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsOptional()
   @IsUUID()
   readonly domainId: string | undefined;
