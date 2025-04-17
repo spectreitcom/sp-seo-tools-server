@@ -28,6 +28,9 @@ import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-te
 import { GetAllDevicesQueryHandler } from './query-handlers/get-all-devices.query-handler';
 import { DevicesController } from '../presenters/http/devices.controller';
 import { DevicesService } from './services/devices.service';
+import { GetLocalizationsQueryHandler } from './query-handlers/get-localizations.query-handler';
+import { LocalizationService } from './services/localization.service';
+import { LocalizationsController } from '../presenters/http/localizations.controller';
 
 @Module({
   imports: [
@@ -41,6 +44,7 @@ import { DevicesService } from './services/devices.service';
     AnalysisController,
     AnalysisProgressController,
     DevicesController,
+    LocalizationsController,
   ],
   providers: [
     SubscriptionActivatedEventHandler,
@@ -64,6 +68,8 @@ import { DevicesService } from './services/devices.service';
     GetUserTestingModeInfoQueryHandler,
     GetAllDevicesQueryHandler,
     DevicesService,
+    GetLocalizationsQueryHandler,
+    LocalizationService,
   ],
 })
 export class SerpAnalyzerModule {}

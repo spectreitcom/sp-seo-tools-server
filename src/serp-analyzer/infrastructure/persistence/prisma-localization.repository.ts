@@ -47,4 +47,9 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
     if (!model) return null;
     return LocalizationMapper.toDomain(model);
   }
+
+  async findAll(): Promise<Localization[]> {
+    const models = await this.databaseService.saLocalization.findMany();
+    return models.map((model) => LocalizationMapper.toDomain(model));
+  }
 }
