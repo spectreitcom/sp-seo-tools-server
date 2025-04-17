@@ -6,6 +6,7 @@ import { GetUserAnalysisListQuery } from '../queries/get-user-analysis-list.quer
 import { GetUserAnalysisListQueryResponse } from '../query-handlers/get-user-analysis-list.query-handler';
 import { GetUserMonthlyUsageQuery } from '../queries/get-user-monthly-usage.query';
 import { GetUserMonthlyUsageQueryResponse } from '../query-handlers/get-user-monthly-usage.query-handler';
+import { AddCompetitorCommand } from '../commands/add-competitor.command';
 
 @Injectable()
 export class AnalysisService {
@@ -53,5 +54,11 @@ export class AnalysisService {
       GetUserMonthlyUsageQuery,
       GetUserMonthlyUsageQueryResponse
     >(new GetUserMonthlyUsageQuery(userId));
+  }
+
+  addCompetitor(userId: string, analysisId: string, url: string) {
+    return this.commandBus.execute<AddCompetitorCommand, void>(
+      new AddCompetitorCommand(userId, analysisId, url),
+    );
   }
 }
