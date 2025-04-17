@@ -31,7 +31,7 @@ export class GetUserMonthlyUsageQueryHandler
 
     let monthlyLimit = 0;
 
-    if (userSubscriptionInfo && userSubscriptionInfo.getActive()) {
+    if (userSubscriptionInfo?.getActive()) {
       monthlyLimit = userSubscriptionInfo.getAnalysisPerMonth();
 
       const usedQuota =
@@ -43,7 +43,7 @@ export class GetUserMonthlyUsageQueryHandler
       };
     }
 
-    if (testingMode && testingMode.getActive()) {
+    if (testingMode?.getActive()) {
       monthlyLimit = testingMode.getAnalysisPerMonth();
 
       const usedQuota =

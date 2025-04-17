@@ -105,20 +105,14 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
     });
 
     if (
-      userSubscriptionInfoModel &&
-      userSubscriptionInfoModel.active &&
+      userSubscriptionInfoModel?.active &&
       total >= userSubscriptionInfoModel.analysisPerMonth
     )
       return true;
 
-    if (
-      testingModeModel &&
-      testingModeModel.active &&
-      total >= testingModeModel.analysisPerMonth
-    )
-      return true;
-
-    return false;
+    return (
+      testingModeModel?.active && total >= testingModeModel.analysisPerMonth
+    );
   }
 
   async getUsedQuotaInCurrentMonth(userId: string): Promise<number> {

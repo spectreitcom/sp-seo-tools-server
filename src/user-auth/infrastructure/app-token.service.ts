@@ -20,7 +20,8 @@ export class AppTokenService implements TokenService {
       // so we need to await the result and then return it
       const result = await this.jwtService.verifyAsync(token);
       return result;
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       return null;
     }
   }
