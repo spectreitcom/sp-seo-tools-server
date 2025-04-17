@@ -25,6 +25,9 @@ import { AnalysisProgressService } from './services/analysis-progress.service';
 import { AnalysisProgressController } from '../presenters/http/analysis-progress.controller';
 import { AddCompetitorCommandHandler } from './command-handlers/add-competitor.command-handler';
 import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-testing-mode-info.query-handler';
+import { GetAllDevicesQueryHandler } from './query-handlers/get-all-devices.query-handler';
+import { DevicesController } from '../presenters/http/devices.controller';
+import { DevicesService } from './services/devices.service';
 
 @Module({
   imports: [
@@ -37,6 +40,7 @@ import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-te
     TestingModeController,
     AnalysisController,
     AnalysisProgressController,
+    DevicesController,
   ],
   providers: [
     SubscriptionActivatedEventHandler,
@@ -58,6 +62,8 @@ import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-te
     AnalysisProgressService,
     AddCompetitorCommandHandler,
     GetUserTestingModeInfoQueryHandler,
+    GetAllDevicesQueryHandler,
+    DevicesService,
   ],
 })
 export class SerpAnalyzerModule {}
