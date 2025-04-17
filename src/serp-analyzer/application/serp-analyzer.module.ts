@@ -24,6 +24,7 @@ import { GetUserMonthlyUsageQueryHandler } from './query-handlers/get-user-month
 import { AnalysisProgressService } from './services/analysis-progress.service';
 import { AnalysisProgressController } from '../presenters/http/analysis-progress.controller';
 import { AddCompetitorCommandHandler } from './command-handlers/add-competitor.command-handler';
+import { GetUserTestingModeInfoQueryHandler } from './query-handlers/get-user-testing-mode-info.query-handler';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { AddCompetitorCommandHandler } from './command-handlers/add-competitor.c
     GetUserMonthlyUsageQueryHandler,
     AnalysisProgressService,
     AddCompetitorCommandHandler,
+    GetUserTestingModeInfoQueryHandler,
   ],
 })
 export class SerpAnalyzerModule {}

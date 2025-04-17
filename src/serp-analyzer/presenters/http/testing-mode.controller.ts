@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -9,6 +10,7 @@ import { TestingModeService } from '../../application/services/testing-mode.serv
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { AuthGuard } from '../../application/guards/auth.guard';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UserTestingModeInfoReadModelSwagger } from '../../application/swagger/user-testing-mode-info.read-model.swagger';
 
 @Controller('serp-analyzer/testing-mode')
 export class TestingModeController {
@@ -27,5 +29,19 @@ export class TestingModeController {
   @HttpCode(HttpStatus.OK)
   activate(@CurrentUserId() userId: string) {
     return this.testingModeService.activate(userId);
+  }
+
+  @ApiBearerAuth('user-auth')
+  @ApiOperation({
+    summary: 'Returns information about current user testing mode',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: UserTestingModeInfoReadModelSwagger,
+  })
+  @Get('user-info')
+  @UseGuards(AuthGuard)
+  getUserTestingModeInfo(@CurrentUserId() userId: string) {
+    return this.testingModeService.getUserTestingModeInfo(userId);
   }
 }
