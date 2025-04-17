@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Query,
   UseGuards,
@@ -16,6 +17,7 @@ import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetUserAnalysisListQueryParamsDto } from '../../application/dto/get-user-analysis-list-query-params.dto';
 import { GetUserAnalysisListResponseSwagger } from '../../application/swagger/get-user-analysis-list-response.swagger';
 import { GetUserMonthlyUsageQueryResponseSwagger } from '../../application/swagger/get-user-monthly-usage-query-response.swagger';
+import { AddCompetitorDto } from '../../application/dto/add-competitor.dto';
 
 @Controller('serp-analyzer/analysis')
 export class AnalysisController {
@@ -76,5 +78,23 @@ export class AnalysisController {
   @UseGuards(AuthGuard)
   getUserMonthlyUsage(@CurrentUserId() userId: string) {
     return this.analysisService.getUserMonthlyUsage(userId);
+  }
+
+  @ApiBearerAuth('user-auth')
+  @ApiOperation({
+    summary: 'Adds a competitor to the analysis',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Competitor was added',
+  })
+  @Post(':analysisId/add-competitor')
+  @UseGuards(AuthGuard)
+  addCompetitor(
+    @Param('analysisId') analysisId: string,
+    @CurrentUserId() userId: string,
+    @Body() payload: AddCompetitorDto,
+  ) {
+    return this.analysisService.addCompetitor(userId, analysisId, payload.url);
   }
 }
