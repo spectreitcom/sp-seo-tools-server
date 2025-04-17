@@ -36,7 +36,7 @@ export class AppGoogleScraperService implements GoogleScraperService {
     const searchResults = query.getResults();
 
     for (let i = 0; i < query.getResultsNumber(); i++) {
-      if (searchResults.organic && searchResults.organic[i]) {
+      if (searchResults?.organic[i]) {
         results.push({
           url: searchResults.organic[i].link,
           position: searchResults.organic[i].rank,
@@ -90,8 +90,8 @@ export class AppGoogleScraperService implements GoogleScraperService {
         return 'ios';
       case 'tablet':
         return 'ipad';
-      default:
       case 'desktop':
+      default:
         return 0;
     }
   }

@@ -30,7 +30,8 @@ export class AppAccessService implements AccessService {
       );
       if (!token) return null;
       return this.tokenService.verify(token);
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       return null;
     }
   }

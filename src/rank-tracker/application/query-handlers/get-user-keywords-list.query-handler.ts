@@ -2,9 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetUserKeywordsListQuery } from '../queries/get-user-keywords-list.query';
 import { CollectionData } from '../../../shared/types/collection.data';
 import { UserKeywordsListItemDto } from '../dto/user-keywords-list-item.dto';
-import { Device } from '../../domain/value-objects/device';
 import { UserKeywordsListRepository } from '../ports/user-keywords-list.repository';
-import { BadRequestException } from '@nestjs/common';
 
 export type GetUserKeywordsListQueryResponse =
   CollectionData<UserKeywordsListItemDto>;
@@ -23,14 +21,6 @@ export class GetUserKeywordsListQueryHandler
   ): Promise<GetUserKeywordsListQueryResponse> {
     const { domainId, page, localizationId, searchText, device, userId, take } =
       query;
-    const _device = new Device(device);
-
-    if (device && !_device.isValid()) {
-      throw new BadRequestException('Invalid device');
-    }
-
-    const deviceFilterValue = device ? _device.value : undefined;
-    const domainIdFilterValue = domainId ? domainId : undefined;
 
     const skip = (page - 1) * take;
 
@@ -40,8 +30,8 @@ export class GetUserKeywordsListQueryHandler
       skip,
       searchText,
       localizationId,
-      deviceFilterValue,
-      domainIdFilterValue,
+      device,
+      domainId,
     );
 
     const total =
@@ -49,8 +39,8 @@ export class GetUserKeywordsListQueryHandler
         userId,
         searchText,
         localizationId,
-        deviceFilterValue,
-        domainIdFilterValue,
+        device,
+        domainId,
       );
 
     const userTotal =

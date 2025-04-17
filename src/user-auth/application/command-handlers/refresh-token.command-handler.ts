@@ -39,7 +39,8 @@ export class RefreshTokenCommandHandler
         accessToken,
         refreshToken,
       };
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       throw new UnauthorizedException();
     }
   }

@@ -29,7 +29,8 @@ export class AppGoogleAuthenticationService
         googleId,
         picture,
       };
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       throw new GoogleAuthenticateError();
     }
   }
