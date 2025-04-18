@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "create-admin": "node dist/src/admin-auth/application/cli/cli.js create-admin",
     "ranktrackerpayment:listen": "stripe listen --forward-to http://localhost:3000/api/rank-tracker-subscription/webhook",
+    "serpanalyzer:listen": "stripe listen --forward-to http://localhost:3000/api/serp-analyzer-payments/webhook",
     "rtseeder": "node dist/src/rank-tracker/application/cli/cli.js rt-seed",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
