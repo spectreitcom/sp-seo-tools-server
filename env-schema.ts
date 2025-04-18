@@ -20,6 +20,7 @@ export default Joi.object({
   USER_JWT_TOKEN_ISSUER: Joi.string().required(),
   USER_JWT_ACCESS_TOKEN_TTL: Joi.string().required(),
   STRIPE_RANK_TRACKER_ENDPOINT_SECRET: Joi.string().required(),
+  STRIPE_SERP_ANALYZER_ENDPOINT_SECRET: Joi.string().required(),
   STRIPE_SECRET_KEY: Joi.string().required(),
   STRIPE_RANK_TRACKER_SUCCESS_URL: Joi.string().required(),
   STRIPE_RANK_TRACKER_CANCEL_URL: Joi.string().required(),
