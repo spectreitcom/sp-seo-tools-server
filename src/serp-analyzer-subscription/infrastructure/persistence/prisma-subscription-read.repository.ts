@@ -22,4 +22,21 @@ export class PrismaSubscriptionReadRepository
         ),
     );
   }
+
+  async findByUser(userId: string): Promise<SubscriptionReadModel> {
+    const model = await this.databaseService.saUserSubscription.findUnique({
+      where: { userId },
+      include: {
+        subscription: true,
+      },
+    });
+    if (!model) return null;
+    return new SubscriptionReadModel(
+      model.subscription.id,
+      model.subscription.name,
+      model.subscription.amount,
+      model.subscription.searchedPages,
+      model.subscription.analysisPerMonth,
+    );
+  }
 }
