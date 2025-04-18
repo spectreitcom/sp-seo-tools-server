@@ -2,4 +2,5 @@ import { SubscriptionReadModel } from '../../infrastructure/read-models/subscrip
 
 export abstract class SubscriptionReadRepository {
   abstract findAll(): Promise<SubscriptionReadModel[]>;
+  abstract findByUser(userId: string): Promise<SubscriptionReadModel>;
 }

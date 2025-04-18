@@ -16,6 +16,7 @@ import { PaymentService } from './services/payment.service';
 import { CreateSessionPortalCommandHandler } from './command-handlers/create-session-portal.command-handler';
 import { DeactivateSubscriptionCommandHandler } from './command-handlers/deactivate-subscription.command-handler';
 import { GetSubscriptionsQueryHandler } from './query-handlers/get-subscriptions.query-handler';
+import { GetCurrentUserPlanQueryHandler } from './query-handlers/get-current-user-plan.query-handler';
 
 @Module({
   imports: [InfrastructureModule, AdminAuthModule, UserAuthModule],
@@ -36,6 +37,7 @@ import { GetSubscriptionsQueryHandler } from './query-handlers/get-subscriptions
     CreateSessionPortalCommandHandler,
     DeactivateSubscriptionCommandHandler,
     GetSubscriptionsQueryHandler,
+    GetCurrentUserPlanQueryHandler,
   ],
 })
 export class SerpAnalyzerSubscriptionModule {}

@@ -4,6 +4,7 @@ import { CreateSubscriptionDto } from '../dto/create-subscription.dto';
 import { CreateSubscriptionCommand } from '../commands/create-subscription.command';
 import { GetSubscriptionsQuery } from '../queries/get-subscriptions.query';
 import { SubscriptionReadModel } from '../../infrastructure/read-models/subscription.read-model';
+import { GetCurrentUserPlanQuery } from '../queries/get-current-user-plan.query';
 
 @Injectable()
 export class SubscriptionService {
@@ -29,5 +30,12 @@ export class SubscriptionService {
       GetSubscriptionsQuery,
       SubscriptionReadModel[]
     >(new GetSubscriptionsQuery());
+  }
+
+  async getCurrentUserPlan(userId: string) {
+    return this.queryBus.execute<
+      GetCurrentUserPlanQuery,
+      SubscriptionReadModel | null
+    >(new GetCurrentUserPlanQuery(userId));
   }
 }

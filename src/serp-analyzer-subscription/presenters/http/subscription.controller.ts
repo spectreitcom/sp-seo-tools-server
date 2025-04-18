@@ -8,6 +8,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { SubscriptionReadModelSwagger } from '../../application/swagger/subscription.read-model.swagger';
+import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 
 @ApiTags('SerpAnalyzerSubscriptionController')
 @Controller('serp-analyzer-subscription')
@@ -27,5 +28,19 @@ export class SubscriptionController {
   @UseGuards(AuthGuard)
   getSubscriptions() {
     return this.subscriptionService.getSubscriptions();
+  }
+
+  @ApiBearerAuth('user-auth')
+  @ApiOperation({
+    summary: "Returns current user's plan",
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: SubscriptionReadModelSwagger,
+  })
+  @Get('current-plan')
+  @UseGuards(AuthGuard)
+  getCurrentUserPlan(@CurrentUserId() userId: string) {
+    return this.subscriptionService.getCurrentUserPlan(userId);
   }
 }
