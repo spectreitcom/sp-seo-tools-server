@@ -31,6 +31,7 @@ import { DevicesService } from './services/devices.service';
 import { GetLocalizationsQueryHandler } from './query-handlers/get-localizations.query-handler';
 import { LocalizationService } from './services/localization.service';
 import { LocalizationsController } from '../presenters/http/localizations.controller';
+import { GetProgressQueryHandler } from './query-handlers/get-progress.query-handler';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { LocalizationsController } from '../presenters/http/localizations.contro
     DevicesService,
     GetLocalizationsQueryHandler,
     LocalizationService,
+    GetProgressQueryHandler,
   ],
 })
 export class SerpAnalyzerModule {}
