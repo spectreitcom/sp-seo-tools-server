@@ -24,6 +24,7 @@ export class GetUserAnalysisListQueryParamsDto {
   @ApiProperty({
     required: false,
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsUUID()
   @IsOptional()
   readonly localizationId: string | undefined;
@@ -31,12 +32,14 @@ export class GetUserAnalysisListQueryParamsDto {
   @ApiProperty({
     required: false,
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsOptional()
   readonly device: string | undefined;
 
   @ApiProperty({
     required: false,
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsOptional()
   readonly searchText: string | undefined;
 }
