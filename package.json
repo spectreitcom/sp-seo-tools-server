@@ -42,7 +42,7 @@
     "@prisma/client": "^6.2.1",
     "@sentry/cli": "^2.42.4",
     "@sentry/nestjs": "^9.9.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "bcryptjs": "^2.4.3",
     "bullmq": "^5.34.8",
     "cheerio": "^1.0.0",
