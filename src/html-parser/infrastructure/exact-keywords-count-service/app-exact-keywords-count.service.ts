@@ -44,7 +44,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $('img[alt]:not([alt=""])');
-    if (!elements) return 0;
+    if (!elements.length) return 0;
     const texts: string[] = [];
     elements.map((_, element) => {
       const _element = $(element);
@@ -57,7 +57,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const title = $('title');
-    if (!title) return 0;
+    if (!title.length) return 0;
     const text = title.text().toLowerCase();
     const _phrase = phrase.toLowerCase();
     const regExp = new RegExp(`${_phrase}`, 'gim');
@@ -69,19 +69,22 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const metaDescription = $('meta[name="description"]');
-    if (!metaDescription) return 0;
+    if (!metaDescription.length) return 0;
     const text = metaDescription.attr('content');
-    const _phrase = phrase.toLowerCase();
-    const regExp = new RegExp(`${_phrase}`, 'gim');
-    const results = text.match(regExp);
-    return results && Array.isArray(results) ? results.length : 0;
+    if (text) {
+      const _phrase = phrase.toLowerCase();
+      const regExp = new RegExp(`${_phrase}`, 'gim');
+      const results = text.match(regExp);
+      return results && Array.isArray(results) ? results.length : 0;
+    }
+    return 0;
   }
 
   bodyExactKeywordsCount(html: string, phrase: string): number {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $('body');
-    if (!elements) return 0;
+    if (!elements.length) return 0;
     const texts: string[] = [];
 
     elements.map((_, element) => {
@@ -105,7 +108,7 @@ export class AppExactKeywordsCountService implements ExactKeywordsCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const elements = $(tag);
-    if (!elements) return 0;
+    if (!elements.length) return 0;
     const texts: string[] = [];
     elements.map((_, element) => {
       const _element = $(element);

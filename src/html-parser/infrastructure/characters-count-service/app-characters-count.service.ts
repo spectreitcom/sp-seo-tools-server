@@ -74,7 +74,7 @@ export class AppCharactersCountService implements CharactersCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const titleElement = $('title');
-    if (!titleElement) return 0;
+    if (!titleElement.length) return 0;
     return titleElement.text().replace(/\W/g, '').length;
   }
 
@@ -82,8 +82,8 @@ export class AppCharactersCountService implements CharactersCountService {
     if (!html || html === '' || html === ' ') return 0;
     const $ = cheerio.load(html);
     const metaDescElement = $('meta[name="description"]');
-    if (!metaDescElement) return 0;
-    return metaDescElement.attr('content').replace(/\W/g, '').length;
+    if (!metaDescElement.length) return 0;
+    return metaDescElement.attr('content')?.replace(/\W/g, '').length;
   }
 
   bodyCharactersCount(html: string): number {

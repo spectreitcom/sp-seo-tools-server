@@ -32,6 +32,6 @@ export class GetProgressQueryHandler
 
   private calcProgress(current: number, total: number) {
     if (!total || total === 0) return 0;
-    return Math.floor(current / total) * 100;
+    return Math.floor((current / total) * 100);
   }
 }
