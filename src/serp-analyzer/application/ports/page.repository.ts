@@ -5,4 +5,5 @@ export abstract class PageRepository {
   abstract saveMany(pages: Page[]): Promise<void>;
   abstract findById(pageId: string): Promise<Page>;
   abstract findByStageId(stageId: string): Promise<Page>;
+  abstract findAllByAnalysis(analysisId: string): Promise<Page[]>;
 }

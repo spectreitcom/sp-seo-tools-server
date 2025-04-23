@@ -18,4 +18,9 @@ export abstract class UserAnalysisRepository {
   ): Promise<number>;
 
   abstract countAllForUser(userId: string): Promise<number>;
+
+  abstract findByIdAndUser(
+    analysisId: string,
+    userId: string,
+  ): Promise<UserAnalysisReadModel>;
 }
