@@ -220,4 +220,25 @@ export class PrismaPageRepository implements PageRepository {
       stageModels.map((stage) => stage.stage),
     );
   }
+
+  async findAllByAnalysis(analysisId: string): Promise<Page[]> {
+    const models = await this.databaseService.saPage.findMany({
+      where: { analysisId },
+    });
+    if (!models.length) return [];
+
+    const result: Page[] = [];
+
+    for (const model of models) {
+      const stageModels = await this.databaseService.saStage.findMany({
+        where: {
+          pageId: model.id,
+        },
+      });
+      const stages = stageModels.map((stage) => stage.stage);
+      result.push(PageMapper.toDomain(model, stages));
+    }
+
+    return result;
+  }
 }

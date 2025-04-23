@@ -7,6 +7,8 @@ import { GetUserAnalysisListQueryResponse } from '../query-handlers/get-user-ana
 import { GetUserMonthlyUsageQuery } from '../queries/get-user-monthly-usage.query';
 import { GetUserMonthlyUsageQueryResponse } from '../query-handlers/get-user-monthly-usage.query-handler';
 import { AddCompetitorCommand } from '../commands/add-competitor.command';
+import { GetAnalysisDetailsQuery } from '../queries/get-analysis-details.query';
+import { GetAnalysisDetailsQueryResponse } from '../query-handlers/get-analysis-details.query-handler';
 
 @Injectable()
 export class AnalysisService {
@@ -60,5 +62,12 @@ export class AnalysisService {
     return this.commandBus.execute<AddCompetitorCommand, void>(
       new AddCompetitorCommand(userId, analysisId, url),
     );
+  }
+
+  getAnalysisDetails(userId: string, analysisId: string) {
+    return this.queryBus.execute<
+      GetAnalysisDetailsQuery,
+      GetAnalysisDetailsQueryResponse
+    >(new GetAnalysisDetailsQuery(userId, analysisId));
   }
 }
