@@ -67,6 +67,23 @@ export class AnalysisController {
 
   @ApiBearerAuth('user-auth')
   @ApiOperation({
+    summary: 'Returns the details of the analysis',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Returns the complex data of the analysis',
+  })
+  @Get(':analysisId')
+  @UseGuards(AuthGuard)
+  getAnalysisDetails(
+    @Param('analysisId') analysisId: string,
+    @CurrentUserId() userId: string,
+  ) {
+    return this.analysisService.getAnalysisDetails(userId, analysisId);
+  }
+
+  @ApiBearerAuth('user-auth')
+  @ApiOperation({
     summary: "Returns the user's monthly usage quota",
   })
   @ApiResponse({

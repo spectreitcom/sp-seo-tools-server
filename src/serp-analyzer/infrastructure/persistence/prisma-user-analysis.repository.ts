@@ -109,4 +109,38 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
       },
     });
   }
+
+  async findByIdAndUser(
+    analysisId: string,
+    userId: string,
+  ): Promise<UserAnalysisReadModel> {
+    const model = await this.databaseService.saAnalysis.findUnique({
+      where: { userId, id: analysisId },
+      include: {
+        localization: true,
+      },
+    });
+    if (!model) return null;
+
+    const analysisProgressModel =
+      await this.databaseService.saAnalysisProgress.findUnique({
+        where: {
+          analysisId,
+        },
+      });
+
+    const progress = this.calcProgress(
+      analysisProgressModel.current,
+      analysisProgressModel.total,
+    );
+
+    return new UserAnalysisReadModel(
+      model.id,
+      model.keyword,
+      model.localization.name,
+      model.localization.countryCode,
+      DeviceMapper.toName(model.device),
+      progress,
+    );
+  }
 }

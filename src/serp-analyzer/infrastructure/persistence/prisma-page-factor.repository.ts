@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PageFactorRepository } from '../../application/ports/page-factor.repository';
 import { PageFactor } from '../../domain/page-factor';
 import { DatabaseService } from '../../../database/database.service';
+import { PageFactorMapper } from '../../domain/mappers/page-factor.mapper';
 
 @Injectable()
 export class PrismaPageFactorRepository implements PageFactorRepository {
@@ -65,5 +66,13 @@ export class PrismaPageFactorRepository implements PageFactorRepository {
         value: item.getValue(),
       })),
     });
+  }
+
+  async findByPage(pageId: string): Promise<PageFactor[]> {
+    const models = await this.databaseService.saPageFactor.findMany({
+      where: { pageId },
+    });
+    if (!models.length) return [];
+    return models.map((model) => PageFactorMapper.toDomain(model));
   }
 }
