@@ -159,6 +159,7 @@ export class PrismaPageRepository implements PageRepository {
             stagesToRemove.push(stageModel);
           }
         }
+
         for (const stage of pageToUpdate.getStages()) {
           if (!existingStages.includes(stage)) {
             stagesToCreate.push(stage);
@@ -224,6 +225,9 @@ export class PrismaPageRepository implements PageRepository {
   async findAllByAnalysis(analysisId: string): Promise<Page[]> {
     const models = await this.databaseService.saPage.findMany({
       where: { analysisId },
+      orderBy: {
+        position: 'asc',
+      },
     });
     if (!models.length) return [];
 
