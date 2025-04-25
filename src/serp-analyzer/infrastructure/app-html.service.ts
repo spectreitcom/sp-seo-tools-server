@@ -10,15 +10,37 @@ export class AppHtmlService implements HtmlService {
   async fromUrl(url: string): Promise<{ html: string; status: number }> {
     try {
       const response = await firstValueFrom(this.http.get(url));
+
       return {
         html: response.data,
         status: response.status,
       };
     } catch (e: any) {
-      return {
-        html: '',
-        status: e.response?.status ?? 500,
-      };
+      console.log(e);
+      try {
+        const response = await firstValueFrom(
+          this.http.get(url, {
+            headers: {
+              // 'User-Agent':
+              //   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
+              //   'AppleWebKit/537.36 (KHTML, like Gecko) ' +
+              //   'Chrome/123.0.0.0 Safari/537.36',
+              'User-Agent':
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+            },
+          }),
+        );
+
+        return {
+          html: response.data,
+          status: response.status,
+        };
+      } catch (e: any) {
+        return {
+          html: '',
+          status: e.response?.status ?? 500,
+        };
+      }
     }
   }
 }
