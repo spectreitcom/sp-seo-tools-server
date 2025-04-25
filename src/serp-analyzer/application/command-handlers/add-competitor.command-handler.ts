@@ -7,6 +7,7 @@ import { PageRepository } from '../ports/page.repository';
 import { AnalysisRepository } from '../ports/analysis.repository';
 import { BadRequestException } from '@nestjs/common';
 import { StageProcessingQueueService } from '../ports/stage-processing-queue.service';
+import { AnalysisProgressRepository } from '../ports/analysis-progress.repository';
 
 @CommandHandler(AddCompetitorCommand)
 export class AddCompetitorCommandHandler
@@ -17,10 +18,18 @@ export class AddCompetitorCommandHandler
     private readonly pageRepository: PageRepository,
     private readonly analysisRepository: AnalysisRepository,
     private readonly stageProcessingQueueService: StageProcessingQueueService,
+    private readonly analysisProgressRepository: AnalysisProgressRepository,
   ) {}
 
   async execute(command: AddCompetitorCommand): Promise<void> {
     const { userId, url, analysisId } = command;
+
+    const analysisProgress =
+      await this.analysisProgressRepository.findByAnalysis(analysisId);
+
+    analysisProgress.updateTotalProgress(
+      analysisProgress.getTotal() + stagesArray.length,
+    );
 
     await this.checkAnalysis(analysisId, userId);
 
@@ -32,6 +41,7 @@ export class AddCompetitorCommandHandler
     }
 
     await this.pageRepository.save(page);
+    await this.analysisProgressRepository.save(analysisProgress);
 
     await this.stageProcessingQueueService.beginProcessing([page.getPageId()]);
   }
