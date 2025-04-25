@@ -33,6 +33,7 @@ import { LocalizationService } from './services/localization.service';
 import { LocalizationsController } from '../presenters/http/localizations.controller';
 import { GetProgressQueryHandler } from './query-handlers/get-progress.query-handler';
 import { GetAnalysisDetailsQueryHandler } from './query-handlers/get-analysis-details.query-handler';
+import { LocalizationSyncEventHandler } from './event-handlers/localization-sync.event-handler';
 
 @Module({
   imports: [
@@ -74,6 +75,7 @@ import { GetAnalysisDetailsQueryHandler } from './query-handlers/get-analysis-de
     LocalizationService,
     GetProgressQueryHandler,
     GetAnalysisDetailsQueryHandler,
+    LocalizationSyncEventHandler,
   ],
 })
 export class SerpAnalyzerModule {}

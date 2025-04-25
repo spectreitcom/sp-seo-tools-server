@@ -40,6 +40,7 @@ import { DomainPositionProcessingCron } from './cron/domain-position-processing.
 import { DomainPositionCreatedEventHandler } from './event-handlers/domain-position-created.event-handler';
 import { DomainPositionStatusUpdatedEventHandler } from './event-handlers/domain-position-status-updated.event-handler';
 import { KeywordAddedEventHandler } from './event-handlers/keyword-added.event-handler';
+import { LocalizationSyncEventHandler } from './event-handlers/localization-sync.event-handler';
 
 @Module({
   imports: [InfrastructureModule, UserAuthModule],
@@ -85,6 +86,7 @@ import { KeywordAddedEventHandler } from './event-handlers/keyword-added.event-h
     DomainPositionCreatedEventHandler,
     DomainPositionStatusUpdatedEventHandler,
     KeywordAddedEventHandler,
+    LocalizationSyncEventHandler,
   ],
 })
 export class RankTrackerModule {}

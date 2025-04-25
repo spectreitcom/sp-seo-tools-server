@@ -44,4 +44,12 @@ export class PrismaLocalizationRepository implements LocalizationRepository {
       });
     return !!localizationModel;
   }
+
+  async findAll(): Promise<Localization[]> {
+    const models = await this.databaseService.seLocalization.findMany();
+    if (!models.length) return [];
+    return models.map(
+      (model) => new Localization(model.id, model.countryCode, model.name),
+    );
+  }
 }
