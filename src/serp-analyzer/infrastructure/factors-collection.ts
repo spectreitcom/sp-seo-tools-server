@@ -95,34 +95,34 @@ export type FactorsCollection = {
 export const factorsCollection: FactorsCollection = [
   // H1
   {
-    label: 'H1',
+    label: 'H1 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H1 words count',
         key: H1_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H1 characters count',
         key: H1_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H1 elements count',
         key: H1_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H1 exact keywords count',
         key: H1_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H1 exact keywords density',
         key: H1_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H1 partial keywords count',
         key: H1_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H1 partial keywords density',
         key: H1_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -130,34 +130,34 @@ export const factorsCollection: FactorsCollection = [
   // --------------------
   // H2
   {
-    label: 'H2',
+    label: 'H2 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H2 words count',
         key: H2_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H2 characters count',
         key: H2_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H2 elements count',
         key: H2_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H2 exact keywords count',
         key: H2_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H2 exact keywords density',
         key: H2_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H2 partial keywords count',
         key: H2_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H2 partial keywords density',
         key: H2_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -165,34 +165,34 @@ export const factorsCollection: FactorsCollection = [
   // --------------------
   // H3
   {
-    label: 'H3',
+    label: 'H3 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H3 words count',
         key: H3_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H3 characters count',
         key: H3_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H3 elements count',
         key: H3_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H3 exact keywords count',
         key: H3_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H3 exact keywords density',
         key: H3_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H3 partial keywords count',
         key: H3_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H3 partial keywords density',
         key: H3_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -200,34 +200,34 @@ export const factorsCollection: FactorsCollection = [
   // --------------------
   // H4
   {
-    label: 'H4',
+    label: 'H4 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H4 words count',
         key: H4_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H4 characters count',
         key: H4_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H4 elements count',
         key: H4_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H4 exact keywords count',
         key: H4_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H4 exact keywords density',
         key: H4_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H4 partial keywords count',
         key: H4_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H4 partial keywords density',
         key: H4_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -235,34 +235,34 @@ export const factorsCollection: FactorsCollection = [
   // --------------------
   // H5
   {
-    label: 'H5',
+    label: 'H5 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H5 words count',
         key: H5_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H5 characters count',
         key: H5_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H5 elements count',
         key: H5_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H5 exact keywords count',
         key: H5_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H5 exact keywords density',
         key: H5_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H5 partial keywords count',
         key: H5_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H5 partial keywords density',
         key: H5_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -270,34 +270,34 @@ export const factorsCollection: FactorsCollection = [
   // --------------------
   // H6
   {
-    label: 'H6',
+    label: 'H6 elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'H6 words count',
         key: H6_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'H6 characters count',
         key: H6_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'H6 elements count',
         key: H6_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'H6 exact keywords count',
         key: H6_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'H6 exact keywords density',
         key: H6_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'H6 partial keywords count',
         key: H6_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'H6 partial keywords density',
         key: H6_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -308,31 +308,31 @@ export const factorsCollection: FactorsCollection = [
     label: 'Paragraphs',
     factors: [
       {
-        label: 'Words count',
+        label: 'P words count',
         key: P_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'P characters count',
         key: P_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'P elements count',
         key: P_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'P exact keywords count',
         key: P_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'P exact keywords density',
         key: P_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'P partial keywords count',
         key: P_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'P partial keywords density',
         key: P_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -343,31 +343,31 @@ export const factorsCollection: FactorsCollection = [
     label: 'Strong elements',
     factors: [
       {
-        label: 'Words count',
+        label: 'Strong words count',
         key: STRONG_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'Strong characters count',
         key: STRONG_CHARACTERS_COUNT,
       },
       {
-        label: 'Elements count',
+        label: 'Strong elements count',
         key: STRONG_ELEMENTS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'Strong exact keywords count',
         key: STRONG_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'Strong exact keywords density',
         key: STRONG_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'Strong partial keywords count',
         key: STRONG_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'Strong partial keywords density',
         key: STRONG_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -378,27 +378,27 @@ export const factorsCollection: FactorsCollection = [
     label: 'Image alt',
     factors: [
       {
-        label: 'Words count',
+        label: 'Image alt words count',
         key: IMG_ALT_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'Image alt characters count',
         key: IMG_ALT_CHARACTERS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'Image alt exact keywords count',
         key: IMG_ALT_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'Image alt exact keywords density',
         key: IMG_ALT_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'Image alt partial keywords count',
         key: IMG_ALT_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'Image alt partial keywords density',
         key: IMG_ALT_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -409,27 +409,27 @@ export const factorsCollection: FactorsCollection = [
     label: 'Title',
     factors: [
       {
-        label: 'Words count',
+        label: 'Title words count',
         key: TITLE_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'Title characters count',
         key: TITLE_CHARACTERS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'Title exact keywords count',
         key: TITLE_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'Title exact keywords density',
         key: TITLE_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'Title partial keywords count',
         key: TITLE_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'Title partial keywords density',
         key: TITLE_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -440,27 +440,27 @@ export const factorsCollection: FactorsCollection = [
     label: 'Meta description',
     factors: [
       {
-        label: 'Words count',
+        label: 'Meta description words count',
         key: META_DESC_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'Meta description characters count',
         key: META_DESC_CHARACTERS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'Meta description exact keywords count',
         key: META_DESC_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'Meta description exact keywords density',
         key: META_DESC_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'Meta description partial keywords count',
         key: META_DESC_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'Meta description partial keywords density',
         key: META_DESC_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -471,15 +471,15 @@ export const factorsCollection: FactorsCollection = [
     label: 'Links',
     factors: [
       {
-        label: 'Elements count',
+        label: 'Links elements count',
         key: LINK_ELEMENTS_COUNT,
       },
       {
-        label: 'Nofollow count',
+        label: 'Links nofollow count',
         key: LINK_NOFOLLOW_ELEMENTS_COUNT,
       },
       {
-        label: 'Dofollow count',
+        label: 'Links dofollow count',
         key: LINK_DOFOLLOW_ELEMENTS_COUNT,
       },
     ],
@@ -490,27 +490,27 @@ export const factorsCollection: FactorsCollection = [
     label: 'Body',
     factors: [
       {
-        label: 'Words count',
+        label: 'Body words count',
         key: BODY_WORDS_COUNT,
       },
       {
-        label: 'Characters count',
+        label: 'Body characters count',
         key: BODY_CHARACTERS_COUNT,
       },
       {
-        label: 'Exact keywords count',
+        label: 'Body exact keywords count',
         key: BODY_EXACT_KEYWORDS_COUNT,
       },
       {
-        label: 'Exact keywords density',
+        label: 'Body exact keywords density',
         key: BODY_EXACT_KEYWORDS_DENSITY,
       },
       {
-        label: 'Partial keywords count',
+        label: 'Body partial keywords count',
         key: BODY_PARTIAL_KEYWORDS_COUNT,
       },
       {
-        label: 'Partial keywords density',
+        label: 'Body partial keywords density',
         key: BODY_PARTIAL_KEYWORDS_DENSITY,
       },
     ],
@@ -521,15 +521,15 @@ export const factorsCollection: FactorsCollection = [
     label: 'Images',
     factors: [
       {
-        label: 'Elements count',
+        label: 'Images elements count',
         key: IMAGE_ELEMENTS_COUNT,
       },
       {
-        label: "Elements with 'alt' attribute count",
+        label: "Images elements with 'alt' attribute count",
         key: IMAGE_ELEMENTS_WITH_ALT_COUNT,
       },
       {
-        label: "Elements without or empty 'alt' attribute count",
+        label: "Images elements without or empty 'alt' attribute count",
         key: IMAGE_ELEMENTS_WITHOUT_OR_WITH_EMPTY_ALT_COUNT,
       },
     ],
