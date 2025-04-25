@@ -1,4 +1,11 @@
-import { Body, Controller, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { SearchEngineService } from '../../application/services/search-engine.service';
 import { AdminAuthGuard } from '../../application/guards/admin-auth.guard';
 import { AddLocalizationDto } from '../../application/dto/add-localization.dto';
@@ -20,5 +27,20 @@ export class AdminSearchEngineController {
   @Post('localizations')
   async addLocalization(@Body() payload: AddLocalizationDto) {
     return this.searchEngineService.addLocalization(payload);
+  }
+
+  @ApiBearerAuth('admin-auth')
+  @ApiOperation({
+    summary: 'Syncs all localizations for related modules',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Sync was begun',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('localizations/sync')
+  @UseGuards(AdminAuthGuard)
+  syncLocalizations() {
+    return this.searchEngineService.syncLocalizations();
   }
 }
