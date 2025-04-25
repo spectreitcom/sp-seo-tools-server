@@ -6,6 +6,7 @@ import { SearchEngineService } from './services/search-engine.service';
 import { LocalizationCreatedEventHandler } from './event-handlers/localization-created.event-handler';
 import { AdminAuthModule } from '../../admin-auth/application/admin-auth.module';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
+import { SyncLocalizationsCommandHandler } from './command-handlers/sync-localizations.command-handler';
 
 @Module({
   imports: [InfrastructureModule, AdminAuthModule],
@@ -15,6 +16,7 @@ import { AdminAuthGuard } from './guards/admin-auth.guard';
     SearchEngineService,
     LocalizationCreatedEventHandler,
     AdminAuthGuard,
+    SyncLocalizationsCommandHandler,
   ],
 })
 export class SearchEngineModule {}
