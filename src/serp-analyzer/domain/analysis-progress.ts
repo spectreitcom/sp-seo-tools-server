@@ -3,8 +3,12 @@ export class AnalysisProgress {
     private readonly analysisProgressId: string,
     private readonly analysisId: string,
     private current: number,
-    private readonly total: number,
+    private total: number,
   ) {}
+
+  updateTotalProgress(total: number) {
+    this.total = total;
+  }
 
   increment() {
     this.current = this.current + 1;
