@@ -56,7 +56,7 @@ export class ScrapingFinishedEventHandler
     const pages: Page[] = [];
 
     for (const searchResult of searchResults) {
-      const { html } = await this.htmlService.fromUrl(searchResult.url);
+      const { html, status } = await this.htmlService.fromUrl(searchResult.url);
       const page = PageFactory.create(
         searchResult.url,
         searchResult.position,
@@ -64,6 +64,11 @@ export class ScrapingFinishedEventHandler
         stagesArray,
         html,
       );
+
+      if (status >= 400) {
+        page.setError(`Failed to fetch HTML`);
+      }
+
       pages.push(page);
     }
     await this.pageRepository.saveMany(pages);

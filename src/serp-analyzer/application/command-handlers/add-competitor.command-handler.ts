@@ -24,8 +24,13 @@ export class AddCompetitorCommandHandler
 
     await this.checkAnalysis(analysisId, userId);
 
-    const { html } = await this.htmlService.fromUrl(url);
+    const { html, status } = await this.htmlService.fromUrl(url);
     const page = PageFactory.create(url, 0, analysisId, stagesArray, html);
+
+    if (status >= 400) {
+      page.setError(`Failed to fetch HTML`);
+    }
+
     await this.pageRepository.save(page);
 
     await this.stageProcessingQueueService.beginProcessing([page.getPageId()]);
