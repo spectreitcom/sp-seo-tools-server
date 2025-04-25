@@ -219,6 +219,7 @@ model SaPage {
   stages      SaStage[]
   pageFactors SaPageFactor[]
   html        String
+  error       String?
 }
 
 model SaStage {

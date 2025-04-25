@@ -10,6 +10,7 @@ export class PageMapper {
       model.analysisId,
       stages,
       model.html,
+      model.error,
     );
   }
 }

@@ -6,7 +6,12 @@ export class Page {
     private readonly analysisId: string,
     private readonly stages: string[],
     private readonly html: string,
+    private error: string | null = null,
   ) {}
+
+  setError(error: string): void {
+    this.error = error;
+  }
 
   getPageId() {
     return this.pageId;
@@ -30,5 +35,13 @@ export class Page {
 
   getHtml() {
     return this.html;
+  }
+
+  getError() {
+    return this.error;
+  }
+
+  hasError() {
+    return this.error !== null;
   }
 }
