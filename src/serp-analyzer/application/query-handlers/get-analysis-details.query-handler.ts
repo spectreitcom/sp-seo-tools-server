@@ -14,6 +14,7 @@ type PageData = {
   url: string;
   position: number;
   factors: Record<string, number>;
+  hasError: boolean;
 };
 
 export type GetAnalysisDetailsQueryResponse = {
@@ -69,6 +70,7 @@ export class GetAnalysisDetailsQueryHandler
         url: page.getUrl(),
         position: page.getPosition(),
         factors,
+        hasError: page.hasError(),
       });
     }
 
