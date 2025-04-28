@@ -38,4 +38,9 @@ export class UserAnalysisReadModelSwagger implements UserAnalysisReadModelBase {
     example: 'the best software house in Cracow',
   })
   readonly phrase: string;
+
+  @ApiProperty({
+    example: false,
+  })
+  readonly hasError: boolean;
 }

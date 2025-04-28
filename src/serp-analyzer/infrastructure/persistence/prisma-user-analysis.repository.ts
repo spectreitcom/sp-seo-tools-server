@@ -63,6 +63,15 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
         );
       }
 
+      const stagesWithErrorCount = await this.databaseService.saStage.count({
+        where: {
+          status: 'ERROR',
+          page: {
+            analysisId: model.id,
+          },
+        },
+      });
+
       results.push(
         new UserAnalysisReadModel(
           model.id,
@@ -71,6 +80,7 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
           model.localization.countryCode,
           DeviceMapper.toName(model.device),
           progress,
+          stagesWithErrorCount > 0,
         ),
       );
     }
@@ -134,6 +144,15 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
       analysisProgressModel.total,
     );
 
+    const stagesWithErrorCount = await this.databaseService.saStage.count({
+      where: {
+        status: 'ERROR',
+        page: {
+          analysisId,
+        },
+      },
+    });
+
     return new UserAnalysisReadModel(
       model.id,
       model.keyword,
@@ -141,6 +160,7 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
       model.localization.countryCode,
       DeviceMapper.toName(model.device),
       progress,
+      stagesWithErrorCount > 0,
     );
   }
 }

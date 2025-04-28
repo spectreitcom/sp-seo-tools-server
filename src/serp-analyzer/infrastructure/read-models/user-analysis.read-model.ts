@@ -6,5 +6,6 @@ export class UserAnalysisReadModel {
     public readonly localizationCountryCode: string,
     public readonly deviceName: string,
     public readonly progress: number,
+    public readonly hasError: boolean,
   ) {}
 }

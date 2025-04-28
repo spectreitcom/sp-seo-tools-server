@@ -16,6 +16,10 @@ export class Stage {
     this.status = SaStageStatus.PENDING;
   }
 
+  markAsError() {
+    this.status = SaStageStatus.ERROR;
+  }
+
   getStageId() {
     return this.stageId;
   }

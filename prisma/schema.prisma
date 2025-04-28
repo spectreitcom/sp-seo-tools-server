@@ -242,6 +242,7 @@ enum SaStageStatus {
   CREATED
   PENDING
   COMPLETED
+  ERROR
 }
 
 // Google Scraper
