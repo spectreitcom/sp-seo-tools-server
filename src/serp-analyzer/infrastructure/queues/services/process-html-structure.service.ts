@@ -74,6 +74,8 @@ export class ProcessHtmlStructureService {
       );
     } catch (e) {
       console.log(e);
+      stage.markAsError();
+      await this.stageRepository.save(stage);
     }
   }
 }
