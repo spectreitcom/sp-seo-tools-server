@@ -32,4 +32,5 @@ export default Joi.object({
   BRIGHT_DATA_BASE_URL: Joi.string().required(),
   BRIGHT_DATA_CUSTOMER: Joi.string().required(),
   BRIGHT_DATA_ZONE: Joi.string().required(),
+  PAGE_SPEED_API_KEY: Joi.string().required(),
 });

@@ -275,6 +275,23 @@ export const IMAGE_FACTORS = [
   IMAGE_ELEMENTS_WITHOUT_OR_WITH_EMPTY_ALT_COUNT,
 ];
 
+/**
+ * Page speed factors
+ */
+export const PAGE_SPEED_FCP = 'page_speed_fcp';
+export const PAGE_SPEED_LCP = 'page_speed_lcp';
+export const PAGE_SPEED_TTFB = 'page_speed_ttfb';
+export const PAGE_SPEED_DOCUMENT_SIZE = 'page_speed_document_size';
+export const PAGE_SPEED_TTI = 'page_speed_tti';
+
+export const PAGE_SPEED_FACTORS = [
+  PAGE_SPEED_FCP,
+  PAGE_SPEED_LCP,
+  PAGE_SPEED_TTFB,
+  PAGE_SPEED_DOCUMENT_SIZE,
+  PAGE_SPEED_TTI,
+];
+
 export const factorsArray = [
   ...H1_FACTORS,
   ...H2_FACTORS,
@@ -290,4 +307,5 @@ export const factorsArray = [
   ...LINK_FACTORS,
   ...BODY_FACTORS,
   ...IMAGE_FACTORS,
+  ...PAGE_SPEED_FACTORS,
 ];

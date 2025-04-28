@@ -56,6 +56,7 @@ import { AnalysisProgressProducer } from './queues/producers/analysis-progress.p
 import { AnalysisProgressConsumer } from './queues/consumers/analysis-progress.consumer';
 import { AnalysisProgressQueueService } from '../application/ports/analysis-progress-queue.service';
 import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-queue.service';
+import { PageSpeedModule } from '../../page-speed/application/page-speed.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-
     DatabaseModule,
     HttpModule,
     HtmlParserModule,
+    PageSpeedModule,
   ],
   providers: [
     {

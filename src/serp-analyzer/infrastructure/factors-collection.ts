@@ -72,6 +72,11 @@ import {
   P_PARTIAL_KEYWORDS_COUNT,
   P_PARTIAL_KEYWORDS_DENSITY,
   P_WORDS_COUNT,
+  PAGE_SPEED_DOCUMENT_SIZE,
+  PAGE_SPEED_FCP,
+  PAGE_SPEED_LCP,
+  PAGE_SPEED_TTFB,
+  PAGE_SPEED_TTI,
   STRONG_CHARACTERS_COUNT,
   STRONG_ELEMENTS_COUNT,
   STRONG_EXACT_KEYWORDS_COUNT,
@@ -531,6 +536,33 @@ export const factorsCollection: FactorsCollection = [
       {
         label: "Images elements without or empty 'alt' attribute count",
         key: IMAGE_ELEMENTS_WITHOUT_OR_WITH_EMPTY_ALT_COUNT,
+      },
+    ],
+  },
+  // --------------------
+  // Images
+  {
+    label: 'Page Speed',
+    factors: [
+      {
+        label: 'FCP',
+        key: PAGE_SPEED_FCP,
+      },
+      {
+        label: 'LCP',
+        key: PAGE_SPEED_LCP,
+      },
+      {
+        label: 'TTFB',
+        key: PAGE_SPEED_TTFB,
+      },
+      {
+        label: 'Document size',
+        key: PAGE_SPEED_DOCUMENT_SIZE,
+      },
+      {
+        label: 'TTI',
+        key: PAGE_SPEED_TTI,
       },
     ],
   },
