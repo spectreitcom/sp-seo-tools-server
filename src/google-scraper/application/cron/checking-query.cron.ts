@@ -10,7 +10,7 @@ export class CheckingQueryCron implements CronServiceInterface {
   ) {}
 
   @Cron(CronExpression.EVERY_10_SECONDS)
-  handle() {
-    this.checkingQueryQueueService.checkQueries();
+  async handle() {
+    await this.checkingQueryQueueService.checkQueries();
   }
 }
