@@ -13,11 +13,17 @@ import { AnalysisService } from '../../application/services/analysis.service';
 import { CurrentUserId } from '../../application/decorators/current-user-id.decorator';
 import { CreateAnalysisDto } from '../../application/dto/create-analysis.dto';
 import { AuthGuard } from '../../application/guards/auth.guard';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { GetUserAnalysisListQueryParamsDto } from '../../application/dto/get-user-analysis-list-query-params.dto';
 import { GetUserAnalysisListResponseSwagger } from '../../application/swagger/get-user-analysis-list-response.swagger';
 import { GetUserMonthlyUsageQueryResponseSwagger } from '../../application/swagger/get-user-monthly-usage-query-response.swagger';
 import { AddCompetitorDto } from '../../application/dto/add-competitor.dto';
+import { AnalysisIdDto } from '../../application/dto/analysis-id.dto';
 
 @Controller('serp-analyzer/analysis')
 export class AnalysisController {
@@ -88,14 +94,24 @@ export class AnalysisController {
     status: HttpStatus.CREATED,
     description: 'Competitor was added',
   })
+  @ApiParam({
+    name: 'analysisId',
+    description: 'The ID of the analysis',
+    type: String,
+    format: 'uuid',
+  })
   @Post(':analysisId/add-competitor')
   @UseGuards(AuthGuard)
   addCompetitor(
-    @Param('analysisId') analysisId: string,
+    @Param() params: AnalysisIdDto,
     @CurrentUserId() userId: string,
     @Body() payload: AddCompetitorDto,
   ) {
-    return this.analysisService.addCompetitor(userId, analysisId, payload.url);
+    return this.analysisService.addCompetitor(
+      userId,
+      params.analysisId,
+      payload.url,
+    );
   }
 
   @ApiBearerAuth('user-auth')
@@ -106,12 +122,18 @@ export class AnalysisController {
     status: HttpStatus.OK,
     description: 'Returns the complex data of the analysis',
   })
+  @ApiParam({
+    name: 'analysisId',
+    description: 'The ID of the analysis',
+    type: String,
+    format: 'uuid',
+  })
   @Get(':analysisId')
   @UseGuards(AuthGuard)
   getAnalysisDetails(
-    @Param('analysisId') analysisId: string,
+    @Param() params: AnalysisIdDto,
     @CurrentUserId() userId: string,
   ) {
-    return this.analysisService.getAnalysisDetails(userId, analysisId);
+    return this.analysisService.getAnalysisDetails(userId, params.analysisId);
   }
 }

@@ -3,7 +3,6 @@ import { EventBus } from '@nestjs/cqrs';
 import { StageProcessingFinishedEvent } from '../../events/stage-processing-finished.event';
 import { Stage } from '../../../domain/stage';
 import { StageRepository } from '../../../application/ports/stage.repository';
-import { PageRepository } from '../../../application/ports/page.repository';
 import { PageSpeedFacade } from '../../../../page-speed/application/page-speed.facade';
 import { PageFactor } from '../../../domain/page-factor';
 import { PageFactorRepository } from '../../../application/ports/page-factor.repository';
@@ -15,24 +14,24 @@ import {
   PAGE_SPEED_TTFB,
   PAGE_SPEED_TTI,
 } from '../../factors';
+import { StageCheckerService } from './stage-checker.service';
+import { ErrorHandlerService } from '../../../../shared/services/error-handler.service';
 
 @Injectable()
 export class ProcessPageSpeedService {
   constructor(
     private readonly eventBus: EventBus,
     private readonly stageRepository: StageRepository,
-    private readonly pageRepository: PageRepository,
     private readonly pageSpeedFacade: PageSpeedFacade,
     private readonly pageFactorRepository: PageFactorRepository,
+    private readonly stageCheckerService: StageCheckerService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async process(stage: Stage): Promise<void> {
-    stage.makeInProgress();
-    await this.stageRepository.save(stage);
-
-    const page = await this.pageRepository.findByStageId(stage.getStageId());
-
     try {
+      const { page } = await this.stageCheckerService.checkStage(stage);
+
       const { fcp, lcp, ttfb, documentSize, tti } =
         await this.pageSpeedFacade.processPage(page.getUrl());
 
@@ -68,7 +67,7 @@ export class ProcessPageSpeedService {
         new StageProcessingFinishedEvent(stage.getStageId()),
       );
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(e, 'ProcessPageSpeedService.process');
       stage.markAsError();
       await this.stageRepository.save(stage);
     }

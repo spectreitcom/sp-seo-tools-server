@@ -108,12 +108,15 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
 
     if (
       userSubscriptionInfoModel?.active &&
+      userSubscriptionInfoModel?.analysisPerMonth !== undefined &&
       total >= userSubscriptionInfoModel.analysisPerMonth
     )
       return true;
 
     return (
-      testingModeModel?.active && total >= testingModeModel.analysisPerMonth
+      testingModeModel?.active &&
+      testingModeModel?.analysisPerMonth !== undefined &&
+      total >= testingModeModel.analysisPerMonth
     );
   }
 
@@ -150,5 +153,21 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
     });
 
     return [fromDateMoment, toDateMoment];
+  }
+
+  async hasAnalysisErrors(analysisId: string): Promise<boolean> {
+    const model = await this.databaseService.saAnalysis.findUnique({
+      where: { id: analysisId },
+    });
+    if (!model) return false;
+    const stagesWithErrorCount = await this.databaseService.saStage.count({
+      where: {
+        status: 'ERROR',
+        page: {
+          analysisId,
+        },
+      },
+    });
+    return stagesWithErrorCount > 0 || model.error;
   }
 }

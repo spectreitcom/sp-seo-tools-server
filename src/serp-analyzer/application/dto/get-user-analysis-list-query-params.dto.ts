@@ -1,4 +1,11 @@
-import { IsNumber, IsOptional, IsPositive, IsUUID } from 'class-validator';
+import {
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+  Matches,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 
@@ -38,8 +45,15 @@ export class GetUserAnalysisListQueryParamsDto {
 
   @ApiProperty({
     required: false,
+    description:
+      'Search text for filtering analysis by keyword (alphanumeric characters, spaces, and common punctuation only)',
   })
   @Transform(({ value }) => (value === '' ? undefined : value))
+  @IsString()
+  @Matches(/^[a-zA-Z0-9\s.,!?-]*$/, {
+    message:
+      'searchText can only contain alphanumeric characters, spaces, and common punctuation',
+  })
   @IsOptional()
   readonly searchText: string | undefined;
 }

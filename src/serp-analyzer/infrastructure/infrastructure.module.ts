@@ -57,6 +57,8 @@ import { AnalysisProgressConsumer } from './queues/consumers/analysis-progress.c
 import { AnalysisProgressQueueService } from '../application/ports/analysis-progress-queue.service';
 import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-queue.service';
 import { PageSpeedModule } from '../../page-speed/application/page-speed.module';
+import { StageCheckerService } from './queues/services/stage-checker.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [
@@ -75,6 +77,7 @@ import { PageSpeedModule } from '../../page-speed/application/page-speed.module'
     HttpModule,
     HtmlParserModule,
     PageSpeedModule,
+    SharedModule,
   ],
   providers: [
     {
@@ -151,6 +154,7 @@ import { PageSpeedModule } from '../../page-speed/application/page-speed.module'
       provide: AnalysisProgressQueueService,
       useClass: AppAnalysisProgressQueueService,
     },
+    StageCheckerService,
   ],
   exports: [
     UserSubscriptionInfoRepository,

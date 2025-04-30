@@ -72,6 +72,11 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
         },
       });
 
+      if (!model.localization) {
+        // Skip this model if localization is not found
+        continue;
+      }
+
       results.push(
         new UserAnalysisReadModel(
           model.id,
@@ -139,10 +144,14 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
         },
       });
 
-    const progress = this.calcProgress(
-      analysisProgressModel.current,
-      analysisProgressModel.total,
-    );
+    let progress = 0;
+
+    if (analysisProgressModel) {
+      progress = this.calcProgress(
+        analysisProgressModel.current,
+        analysisProgressModel.total,
+      );
+    }
 
     const stagesWithErrorCount = await this.databaseService.saStage.count({
       where: {
@@ -152,6 +161,10 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
         },
       },
     });
+
+    if (!model.localization) {
+      throw new Error(`Localization not found for analysis ${model.id}`);
+    }
 
     return new UserAnalysisReadModel(
       model.id,
