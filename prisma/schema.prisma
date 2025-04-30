@@ -200,6 +200,7 @@ model SaAnalysis {
   pages              SaPage[]
   userId             String
   analysisProgresses SaAnalysisProgress[]
+  error              Boolean              @default(false)
 }
 
 model SaAnalysisProgress {
@@ -259,9 +260,11 @@ model GsQuery {
   device           String
   userId           String
   createdAt        Int
+  checkedAt        Int           @default(0)
 }
 
 enum GsQueryStatus {
   PENDING
   DONE
+  ERROR
 }

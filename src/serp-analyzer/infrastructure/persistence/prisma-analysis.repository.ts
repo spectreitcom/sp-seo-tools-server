@@ -27,6 +27,7 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
           localizationId: analysis.getLocalizationId(),
           processId: analysis.getProcessId(),
           userId: analysis.getUserId(),
+          error: analysis.getError(),
         },
       });
       return;
@@ -41,6 +42,7 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
         processId: analysis.getProcessId(),
         createdAt: moment().unix(),
         userId: analysis.getUserId(),
+        error: analysis.getError(),
       },
     });
   }

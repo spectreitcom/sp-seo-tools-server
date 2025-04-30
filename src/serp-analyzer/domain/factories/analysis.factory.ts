@@ -21,6 +21,7 @@ export class AnalysisFactory {
       hasActiveTestingMode,
       hasActiveSubscription,
       exceededMonthlyLimit,
+      false,
     );
   }
 }

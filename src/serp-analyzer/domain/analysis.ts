@@ -14,8 +14,13 @@ export class Analysis extends AggregateRoot {
     private readonly hasActiveTestingMode: boolean,
     private readonly hasActiveSubscription: boolean,
     private readonly exceededMonthlyLimit: boolean,
+    private error: boolean,
   ) {
     super();
+  }
+
+  markAsError() {
+    this.error = true;
   }
 
   updateProcessId(processId: string) {
@@ -59,5 +64,9 @@ export class Analysis extends AggregateRoot {
 
   getUserId() {
     return this.userId;
+  }
+
+  getError() {
+    return this.error;
   }
 }
