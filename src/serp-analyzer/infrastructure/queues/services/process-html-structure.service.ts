@@ -18,6 +18,7 @@ import { ProcessBodyService } from './processBody.service';
 import { ProcessImageService } from './processImage.service';
 import { StageRepository } from '../../../application/ports/stage.repository';
 import { StageCheckerService } from './stage-checker.service';
+import { ErrorHandlerService } from '../../../../shared/services/error-handler.service';
 
 @Injectable()
 export class ProcessHtmlStructureService {
@@ -39,6 +40,7 @@ export class ProcessHtmlStructureService {
     private readonly processImageService: ProcessImageService,
     private readonly stageRepository: StageRepository,
     private readonly stageCheckerService: StageCheckerService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async process(stage: Stage): Promise<void> {
@@ -67,7 +69,10 @@ export class ProcessHtmlStructureService {
         new StageProcessingFinishedEvent(stage.getStageId()),
       );
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(
+        e,
+        'ProcessHtmlStructureService.process',
+      );
       stage.markAsError();
       await this.stageRepository.save(stage);
     }

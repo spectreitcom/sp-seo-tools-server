@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { HtmlService } from '../application/ports/html.service';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 
 @Injectable()
 export class AppHtmlService implements HtmlService {
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly errorHandlerService: ErrorHandlerService,
+  ) {}
 
   async fromUrl(url: string): Promise<{ html: string; status: number }> {
     try {
@@ -16,7 +20,7 @@ export class AppHtmlService implements HtmlService {
         status: response.status,
       };
     } catch (e: any) {
-      console.log(e);
+      this.errorHandlerService.logError(e, 'AppHtmlService.fromUrl');
       try {
         const response = await firstValueFrom(
           this.http.get(url, {
@@ -36,6 +40,7 @@ export class AppHtmlService implements HtmlService {
           status: response.status,
         };
       } catch (e: any) {
+        this.errorHandlerService.logError(e, 'AppHtmlService.fromUrl');
         return {
           html: '',
           status: e.response?.status ?? 500,

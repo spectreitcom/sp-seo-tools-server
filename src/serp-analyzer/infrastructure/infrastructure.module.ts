@@ -58,6 +58,7 @@ import { AnalysisProgressQueueService } from '../application/ports/analysis-prog
 import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-queue.service';
 import { PageSpeedModule } from '../../page-speed/application/page-speed.module';
 import { StageCheckerService } from './queues/services/stage-checker.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { StageCheckerService } from './queues/services/stage-checker.service';
     HttpModule,
     HtmlParserModule,
     PageSpeedModule,
+    SharedModule,
   ],
   providers: [
     {

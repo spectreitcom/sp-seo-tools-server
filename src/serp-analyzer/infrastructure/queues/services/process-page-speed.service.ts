@@ -15,6 +15,7 @@ import {
   PAGE_SPEED_TTI,
 } from '../../factors';
 import { StageCheckerService } from './stage-checker.service';
+import { ErrorHandlerService } from '../../../../shared/services/error-handler.service';
 
 @Injectable()
 export class ProcessPageSpeedService {
@@ -24,6 +25,7 @@ export class ProcessPageSpeedService {
     private readonly pageSpeedFacade: PageSpeedFacade,
     private readonly pageFactorRepository: PageFactorRepository,
     private readonly stageCheckerService: StageCheckerService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async process(stage: Stage): Promise<void> {
@@ -65,7 +67,7 @@ export class ProcessPageSpeedService {
         new StageProcessingFinishedEvent(stage.getStageId()),
       );
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(e, 'ProcessPageSpeedService.process');
       stage.markAsError();
       await this.stageRepository.save(stage);
     }
