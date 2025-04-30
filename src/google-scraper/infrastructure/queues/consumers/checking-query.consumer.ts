@@ -40,6 +40,19 @@ export class CheckingQueryConsumer extends WorkerHost {
       query.getProcessId(),
     );
 
+    query.checked();
+    this.eventPublisher.mergeObjectContext(query);
+    await this.queryRepository.save(query);
+    query.commit();
+
+    if (query.exceededTimeLimit()) {
+      query.markAsError();
+      this.eventPublisher.mergeObjectContext(query);
+      await this.queryRepository.save(query);
+      query.commit();
+      return null;
+    }
+
     if (!this.googleScraperService.isDataAvailableCondition(response.status))
       return null;
 

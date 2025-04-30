@@ -10,7 +10,7 @@ export class DomainPositionProcessingCron implements CronServiceInterface {
   ) {}
 
   @Cron(CronExpression.EVERY_30_MINUTES)
-  handle() {
-    this.domainPositionProcessingQueueService.processPositions();
+  async handle() {
+    await this.domainPositionProcessingQueueService.processPositions();
   }
 }

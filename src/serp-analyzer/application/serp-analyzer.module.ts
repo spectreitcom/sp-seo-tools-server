@@ -34,6 +34,7 @@ import { LocalizationsController } from '../presenters/http/localizations.contro
 import { GetProgressQueryHandler } from './query-handlers/get-progress.query-handler';
 import { GetAnalysisDetailsQueryHandler } from './query-handlers/get-analysis-details.query-handler';
 import { LocalizationSyncEventHandler } from './event-handlers/localization-sync.event-handler';
+import { ScrapingErrorEventHandler } from './event-handlers/scraping-error.event-handler';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { LocalizationSyncEventHandler } from './event-handlers/localization-sync
     GetProgressQueryHandler,
     GetAnalysisDetailsQueryHandler,
     LocalizationSyncEventHandler,
+    ScrapingErrorEventHandler,
   ],
 })
 export class SerpAnalyzerModule {}

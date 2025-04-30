@@ -80,7 +80,7 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
           model.localization.countryCode,
           DeviceMapper.toName(model.device),
           progress,
-          stagesWithErrorCount > 0,
+          stagesWithErrorCount > 0 || model.error,
         ),
       );
     }
@@ -160,7 +160,7 @@ export class PrismaUserAnalysisRepository implements UserAnalysisRepository {
       model.localization.countryCode,
       DeviceMapper.toName(model.device),
       progress,
-      stagesWithErrorCount > 0,
+      stagesWithErrorCount > 0 || model.error,
     );
   }
 }

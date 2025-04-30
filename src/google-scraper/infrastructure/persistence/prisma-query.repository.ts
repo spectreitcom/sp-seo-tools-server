@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { QueryRepository } from '../../application/ports/query.repository';
 import { Query } from '../../domain/query';
 import { DatabaseService } from '../../../database/database.service';
-import * as moment from 'moment';
 import { QueryMapper } from '../../domain/mappers/query.mapper';
 
 @Injectable()
@@ -30,8 +29,9 @@ export class PrismaQueryRepository implements QueryRepository {
           localizationCode: query.getLocalizationCode(),
           results: query.getResults(),
           status: query.getStatus(),
-          createdAt: moment().unix(),
+          createdAt: query.getCreatedAt(),
           userId: query.getUserId(),
+          checkedAt: query.getCheckedAt(),
         },
       });
       return;
@@ -48,8 +48,9 @@ export class PrismaQueryRepository implements QueryRepository {
         localizationCode: query.getLocalizationCode(),
         results: query.getResults(),
         status: query.getStatus(),
-        createdAt: moment().unix(),
+        createdAt: query.getCreatedAt(),
         userId: query.getUserId(),
+        checkedAt: query.getCheckedAt(),
       },
     });
   }
