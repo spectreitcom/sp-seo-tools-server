@@ -3,7 +3,9 @@ import {
   IsNumber,
   IsOptional,
   IsPositive,
+  IsString,
   IsUUID,
+  Matches,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -30,8 +32,15 @@ export class UserKeywordsListQueryParamsDto {
 
   @ApiProperty({
     required: false,
+    description:
+      'Search text for filtering keywords (alphanumeric characters, spaces, and common punctuation only)',
   })
   @IsOptional()
+  @IsString()
+  @Matches(/^[a-zA-Z0-9\s.,!?-]*$/, {
+    message:
+      'searchText can only contain alphanumeric characters, spaces, and common punctuation',
+  })
   readonly searchText: string | undefined;
 
   @ApiProperty({
