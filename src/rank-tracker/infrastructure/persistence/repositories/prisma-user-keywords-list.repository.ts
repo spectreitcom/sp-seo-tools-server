@@ -64,6 +64,11 @@ export class PrismaUserKeywordsListRepository
     const results: UserKeywordsListItemDto[] = [];
 
     for (const model of models) {
+      // Skip if localization or domain is missing
+      if (!model.localization || !model.domain) {
+        continue;
+      }
+
       const _domainPositions = domainPositions.filter(
         (dp) => dp.keywordId === model.id,
       );
@@ -117,6 +122,11 @@ export class PrismaUserKeywordsListRepository
     });
 
     if (!keyword) return null;
+
+    // Check if localization or domain is missing
+    if (!keyword.localization || !keyword.domain) {
+      throw new Error(`Localization or domain not found for keyword ${keyword.id}`);
+    }
 
     const domainPosition =
       await this.databaseService.rtDomainPosition.findFirst({
