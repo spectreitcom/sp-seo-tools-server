@@ -12,6 +12,7 @@ import { CurrentUserId } from '../../application/decorators/current-user-id.deco
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetKeywordPositionHistoryQueryResponseSwagger } from '../../application/swagger/get-keyword-position-history-query-response.swagger';
 import { DomainPositionHistoryQueryParamsDto } from '../../application/dto/domain-position-history-query-params.dto';
+import { KeywordIdDto } from '../../application/dto/keyword-id.dto';
 
 @Controller('rank-tracker/domain-history-position')
 export class DomainPositionHistoryController {
@@ -30,12 +31,12 @@ export class DomainPositionHistoryController {
   @Get(':keywordId')
   @UseGuards(AuthGuard)
   async getDomainPositionHistory(
-    @Param('keywordId') keywordId: string,
+    @Param() params: KeywordIdDto,
     @CurrentUserId() userId: string,
     @Query() queryParams: DomainPositionHistoryQueryParamsDto,
   ) {
     return this.domainHistoryPositionService.getDomainHistoryPosition(
-      keywordId,
+      params.keywordId,
       userId,
       queryParams.fromDate,
       queryParams.toDate,

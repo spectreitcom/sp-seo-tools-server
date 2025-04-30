@@ -19,6 +19,7 @@ import { GetUserKeywordsListQueryResponseSwagger } from '../../application/swagg
 import { AvailableKeywordsQuantityDtoSwagger } from '../../application/swagger/available-keywords-quantity.dto.swagger';
 import { UserKeywordsListItemDto } from '../../application/swagger/user-keywords-list-item.dto';
 import { UserKeywordsListQueryParamsDto } from '../../application/dto/user-keywords-list-query-params.dto';
+import { KeywordIdDto } from '../../application/dto/keyword-id.dto';
 
 @Controller('rank-tracker/keywords')
 export class KeywordsController {
@@ -88,10 +89,10 @@ export class KeywordsController {
   @Get(':keywordId')
   @UseGuards(AuthGuard)
   getUserKeyword(
-    @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
+    @Param() params: KeywordIdDto,
     @CurrentUserId() userId: string,
   ) {
-    return this.keywordService.getUserKeyword(keywordId, userId);
+    return this.keywordService.getUserKeyword(params.keywordId, userId);
   }
 
   @ApiBearerAuth('user-auth')
@@ -105,9 +106,9 @@ export class KeywordsController {
   @Delete(':keywordId')
   @UseGuards(AuthGuard)
   deleteKeyword(
-    @Param('keywordId', new ParseUUIDPipe()) keywordId: string,
+    @Param() params: KeywordIdDto,
     @CurrentUserId() userId: string,
   ) {
-    return this.keywordService.delete(keywordId, userId);
+    return this.keywordService.delete(params.keywordId, userId);
   }
 }
