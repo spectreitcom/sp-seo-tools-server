@@ -26,6 +26,10 @@ export class StageCheckerService {
       page.getAnalysisId(),
     );
 
+    if (!analysis) {
+      throw new Error('Analysis not found, cannot process stage');
+    }
+
     const hasAnalysisErrors = await this.analysisRepository.hasAnalysisErrors(
       analysis.getAnalysisId(),
     );

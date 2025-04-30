@@ -108,12 +108,15 @@ export class PrismaAnalysisRepository implements AnalysisRepository {
 
     if (
       userSubscriptionInfoModel?.active &&
+      userSubscriptionInfoModel?.analysisPerMonth !== undefined &&
       total >= userSubscriptionInfoModel.analysisPerMonth
     )
       return true;
 
     return (
-      testingModeModel?.active && total >= testingModeModel.analysisPerMonth
+      testingModeModel?.active &&
+      testingModeModel?.analysisPerMonth !== undefined &&
+      total >= testingModeModel.analysisPerMonth
     );
   }
 
