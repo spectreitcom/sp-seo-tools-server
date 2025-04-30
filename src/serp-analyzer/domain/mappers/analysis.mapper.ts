@@ -18,6 +18,7 @@ export class AnalysisMapper {
       hasActiveTestingMode,
       hasActiveSubscription,
       exceededMonthlyLimit,
+      model.error,
     );
   }
 }

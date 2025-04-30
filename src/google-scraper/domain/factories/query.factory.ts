@@ -2,6 +2,7 @@ import { Query } from '../query';
 import { randomUUID } from 'crypto';
 import { GsQueryStatus } from '@prisma/client';
 import { Metadata } from '../../application/types';
+import * as moment from 'moment';
 
 export class QueryFactory {
   static create(
@@ -24,6 +25,8 @@ export class QueryFactory {
       query,
       device,
       userId,
+      moment().unix(),
+      moment().unix(),
     );
   }
 }

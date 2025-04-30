@@ -15,6 +15,8 @@ export class QueryMapper {
       model.query,
       model.device,
       model.userId,
+      model.createdAt,
+      model.checkedAt,
     );
   }
 }

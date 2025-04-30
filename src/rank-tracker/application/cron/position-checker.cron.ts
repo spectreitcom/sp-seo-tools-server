@@ -10,7 +10,7 @@ export class PositionCheckerCron implements CronServiceInterface {
   ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_1AM)
-  handle() {
-    this.positionCheckerQueueService.checkPositions();
+  async handle() {
+    await this.positionCheckerQueueService.checkPositions();
   }
 }
