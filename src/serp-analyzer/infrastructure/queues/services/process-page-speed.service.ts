@@ -3,7 +3,6 @@ import { EventBus } from '@nestjs/cqrs';
 import { StageProcessingFinishedEvent } from '../../events/stage-processing-finished.event';
 import { Stage } from '../../../domain/stage';
 import { StageRepository } from '../../../application/ports/stage.repository';
-import { PageRepository } from '../../../application/ports/page.repository';
 import { PageSpeedFacade } from '../../../../page-speed/application/page-speed.facade';
 import { PageFactor } from '../../../domain/page-factor';
 import { PageFactorRepository } from '../../../application/ports/page-factor.repository';
@@ -15,39 +14,21 @@ import {
   PAGE_SPEED_TTFB,
   PAGE_SPEED_TTI,
 } from '../../factors';
-import { AnalysisRepository } from '../../../application/ports/analysis.repository';
+import { StageCheckerService } from './stage-checker.service';
 
 @Injectable()
 export class ProcessPageSpeedService {
   constructor(
     private readonly eventBus: EventBus,
     private readonly stageRepository: StageRepository,
-    private readonly pageRepository: PageRepository,
     private readonly pageSpeedFacade: PageSpeedFacade,
     private readonly pageFactorRepository: PageFactorRepository,
-    private readonly analysisRepository: AnalysisRepository,
+    private readonly stageCheckerService: StageCheckerService,
   ) {}
 
   async process(stage: Stage): Promise<void> {
     try {
-      stage.makeInProgress();
-      await this.stageRepository.save(stage);
-
-      const page = await this.pageRepository.findByStageId(stage.getStageId());
-
-      const analysis = await this.analysisRepository.findById(
-        page.getAnalysisId(),
-      );
-
-      const hasAnalysisErrors = await this.analysisRepository.hasAnalysisErrors(
-        analysis.getAnalysisId(),
-      );
-
-      if (hasAnalysisErrors) {
-        stage.markAsError();
-        await this.stageRepository.save(stage);
-        return;
-      }
+      const { page } = await this.stageCheckerService.checkStage(stage);
 
       const { fcp, lcp, ttfb, documentSize, tti } =
         await this.pageSpeedFacade.processPage(page.getUrl());

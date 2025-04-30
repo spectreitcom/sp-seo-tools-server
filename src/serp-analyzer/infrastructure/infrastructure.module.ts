@@ -57,6 +57,7 @@ import { AnalysisProgressConsumer } from './queues/consumers/analysis-progress.c
 import { AnalysisProgressQueueService } from '../application/ports/analysis-progress-queue.service';
 import { AppAnalysisProgressQueueService } from './queues/app-analysis-progress-queue.service';
 import { PageSpeedModule } from '../../page-speed/application/page-speed.module';
+import { StageCheckerService } from './queues/services/stage-checker.service';
 
 @Module({
   imports: [
@@ -151,6 +152,7 @@ import { PageSpeedModule } from '../../page-speed/application/page-speed.module'
       provide: AnalysisProgressQueueService,
       useClass: AppAnalysisProgressQueueService,
     },
+    StageCheckerService,
   ],
   exports: [
     UserSubscriptionInfoRepository,

@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { StageProcessingFinishedEvent } from '../../events/stage-processing-finished.event';
 import { EventBus } from '@nestjs/cqrs';
 import { Stage } from '../../../domain/stage';
-import { PageRepository } from '../../../application/ports/page.repository';
-import { AnalysisRepository } from '../../../application/ports/analysis.repository';
 import { ProcessH1Service } from './processH1.service';
 import { ProcessH2Service } from './processH2.service';
 import { ProcessH3Service } from './processH3.service';
@@ -19,13 +17,12 @@ import { ProcessLinkService } from './processLink.service';
 import { ProcessBodyService } from './processBody.service';
 import { ProcessImageService } from './processImage.service';
 import { StageRepository } from '../../../application/ports/stage.repository';
+import { StageCheckerService } from './stage-checker.service';
 
 @Injectable()
 export class ProcessHtmlStructureService {
   constructor(
     private readonly eventBus: EventBus,
-    private readonly pageRepository: PageRepository,
-    private readonly analysisRepository: AnalysisRepository,
     private readonly processH1Service: ProcessH1Service,
     private readonly processH2Service: ProcessH2Service,
     private readonly processH3Service: ProcessH3Service,
@@ -41,26 +38,13 @@ export class ProcessHtmlStructureService {
     private readonly processBodyService: ProcessBodyService,
     private readonly processImageService: ProcessImageService,
     private readonly stageRepository: StageRepository,
+    private readonly stageCheckerService: StageCheckerService,
   ) {}
 
   async process(stage: Stage): Promise<void> {
     try {
-      stage.makeInProgress();
-      await this.stageRepository.save(stage);
-      const page = await this.pageRepository.findByStageId(stage.getStageId());
-      const analysis = await this.analysisRepository.findById(
-        page.getAnalysisId(),
-      );
-
-      const hasAnalysisErrors = await this.analysisRepository.hasAnalysisErrors(
-        analysis.getAnalysisId(),
-      );
-
-      if (hasAnalysisErrors) {
-        stage.markAsError();
-        await this.stageRepository.save(stage);
-        return;
-      }
+      const { page, analysis } =
+        await this.stageCheckerService.checkStage(stage);
 
       const html = page.getHtml();
       const phrase = analysis.getKeyword();

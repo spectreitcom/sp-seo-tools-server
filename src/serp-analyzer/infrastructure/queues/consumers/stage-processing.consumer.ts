@@ -30,6 +30,10 @@ export class StageProcessingConsumer extends WorkerHost {
       case PAGE_SPEED_STAGE:
         await this.processPageSpeedService.process(stage);
         break;
+      default:
+        stage.markAsError();
+        await this.stageRepository.save(stage);
+        break;
     }
   }
 }
