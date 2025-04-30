@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString, IsUUID, Matches } from 'class-validator';
 import {
   DESKTOP_DEVICE,
   MOBILE_DEVICE,
@@ -9,10 +9,16 @@ import { randomUUID } from 'crypto';
 
 export class CreateAnalysisDto {
   @ApiProperty({
-    description: 'A keyword for analysis',
+    description:
+      'A keyword for analysis (alphanumeric characters, spaces, and common punctuation only)',
     example: 'the best software house in Cracow',
   })
   @IsNotEmpty()
+  @IsString()
+  @Matches(/^[a-zA-Z0-9\s.,!?-]*$/, {
+    message:
+      'keyword can only contain alphanumeric characters, spaces, and common punctuation',
+  })
   readonly keyword: string;
 
   @ApiProperty({

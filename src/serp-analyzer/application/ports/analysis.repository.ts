@@ -5,4 +5,5 @@ export abstract class AnalysisRepository {
   abstract exceededMonthlyLimit(userId: string): Promise<boolean>;
   abstract findById(analysisId: string): Promise<Analysis>;
   abstract getUsedQuotaInCurrentMonth(userId: string): Promise<number>;
+  abstract hasAnalysisErrors(analysisId: string): Promise<boolean>;
 }

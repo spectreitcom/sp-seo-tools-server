@@ -163,6 +163,11 @@ export class PrismaKeywordRepository implements KeywordRepository {
         (dm) => dm.id === keywordModel.domainId,
       );
 
+      // Skip if domain model is not found
+      if (!domainModel) {
+        continue;
+      }
+
       const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
         (us) => us.userId === domainModel.userId,
       );
@@ -261,6 +266,11 @@ export class PrismaKeywordRepository implements KeywordRepository {
     for (const model of models) {
       const domainModel = domainModels.find((dm) => dm.id === model.domainId);
 
+      // Skip if domain model is not found
+      if (!domainModel) {
+        continue;
+      }
+
       const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
         (us) => us.userId === domainModel.userId,
       );
@@ -337,6 +347,11 @@ export class PrismaKeywordRepository implements KeywordRepository {
     for (const model of models) {
       const domainModel = domainModels.find((dm) => dm.id === model.domainId);
 
+      // Skip if domain model is not found
+      if (!domainModel) {
+        continue;
+      }
+
       const userSubscriptionInfoModel = userSubscriptionInfoModels.find(
         (us) => us.userId === domainModel.userId,
       );
@@ -371,6 +386,11 @@ export class PrismaKeywordRepository implements KeywordRepository {
         id: model.domainId,
       },
     });
+
+    // Return null if domain is not found
+    if (!domain) {
+      return null;
+    }
 
     const userSubscriptionInfoModel =
       await this.databaseService.rtUserSubscriptionInfo.findUnique({
