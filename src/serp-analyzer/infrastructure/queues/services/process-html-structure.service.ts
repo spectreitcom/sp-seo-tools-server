@@ -29,7 +29,7 @@ export class ProcessHtmlStructureService {
     private readonly processH1Service: ProcessH1Service,
     private readonly processH2Service: ProcessH2Service,
     private readonly processH3Service: ProcessH3Service,
-    protected readonly processH4Service: ProcessH4Service,
+    private readonly processH4Service: ProcessH4Service,
     private readonly processH5Service: ProcessH5Service,
     private readonly processH6Service: ProcessH6Service,
     private readonly processPService: ProcessPService,
@@ -44,17 +44,27 @@ export class ProcessHtmlStructureService {
   ) {}
 
   async process(stage: Stage): Promise<void> {
-    stage.makeInProgress();
-    await this.stageRepository.save(stage);
-    const page = await this.pageRepository.findByStageId(stage.getStageId());
-    const analysis = await this.analysisRepository.findById(
-      page.getAnalysisId(),
-    );
-
-    const html = page.getHtml();
-    const phrase = analysis.getKeyword();
-
     try {
+      stage.makeInProgress();
+      await this.stageRepository.save(stage);
+      const page = await this.pageRepository.findByStageId(stage.getStageId());
+      const analysis = await this.analysisRepository.findById(
+        page.getAnalysisId(),
+      );
+
+      const hasAnalysisErrors = await this.analysisRepository.hasAnalysisErrors(
+        analysis.getAnalysisId(),
+      );
+
+      if (hasAnalysisErrors) {
+        stage.markAsError();
+        await this.stageRepository.save(stage);
+        return;
+      }
+
+      const html = page.getHtml();
+      const phrase = analysis.getKeyword();
+
       await this.processH1Service.process(html, phrase, page.getPageId());
       await this.processH2Service.process(html, phrase, page.getPageId());
       await this.processH3Service.process(html, phrase, page.getPageId());
