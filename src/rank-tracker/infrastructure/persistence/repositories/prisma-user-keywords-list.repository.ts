@@ -125,7 +125,9 @@ export class PrismaUserKeywordsListRepository
 
     // Check if localization or domain is missing
     if (!keyword.localization || !keyword.domain) {
-      throw new Error(`Localization or domain not found for keyword ${keyword.id}`);
+      throw new Error(
+        `Localization or domain not found for keyword ${keyword.id}`,
+      );
     }
 
     const domainPosition =
