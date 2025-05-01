@@ -16,8 +16,8 @@ export class AppHtmlService implements HtmlService {
       const response = await firstValueFrom(this.http.get(url));
 
       return {
-        html: response.data,
-        status: response.status,
+        html: typeof response.data === 'string' ? response.data : '',
+        status: typeof response.data === 'string' ? response.status : 500,
       };
     } catch (e: any) {
       this.errorHandlerService.logError(e, 'AppHtmlService.fromUrl');
@@ -25,10 +25,6 @@ export class AppHtmlService implements HtmlService {
         const response = await firstValueFrom(
           this.http.get(url, {
             headers: {
-              // 'User-Agent':
-              //   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
-              //   'AppleWebKit/537.36 (KHTML, like Gecko) ' +
-              //   'Chrome/123.0.0.0 Safari/537.36',
               'User-Agent':
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
             },
@@ -36,8 +32,8 @@ export class AppHtmlService implements HtmlService {
         );
 
         return {
-          html: response.data,
-          status: response.status,
+          html: typeof response.data === 'string' ? response.data : '',
+          status: typeof response.data === 'string' ? response.status : 500,
         };
       } catch (e: any) {
         this.errorHandlerService.logError(e, 'AppHtmlService.fromUrl');

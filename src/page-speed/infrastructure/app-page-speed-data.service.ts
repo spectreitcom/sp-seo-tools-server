@@ -4,12 +4,14 @@ import { PageSpeedData } from './types';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 
 @Injectable()
 export class AppPageSpeedDataService implements PageSpeedDataService {
   constructor(
     private readonly http: HttpService,
     private readonly configService: ConfigService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async processData(url: string): Promise<PageSpeedData> {
@@ -62,7 +64,10 @@ export class AppPageSpeedDataService implements PageSpeedDataService {
         ttfb,
       };
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(
+        e,
+        'AppPageSpeedDataService.processData',
+      );
       throw e;
     }
   }
