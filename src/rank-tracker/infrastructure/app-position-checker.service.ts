@@ -15,6 +15,7 @@ import {
 } from '../application/constants';
 import { DomainPositionRepository } from '../application/ports/domain-position.repository';
 import { EventPublisher } from '@nestjs/cqrs';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 
 @Injectable()
 export class AppPositionCheckerService implements PositionCheckerService {
@@ -26,6 +27,7 @@ export class AppPositionCheckerService implements PositionCheckerService {
     private readonly googleScraperFacade: GoogleScraperFacade,
     private readonly domainPositionRepository: DomainPositionRepository,
     private readonly eventPublisher: EventPublisher,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async checkPosition(keyword: Keyword): Promise<void> {
@@ -53,7 +55,7 @@ export class AppPositionCheckerService implements PositionCheckerService {
         );
         await this.createDomainPosition(keyword.getKeywordId(), response_id);
       } catch (error) {
-        console.error('send query error', error);
+        this.errorHandlerService.logError(error, 'AppPositionCheckerService.checkPosition');
       }
     }
 

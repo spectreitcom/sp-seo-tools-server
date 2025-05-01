@@ -16,10 +16,12 @@ import { RefreshTokenIdsStorageStorage } from '../application/ports/refresh-toke
 import { AppRefreshTokenIdsStorage } from './app-refresh-token-ids-storage.storage';
 import { TokenHelperService } from '../application/ports/token-helper.service';
 import { AppTokenHelperService } from './app-token-helper.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    SharedModule,
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('USER_JWT_SECRET'),
