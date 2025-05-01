@@ -43,6 +43,7 @@ import { DomainPositionProcessingProducer } from './queues/producers/domain-posi
 import { DomainPositionProcessingConsumer } from './queues/consumers/domain-position-processing.consumer';
 import { PositionCheckerService } from '../application/ports/position-checker.service';
 import { AppPositionCheckerService } from './app-position-checker.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { AppPositionCheckerService } from './app-position-checker.service';
     ),
     DatabaseModule,
     GoogleScraperModule,
+    SharedModule,
   ],
   providers: [
     {

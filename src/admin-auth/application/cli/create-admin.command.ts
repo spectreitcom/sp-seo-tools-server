@@ -1,6 +1,7 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
 import { isEmail } from 'class-validator';
 import { CreateAdminCliCommandService } from '../ports/create-admin-cli-command.service';
+import { ErrorHandlerService } from '../../../shared/services/error-handler.service';
 
 type CommandOptions = {
   email: string;
@@ -11,6 +12,7 @@ type CommandOptions = {
 export class CreateAdminCommand extends CommandRunner {
   constructor(
     private readonly createAdminCliCommandService: CreateAdminCliCommandService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {
     super();
   }
@@ -23,7 +25,7 @@ export class CreateAdminCommand extends CommandRunner {
       await this.createAdminCliCommandService.createAdmin(email, password);
       process.exit();
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(e, 'CreateAdminCommand.run');
       process.exit(1);
     }
   }

@@ -1,6 +1,7 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
 import { isUUID } from 'class-validator';
 import { SeederService } from '../ports/seeder.service';
+import { ErrorHandlerService } from '../../../shared/services/error-handler.service';
 
 type CommandOptions = {
   user: string;
@@ -11,7 +12,10 @@ type CommandOptions = {
   description: 'Creates a dummy data for rank tracker module',
 })
 export class SeedCommand extends CommandRunner {
-  constructor(private readonly seederService: SeederService) {
+  constructor(
+    private readonly seederService: SeederService,
+    private readonly errorHandlerService: ErrorHandlerService,
+  ) {
     super();
   }
 
@@ -21,7 +25,7 @@ export class SeedCommand extends CommandRunner {
       await this.seederService.seed(user);
       process.exit();
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(e, 'SeedCommand.run');
       process.exit(1);
     }
   }

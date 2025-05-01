@@ -41,9 +41,10 @@ import { DomainPositionCreatedEventHandler } from './event-handlers/domain-posit
 import { DomainPositionStatusUpdatedEventHandler } from './event-handlers/domain-position-status-updated.event-handler';
 import { KeywordAddedEventHandler } from './event-handlers/keyword-added.event-handler';
 import { LocalizationSyncEventHandler } from './event-handlers/localization-sync.event-handler';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
-  imports: [InfrastructureModule, UserAuthModule],
+  imports: [InfrastructureModule, UserAuthModule, SharedModule],
   controllers: [
     DomainsController,
     KeywordsController,
