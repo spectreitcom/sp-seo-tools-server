@@ -12,10 +12,12 @@ import { RequestService } from '../application/ports/request.service';
 import { AppRequestService } from './app-request.service';
 import { CreateAdminCliCommandService } from '../application/ports/create-admin-cli-command.service';
 import { AppCreateAdminCliCommandService } from './app-create-admin-cli-command.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    SharedModule,
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('ADMIN_JWT_SECRET'),

@@ -7,6 +7,7 @@ import { UserRepository } from '../ports/user.repository';
 import { RefreshTokenIdsStorageStorage } from '../ports/refresh-token-ids-storage.storage';
 import { randomUUID } from 'crypto';
 import { TokenHelperService } from '../ports/token-helper.service';
+import { ErrorHandlerService } from '../../../shared/services/error-handler.service';
 
 @CommandHandler(RefreshTokenCommand)
 export class RefreshTokenCommandHandler
@@ -17,6 +18,7 @@ export class RefreshTokenCommandHandler
     private readonly userRepository: UserRepository,
     private readonly refreshTokenIdsStorageStorage: RefreshTokenIdsStorageStorage,
     private readonly tokenHelperService: TokenHelperService,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async execute(command: RefreshTokenCommand): Promise<GoogleAuthResponse> {
@@ -40,7 +42,10 @@ export class RefreshTokenCommandHandler
         refreshToken,
       };
     } catch (e) {
-      console.log(e);
+      this.errorHandlerService.logError(
+        e,
+        'RefreshTokenCommandHandler.execute',
+      );
       throw new UnauthorizedException();
     }
   }

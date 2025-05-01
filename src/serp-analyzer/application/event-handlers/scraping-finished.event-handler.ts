@@ -57,6 +57,7 @@ export class ScrapingFinishedEventHandler
 
     for (const searchResult of searchResults) {
       const { html, status } = await this.htmlService.fromUrl(searchResult.url);
+
       const page = PageFactory.create(
         searchResult.url,
         searchResult.position,

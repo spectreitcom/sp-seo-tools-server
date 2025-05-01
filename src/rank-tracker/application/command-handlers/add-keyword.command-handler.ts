@@ -12,6 +12,7 @@ import {
 import { UserSubscriptionInfoRepository } from '../ports/user-subscription-info.repository';
 import { KeywordFactory } from '../../domain/factories/keyword.factory';
 import { TestingModeRepository } from '../ports/testing-mode.repository';
+import { ErrorHandlerService } from '../../../shared/services/error-handler.service';
 
 @CommandHandler(AddKeywordCommand)
 export class AddKeywordCommandHandler
@@ -22,6 +23,7 @@ export class AddKeywordCommandHandler
     private readonly userSubscriptionInfoRepository: UserSubscriptionInfoRepository,
     private readonly testingModeRepository: TestingModeRepository,
     private readonly eventPublisher: EventPublisher,
+    private readonly errorHandlerService: ErrorHandlerService,
   ) {}
 
   async execute(command: AddKeywordCommand): Promise<void> {
@@ -59,6 +61,8 @@ export class AddKeywordCommandHandler
       await this.keywordRepository.save(keyword);
       keyword.commit();
     } catch (e) {
+      this.errorHandlerService.logError(e, 'AddKeywordCommandHandler.execute');
+
       if (e instanceof InactiveSubscriptionError) {
         throw new BadRequestException('Subscription is inactive');
       }

@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsString, IsUUID, Matches } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import {
   DESKTOP_DEVICE,
   MOBILE_DEVICE,
@@ -15,10 +15,6 @@ export class CreateAnalysisDto {
   })
   @IsNotEmpty()
   @IsString()
-  @Matches(/^[a-zA-Z0-9\s.,!?-]*$/, {
-    message:
-      'keyword can only contain alphanumeric characters, spaces, and common punctuation',
-  })
   readonly keyword: string;
 
   @ApiProperty({
