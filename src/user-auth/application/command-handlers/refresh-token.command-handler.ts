@@ -42,7 +42,10 @@ export class RefreshTokenCommandHandler
         refreshToken,
       };
     } catch (e) {
-      this.errorHandlerService.logError(e, 'RefreshTokenCommandHandler.execute');
+      this.errorHandlerService.logError(
+        e,
+        'RefreshTokenCommandHandler.execute',
+      );
       throw new UnauthorizedException();
     }
   }
