@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import { StageProcessingFinishedEvent } from '../../events/stage-processing-finished.event';
 import { Stage } from '../../../domain/stage';
-import { StageRepository } from '../../../application/ports/stage.repository';
 import { PageSpeedFacade } from '../../../../page-speed/application/page-speed.facade';
 import { PageFactor } from '../../../domain/page-factor';
 import { PageFactorRepository } from '../../../application/ports/page-factor.repository';
@@ -21,7 +20,6 @@ import { ErrorHandlerService } from '../../../../shared/services/error-handler.s
 export class ProcessPageSpeedService {
   constructor(
     private readonly eventBus: EventBus,
-    private readonly stageRepository: StageRepository,
     private readonly pageSpeedFacade: PageSpeedFacade,
     private readonly pageFactorRepository: PageFactorRepository,
     private readonly stageCheckerService: StageCheckerService,
@@ -68,8 +66,9 @@ export class ProcessPageSpeedService {
       );
     } catch (e) {
       this.errorHandlerService.logError(e, 'ProcessPageSpeedService.process');
-      stage.markAsError();
-      await this.stageRepository.save(stage);
+      this.eventBus.publish(
+        new StageProcessingFinishedEvent(stage.getStageId()),
+      );
     }
   }
 }

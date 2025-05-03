@@ -73,8 +73,9 @@ export class ProcessHtmlStructureService {
         e,
         'ProcessHtmlStructureService.process',
       );
-      stage.markAsError();
-      await this.stageRepository.save(stage);
+      this.eventBus.publish(
+        new StageProcessingFinishedEvent(stage.getStageId()),
+      );
     }
   }
 }
