@@ -83,4 +83,28 @@ export class PrismaDomainPositionRepository
     if (!models.length) return [];
     return models.map((model) => DomainPositionMapper.toDomain(model));
   }
+
+  async findAllNoneZeroPositionByKeywordK(
+    keywordId: string,
+    take: number,
+    skip: number,
+    status: RtDomainPositionStaus | undefined,
+  ): Promise<DomainPosition[]> {
+    const models = await this.databaseService.rtDomainPosition.findMany({
+      where: {
+        keywordId,
+        status,
+        position: {
+          gt: 0,
+        },
+      },
+      take,
+      skip,
+      orderBy: {
+        timestamp: 'desc',
+      },
+    });
+    if (!models.length) return [];
+    return models.map((model) => DomainPositionMapper.toDomain(model));
+  }
 }
