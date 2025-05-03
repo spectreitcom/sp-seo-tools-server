@@ -19,4 +19,11 @@ export abstract class DomainPositionRepository {
     skip: number,
     status: RtDomainPositionStaus | undefined,
   ): Promise<DomainPosition[]>;
+
+  abstract findAllNoneZeroPositionByKeywordK(
+    keywordId: string,
+    take: number,
+    skip: number,
+    status: RtDomainPositionStaus | undefined,
+  ): Promise<DomainPosition[]>;
 }
