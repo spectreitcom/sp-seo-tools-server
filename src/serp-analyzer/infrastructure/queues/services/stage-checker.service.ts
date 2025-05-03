@@ -30,11 +30,7 @@ export class StageCheckerService {
       throw new Error('Analysis not found, cannot process stage');
     }
 
-    const hasAnalysisErrors = await this.analysisRepository.hasAnalysisErrors(
-      analysis.getAnalysisId(),
-    );
-
-    if (hasAnalysisErrors) {
+    if (analysis.getError()) {
       throw new Error('Analysis has errors, cannot process stage');
     }
 
