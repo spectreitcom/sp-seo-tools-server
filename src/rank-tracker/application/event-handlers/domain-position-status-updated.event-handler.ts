@@ -32,7 +32,7 @@ export class DomainPositionStatusUpdatedEventHandler
       if (!keyword) return;
 
       const twoLatestPositions =
-        await this.domainPositionRepository.findAllByKeywordK(
+        await this.domainPositionRepository.findAllNoneZeroPositionByKeywordK(
           keywordId,
           2,
           0,
